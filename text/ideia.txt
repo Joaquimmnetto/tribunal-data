@@ -1,0 +1,59 @@
+1ª Etapa:
+
+    - 1. Utilizar dados do Tribunal do LOL.
+
+    - 2. Definir três categorias de jogadores: tóxicos, contaminados e limpos.
+        - Tóxico: jogadores 'ofensores' (offenders).
+        - Contaminado: jogadores que 'interagiram' com os jogadores tóxicos.
+        - Limpo: jogadores que não sofreram interação com os jogadores tóxicos.
+
+        - Utilizar dados dos 'players' (desempenho dos jogadores na partida).
+        - Problema:
+            - Assume-se uma hipótese muito forte: todos jogadores têm o mesmo desempenho médio e que
+              o único fator que influencia a variação de desempenho na partida é a contaminação.
+
+    - 3. Avaliar a extensão da contaminação a partir dos dados da partida.
+        - Criar modelo para quantificar a extensão da contaminação.
+    
+    - 4. Criar associação de quais tipos de ofensas geram quais níveis de contaminação. 
+        - Utilizar o modelo preditivo para criar níveis de contaminação.
+        - A partir dos níveis de contaminação, gerar as associações.
+
+    - Modelo:
+        - Pela EDA, podemos verificar se o jogador ofensor tem um desempenho menor que os demais.
+        - Se isso for verdade, podemos criar um modelo em que o jogador ofensor diminui o desempenho dos demais.
+          ('puxa' os outros jogadores para baixo).
+        - Para tentar diminuir o viés (alguns jogadores foram mal simplesmente porque são ruins), jogadores
+          com baixo desempenho têm influência menor no modelo. Jogadores que, em média, são bons têm influência
+          maior no modelo.
+            - Definir o que caracteriza um jogador ruim.
+            - Definir o que caracteriza um jogador bom.
+            - Podemos utilizar a métrica de (Blackburn, 2014): KDA (Kill-Death-Assist).
+        - Normalizar (ou padronizar) as entradas é mandatório de qualquer forma.
+
+EDA:
+
+    - Barplot da variável "most_common_report_reason" do dataset "matchs".
+        - "Intentionally Feeding", "Offensive Language" e "Verbal Abuse" são as ofensas mais comuns nos casos.
+        - Descobrimos que há apenas um match onde não houve qualquer tipo de abuso.
+
+    - Barplot do total de reports para cada ofensa é bem similar ao barplot acima. Isso é um indicativo de que
+      que "Intentionally Feeding" é uma ofensa mais grave que as demais (em torno de 30% comparado com "Offensive Language").
+      Os outros mantêm a mesma proporção de gravidade entre si.
+
+    - Transformar variável "premade" em factor.
+
+    - Fazendo o histograma da variável "time_played", descobrimos que muitas partidas terminam entre 1200 e 1300 segundos.
+
+    - Atráves de um barplot, verificou-se que aliados do jogador tóxico perdem mais partidas, e inimigos ganham mais. Logo o 
+      jogador tóxico influencia negativamente seus aliados. O teste-t para médias, corrbora a hipótese(valor-p < 2.2e-16).
+
+    - A duração média de uma partida tem diferença entre aliados/inimigos vencendo/ganhando?
+        Exite uma diferença significativa entre o tempo de jogo de aliados do jogador tóxico e inimigos deste quando estes ganham uma partida
+        os aliados atingem um tempo médio de 2013 segundos, contra 1964 segundos dos inimigos, o que ajuda a demostrar a influência negativa 
+        do jogador tóxico. Essa diferença foi provada significativa com
+        um teste-t(valor-p < 2.2e-16)
+
+    - É possível medir a eficiência de um time em gold/tempo, e comparar as médias de times aliados do jogador tóxico e inimigos deste?
+
+
