@@ -8,18 +8,20 @@ import random
 import string
 import traceback
 
+
+
 from Queue import Queue
 from threading import Semaphore
 from threading import Thread
 
 finished = False
-numProducers = 3
+numProducers = 2
 consumers = []
 
 
 prodSem = Semaphore(numProducers)
 
-folder = os.path.dirname(__file__)+'/datasets'
+folder = os.path.dirname(__file__)+'/dataset'
 #tmpDir = tempfile.mkdtemp()
 
 corpus_fl = open('chat_corpus.txt', 'wb')
@@ -30,14 +32,13 @@ chat_wr = csv.writer(chat_fl)
 players_fl = open('players.csv','wb')
 players_wr = csv.writer(players_fl)
 
-matches_fl = open('matchs.csv','wb')
+matches_fl = open('matches.csv','wb')
 matches_wr = csv.writer(matches_fl)
 
 chat_buffer = None
 players_buffer = None
 matches_buffer = None
 corpus_buffer = None
-
 
 
 def corpus_chat(case):
@@ -47,6 +48,16 @@ def corpus_chat(case):
 			corpus_lst.append(entry['message'].encode('utf-8'))
 
 	return ' '.join(corpus_lst)
+
+
+def put_NA(match_players):
+	for row in match_players:
+		for i,value in enumerate(row):
+			if row[i] is None or str(row[i]).strip() == '':
+				row[i] = 'NA'
+
+	return match_players
+
 
 
 
@@ -70,16 +81,20 @@ def process_csv(case, chat_atrs = None, ply_atrs = None, match_atrs = None):
 	for match_num,match in enumerate(case):
 		if len(chat_atrs) > 0:
 			match_chat = process_chat(match_num, match, chat_atrs)
+
 			if match_chat is None:
 				pass
+			match_chat = put_NA(match_chat)
 			case_chat += match_chat
 
 		if len(ply_atrs) > 0:
 			match_players = process_players(match_num,match,ply_atrs)
+			match_players = put_NA(match_players)
 			case_players += match_players
 
 		if len(match_atrs) > 0:
 			match_info = process_info(match_num,match, match_atrs)
+			match_info = put_NA(match_info)
 			case_matches += match_info
 
 	return case_chat,case_players,case_matches
@@ -94,7 +109,10 @@ def process_chat(match_num,match,atrs):
 		csv_array.append(match_num)
 		for attr in atrs:
 			if attr == 'message':
-				csv_array.append(entry[attr].encode('utf-8'))
+				if not any(entry[attr]):
+					csv_array.append("")
+				else:
+					csv_array.append(entry[attr].encode('utf-8'))
 			else:
 				csv_array.append(entry[attr])
 		match_chat.append(csv_array)
@@ -186,12 +204,11 @@ def process_tar(tarName, tmp_dir):
 			jsonsFile.close()
 
 
-
+		print 'Fechando '+tarName +' sem erros...'
 	except Exception as e:
 		print 'Erro em ',tarName
 		traceback.print_exc()
 	finally:
-
 		shutil.rmtree(tmp_dir)
 		prodSem.release()
 
@@ -206,12 +223,16 @@ def create_csv_consumer(csv_wr,matrix_buffer):
 	def consumer(_csv_wr, _matrix_buffer):
 		try:
 			while True:
-				matrix = _matrix_buffer.get(timeout=10)
+				if finished:
+					matrix = _matrix_buffer.get(timeout=10)
+				else:
+					matrix = _matrix_buffer.get(timeout=60)
 				_csv_wr.writerows(matrix)
 				del matrix
 		except:
+			traceback.print_exc()
 			print 'consumer finished'
-			pass
+
 
 	t = Thread(None,consumer,None,(csv_wr, matrix_buffer))
 	consumers.append(t)
@@ -223,12 +244,17 @@ def create_text_consumer(txt_file,txt_buffer):
 	def consumer(_txt_file, _txt_buffer):
 		try:
 			while True:
-				corpus = _txt_buffer.get(timeout=10)
+				if finished:
+					corpus = _txt_buffer.get(timeout=10)
+				else:
+					corpus = _txt_buffer.get(timeout=60)
+
 				_txt_file.write(corpus)
 				del corpus
 		except:
+			traceback.print_exc()
 			print 'consumer finished'
-			pass
+
 
 	t = Thread(None,consumer,None,(txt_file,txt_buffer))
 	consumers.append(t)
@@ -242,8 +268,8 @@ players_buffer = Queue()
 create_csv_consumer(players_wr,players_buffer)
 matches_buffer = Queue()
 create_csv_consumer(matches_wr,matches_buffer)
-corpus_buffer = Queue()
-create_text_consumer(corpus_fl, corpus_buffer)
+#corpus_buffer = Queue()
+#create_text_consumer(corpus_fl, corpus_buffer)
 
 dirs = []
 for tarName in os.listdir(folder):
@@ -267,10 +293,18 @@ for consumer in consumers:
 # for dir in dirs:
 # 	shutil.rmtree(dir)
 
-
 chat_fl.close()
 players_fl.close()
 corpus_fl.close()
+
+print 'Organizando resultados...'
+import subprocess
+subprocess.call(['bash','sort','chat.csv','chat.csv'])
+subprocess.call(['bash','sort','players.csv','players.csv'])
+subprocess.call(['bash','sort','matches.csv','matches.csv'])
+
+
+
 
 
 
