@@ -69,8 +69,6 @@ Devido a grande extensão dos dados, obtemos uma amostra, com aproximadamente 37
 
 # Transformação dos dados
 
-Para a nossa análise exploratória, utilizamos a linguagem R. Neste processo de análise exploratória, analisamos e associamos os dados de ambos os datasets construídos(players e matches) de maneiras diferentes, das quais apenas os resultados mais relevantes, e os que contribuem para uma compreensão melhor do dataset foram reportados aqui. Nossos objetivos nessa etapa são: descobrir possíveis padrões que sejam de futuro interesse, e procurar dados que suportem nossas hipóteses.
-
 ```{r transformations}
 setwd("..")
 source("src/R/transformations.R")
@@ -82,42 +80,3 @@ source("src/R/transformations.R")
 setwd("..")
 source("src/R/graphs.R")
 ```
-
-```
-print(common.offense.barplot)
-```
-Neste gráfico, nós exploramos quais os tipos de comportamento tóxico mais incidentes nas partidas. No eixo X são listados todos os tipos diferentes de denuncias catalogados pelo jogo, e no eixo Y nós mostramos em quantas partidas no dataset o jogador ofensor foi denunciado por cada um dos motivos.
-
-```
-print(reports.by.reason.barplot)
-```
-Este gráfico é bem similar ao anterior, com a diferença de que ao invés de ser o número de partidas em que o jogador ofensor foi denunciado por cada tipo de ofensa, nós contamos o número total de denuncias feitas pelos jogadores. 
-
-Essa comparação tem como objetivo explicitar que, pela análise exploratória,  "Intentionally Feeding" é uma ofensa mais grave que as demais, pois ela tem uma média maior de denúncias por partida. Isso pode nos ajudar a fazer uma avaliação futura do modelo de métrica de toxicidade. Também fica evidente que os demais atributos mantêm a mesma proporção.
-
-
-
-```
-print(time.played.hist)
-```
-Fazendo o histograma da variável "time.played", é fácil ver que há uma anomalia por volta de 1200 e 1300 segundos(~20min). Isso representa que muitas partidas terminam neste período. Supomos que isso ocorra devido a mecânica de rendimento do jogo, aonde a partir de 20 minutos de partida um time pode escolher se render e acabar com a partida. Pode se fazer várias análises futuras de proveito sobre essa anomalia, como por exemplo, se essas partidas tem uma incidência maior de toxicidade nelas.
-
-```
-print(outcome.relation.barplot)
-```
-Nesta comparação entre os campos ‘relation.offender’ e ‘outcome’, nós buscamos saber se existe uma relação entre a presença do ofensor em um time, e a taxa de vitórias do time. Aqui encontramos que um time com um jogador tóxico(ally), perde consideravelmente mais partidas do que um time sem um jogador tóxico. Isso é um indício claro do que hipotetizamos acima, que o jogador tóxico tem uma influência negativa sobre o desempenho de seu time.
-
-[Gráficos ainda a serem plotados. Kazuki plz]
-Gráfico: tempo de jogo em vitórias de enemy
-Gráfico: tempo de jogo em vitórias de ally
-
-Existe uma diferença significativa entre o tempo de jogo de aliados do jogador tóxico e inimigos deste quando estes ganham uma partida. Os aliados(ally) atingem um tempo médio de 2013 segundos, contra 1964 segundos dos inimigos(enemy), de onde nós podemos deduzir que os aliados de um jogador tóxico, mesmo quando ganham uma partida, tem uma dificuldade maior de ganhar, corrobando ainda mais nossa hipótese de que o jogador tóxico influencia negativamente o desempenho do seu time.
-
-
-
-# Conclusão 
-Da nossa análise acima, podemos concluir claramente que o jogador tóxico influencia negativamente no desempenho da equipe. Também podemos concluir que os aliados de um jogador tóxico são suas principais ‘vítimas’, assim fazendo sentido considerá-los como jogadores ‘contaminados’. Atualmente não há nenhuma evidência da influência do jogador tóxico no desempenho do time adversário, então decidimos considerá-los como jogadores ‘limpos’. 
-
-Também a partir da análise dos dados, ficou mais claro o que poderia ser obtido através deles, e que objetivos deveríamos almejar. Também conseguimos confirmar importantes hipóteses iniciais, e adquirimos mais confiança de que nossos objetivos finais são sim, possíveis de se conseguir a partir destes dados
-
-Finalmente, gostariamos de agradecer a (Blackburn et. al. 2014) por ter gentilmente cedido o dataset utilizado neste trabalho.
