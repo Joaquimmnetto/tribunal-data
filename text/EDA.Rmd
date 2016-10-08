@@ -100,7 +100,7 @@ Essa comparação tem como objetivo explicitar que, pela análise exploratória,
 ```
 print(time.played.hist)
 ```
-Fazendo o histograma da variável "time.played", é fácil que há uma anomalia por volta de 1200 e 1300 segundos(~20min). Isso representa que muitas partidas terminam neste período. Supomos que isso ocorra devido a mecânica de rendimento do jogo, aonde a partir de 20 minutos de partida um time pode escolher se render e acabar com a partida. Pode se fazer várias análises futuras de proveito sobre essa anomalia, como por exemplo, se essas partidas tem uma incidência maior de toxicidade nelas.
+Fazendo o histograma da variável "time.played", é fácil ver que há uma anomalia por volta de 1200 e 1300 segundos(~20min). Isso representa que muitas partidas terminam neste período. Supomos que isso ocorra devido a mecânica de rendimento do jogo, aonde a partir de 20 minutos de partida um time pode escolher se render e acabar com a partida. Pode se fazer várias análises futuras de proveito sobre essa anomalia, como por exemplo, se essas partidas tem uma incidência maior de toxicidade nelas.
 
 ```
 print(outcome.relation.barplot)
