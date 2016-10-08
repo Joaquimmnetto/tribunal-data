@@ -26,7 +26,7 @@ outcome.relation.barplot <- ggplot(data = players) +
     geom_bar(aes(x = relation.offender, fill = outcome)) +
     xlab("Associação com ofensor") + ylab("Número de partidas")
 
-print(common.offense.barplot)
-print(reports.by.reason.barplot)
-print(time.played.hist)
-print(outcome.relation.barplot)
+#print(common.offense.barplot)
+#print(reports.by.reason.barplot)
+#print(time.played.hist)
+#print(outcome.relation.barplot)
