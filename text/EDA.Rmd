@@ -13,14 +13,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(gridExtra)
 ```
 
 # Introdução
 
-Juntamente com a popularização das redes sociais na internet, veio a popularização dos jogos online. Nestes jogos, o comportamento abusivo de uma parcela dos jogadores é um problema constante. Dentro da comunidade destes jogos, esse tipo de comportamento é denominado tóxico, e pode destruir completamente o esforço de equipe entre os jogadores, arruinando a partida dos jogadores afetados, o que pode levar a uma gama de problemas, desde jogadores desistiram de consumir estes jogos, até a problemas psicológicos resultantes do bullying, nos casos mais sérios.
+Juntamente com a popularização das redes sociais na internet, veio a popularização dos jogos _online_. Nesses jogos, o comportamento abusivo de uma parcela dos jogadores é um problema constante. Dentro da comunidade desses jogos, esse tipo de comportamento é denominado tóxico, e pode destruir completamente o esforço de equipe entre os jogadores, arruinando a partida dos jogadores afetados, o que pode levar a uma gama de problemas, desde jogadores desistiram de consumir estes jogos até a problemas psicológicos resultantes do _bullying_, nos casos mais sérios.
 
-
-Consideramos um jogador tóxico, um jogador que incorre em comportamento abusivo durante o jogo. Neste trabalho, nós consideramos que jogadores tóxicos contaminam o ambiente ao seu redor, tornando ambiente de jogo pior para todo. Dizemos que ocorre uma contaminação tóxica, quando as ações de um jogador tóxico alteram negativamente o desempenho e/ou o comportamento de outros jogadores com quem ele interage.
+Consideramos um jogador tóxico, um jogador que incorre em comportamento abusivo durante o jogo. Neste trabalho, nós consideramos que jogadores tóxicos contaminam o ambiente ao seu redor, tornando o ambiente de jogo pior para todo. Dizemos que ocorre uma contaminação tóxica, quando as ações de um jogador tóxico alteram negativamente o desempenho ou o comportamento de outros jogadores com quem ele interage.
 
 # Objetivos
 
@@ -42,103 +42,145 @@ A fim de conseguirmos tais objetivos, precisamos primeiramente definir o que car
 
 Nosso trabalho tem como base os dados de partidas do jogo _online_ _League of Legends_ - LoL. O _dataset_ é formado por denúncias de comportamento tóxico (abusivo) por jogadores do jogo. O _dataset_ completo contém 1.46 milhões de casos de denúncias, que podem conter uma ou mais partidas com o jogador denunciado, e no total possui mais de 10 milhões de partidas, tornando-o grande demais para o escopo do nosso trabalho.
 
-Devido a grande extensão dos dados, obtemos uma amostra, com aproximadamente 37 mil partidas. Todas as informações estavam originalmente no formato JSON. Para podermos trabalhar mais facilmente com os dados, escolhemos os atributos que consideramos relevantes ao nosso problema, e os dividimos em dois arquivos CSV: um contendo os dados inerentes à própria partida (`matches.csv`), outro contendo os dados dos jogadores de cada partida (`players.csv`), cujos atributos estão descritos abaixo:
+Devido a grande extensão dos dados, obtemos uma amostra, com aproximadamente 37 mil partidas. Todas as informações estavam originalmente no formato JSON. Para podermos trabalhar mais facilmente com os dados, escolhemos os atributos que consideramos relevantes ao nosso problema, e os dividimos em dois arquivos CSV: o primeiro contém os dados inerentes à própria partida (`matches.csv`), o outro contém os dados dos jogadores de cada partida (`players.csv`), cujos atributos são descritos abaixo:
 
 ## __matches.csv__
 
-* *case* - caso dentro do dataset a partida pertence;
+* *case* - caso dentro do _dataset_ a partida pertence;
 * *match* - numeração da partida dentro do caso;
 * *premade* - se foi uma partida combinada anteriormente com os outros jogadores do time (1), ou se foi uma partida aonde o jogo combinou os jogadores (0);
 * *most.common.offense* - qual foi o tipo de ofensa mais comum do jogador denunciado que foi reportada pelos outros jogadores da partida;
 * *reports.allies* - quantidade de denúncias feitas pelo time aliado do jogador denunciado;
-* *reports.enemies* - quantidade de denúncias feita pelo time inimigo ao jogador denunciado;
-* *reports.case* - quantidade total de denuncias em todas as partidas do caso;
+* *reports.enemies* - quantidade de denúncias feita pelo time adversário ao jogador denunciado;
+* *reports.case* - quantidade total de denúncias em todas as partidas do caso;
 * *time.played* - tempo de jogo decorrido nessa partida.
 
 ## __players.csv__
 
-* *case* - caso dentro do dataset a partida pertence;
+* *case* - caso dentro do _dataset_ a partida pertence;
 * *match* - numeração da partida dentro do caso;
 * *relation.offender* - se este jogador está no mesmo time do denunciado (_ally_), em time diferente (_enemy_) ou se é o próprio denunciado (_offender_);
-* *champion* - com qual personagem do jogo este jogador está jogando.Note que dois jogadores no mesmo time não podem ter o mesmo personagem;
+* *champion* - com qual personagem do jogo este jogador está jogando. Note que dois jogadores no mesmo time não podem ter o mesmo personagem;
 * *kills* - quantidade de vezes que este jogador matou outros jogadores durante a partida;
 * *deaths* - quantidade de vezes que este jogador morreu na partida;
-* *assists* - quantidade de vezes que este jogador proveu algum tipo de assistência para o abate de um jogador inimigo, mas não realizou o abate ele mesmo;
+* *assists* - quantidade de vezes que este jogador proveu algum tipo de assistência para o abate de um jogador adversário, mas não realizou o abate ele mesmo;
 * *gold* - quantidade de ouro acumulada durante a partida. Normalmente é usado para medir o desempenho de um jogador;
-* *outcome* - Se este jogador ganhou a partida (_Win_), se ele a perdeu (_Loss_) ou se ele saiu do jogo antes dele acabar (_Leave_).
+* *outcome* - se este jogador ganhou a partida (_Win_), se ele a perdeu (_Loss_) ou se ele saiu do jogo antes do término (_Leave_).
 
 # Transformação dos dados
 
-Para a nossa análise exploratória, utilizamos a linguagem R. Neste processo de análise exploratória, analisamos e associamos os dados de ambos os datasets construídos(players e matches) de maneiras diferentes, das quais apenas os resultados mais relevantes, e os que contribuem para uma compreensão melhor do dataset foram reportados aqui. Nossos objetivos nessa etapa são: descobrir possíveis padrões que sejam de futuro interesse, e procurar dados que suportem nossas hipóteses.
-
-```{r transformations,echo=FALSE}
+```{r transformations, echo = FALSE}
 setwd("..")
 source("src/R/transformations.R")
 ```
 
+Para a nossa análise exploratória, utilizamos a linguagem R. Neste processo de análise exploratória, analisamos e associamos os dados de ambos os _datasets_ construídos (_players_ e _matches_) de maneiras diferentes, das quais apenas os resultados mais relevantes e os que contribuem para uma compreensão melhor do _dataset_ foram reportados aqui. Nossos objetivos nessa etapa são: descobrir possíveis padrões que sejam de futuro interesse e procurar dados que suportem nossas hipóteses.
+
+Outros _datasets_ são originados a partir desses dois conjuntos a fim de facilitar a análise. Por exemplo, é possível unir os dois _matches_ e _players_ através de uma operação de _left join_ pelo caso (_case_) e pelo número da partida dentro do caso (_match_). O resultado é um _dataset_ mais completo que serve de base para a geração de subconjuntos mais específicos. Abaixo são mostrados as primeiras observações de cada um dos conjuntos originais.
+
+__matches__
+
+```{r echo = FALSE}
+head(matches)
+```
+
+__players__
+
+```{r echo = FALSE}
+head(players)
+```
+
+# Análise exploratória dos dados
 
 Abaixo disponibilizamos o resumo de informações de ambos os arquivos obtidos:
 
-## __matches.csv__
-<!--se tiver como fazer com que cada um dos summaries caibam em uma linha, seria ótimo-->
-```{r echo=FALSE}
-summary(matchs)
+__matches.__
+
+```{r echo = FALSE}
+summary(matches[, c("most.common.offense", "time.played", "premade")])
 ```
 
-## __players.csv__ 
-```{r echo=FALSE}
-summary(players)
-```
-# Gráficos
+__players__ 
 
-```{r graphs,echo=FALSE}
+```{r echo = FALSE}
+summary(players[, c("relation.offender", "kills", "deaths", "assists", "KDA", "gold", "outcome")])
+```
+
+```{r graphs, echo = FALSE}
 setwd("..")
 source("src/R/graphs.R")
 ```
 
-```{r echo=FALSE}
+```{r echo = FALSE}
 print(common.offense.barplot)
 ```
-Neste gráfico, nós exploramos quais os tipos de comportamento tóxico mais incidentes nas partidas. No eixo X são listados todos os tipos diferentes de denuncias catalogados pelo jogo, e no eixo Y nós mostramos em quantas partidas no dataset o jogador ofensor foi denunciado por cada um dos motivos.
 
-```{r echo=FALSE}
+Neste gráfico, nós exploramos quais os tipos de comportamento tóxico mais incidentes nas partidas. No eixo X são listados todos os tipos diferentes de denúncias catalogados pelo jogo, e no eixo Y nós mostramos em quantas partidas no _dataset_ o jogador ofensor foi denunciado por cada um dos motivos.
+
+```{r echo = FALSE}
 print(reports.by.reason.barplot)
 ```
-Este gráfico é bem similar ao anterior, com a diferença de que ao invés de ser o número de partidas em que o jogador ofensor foi denunciado por cada tipo de ofensa, nós contamos o número total de denuncias feitas pelos jogadores. 
 
-Essa comparação tem como objetivo explicitar que, pela análise exploratória,  "Intentionally Feeding" é uma ofensa mais grave que as demais, pois ela tem uma média maior de denúncias por partida. Isso pode nos ajudar a fazer uma avaliação futura do modelo de métrica de toxicidade. Também fica evidente que os demais atributos mantêm a mesma proporção.
+A mesma informação é mostrada de forma textual a seguir. A _string_ vazia indica que algumas partidas não tiveram denúncias.
 
+```{r echo = FALSE}
+table(matches$most.common.offense)
+```
 
+Este gráfico é bem similar ao anterior. A diferença é que ao invés de ser o número de partidas em que o jogador ofensor foi denunciado por cada tipo de ofensa, nós contamos o número total de denúncias feitas pelos jogadores.
 
-```{r echo=FALSE}
+Essa comparação tem como objetivo explicitar que, pela análise exploratória,  "_Offensive Language_" é uma ofensa mais grave que as demais, pois ela tem uma média maior de denúncias por partida. Isso pode nos ajudar a fazer uma avaliação futura do modelo de métrica de toxicidade. Também fica evidente que os demais atributos mantêm a mesma proporção.
+
+```{r echo = FALSE}
 print(time.played.hist)
 ```
-Fazendo o histograma da variável "time.played", é fácil ver que há uma anomalia por volta de 1200 e 1300 segundos(~20min). Isso representa que muitas partidas terminam neste período. Supomos que isso ocorra devido a mecânica de rendimento do jogo, aonde a partir de 20 minutos de partida um time pode escolher se render e acabar com a partida. Pode se fazer várias análises futuras de proveito sobre essa anomalia, como por exemplo, descobrir se essas partidas tem uma incidência maior de toxicidade nelas.
 
-```{r echo=FALSE}
+Fazendo o histograma da variável `time.played`, é fácil ver que há uma anomalia por volta de 1200 e 1300 segundos (~20min). Isso representa que muitas partidas terminam neste período. Supomos que isso ocorra devido a mecânica de rendimento do jogo, onde a partir de 20 minutos de partida um time pode escolher se render e acabar com a partida. Pode-se fazer várias análises futuras de proveito sobre essa anomalia, como por exemplo, descobrir se essas partidas têm uma incidência maior de toxicidade nelas.
+
+```{r echo = FALSE}
 print(outcome.relation.barplot)
 ```
-Nesta comparação entre os campos ‘relation.offender’ e ‘outcome’, nós buscamos saber se existe uma relação entre a presença do ofensor em um time, e a taxa de vitórias do time. Aqui encontramos que um time com um jogador tóxico(ally), perde consideravelmente mais partidas do que um time sem um jogador tóxico. Isso é um indício claro do que hipotetizamos acima, que o jogador tóxico tem uma influência negativa sobre o desempenho de seu time.
 
+Nesta comparação entre a relação com o ofensor (`relation.offender`) e o resultado da partida (`outcome`), nós buscamos saber se existe uma relação entre a presença do ofensor em um time e a taxa de vitórias do time. Aqui encontramos que um time com um jogador tóxico (_ally_), perde consideravelmente mais partidas do que um time sem um jogador tóxico. Isso é um indício claro do que hipotetizamos acima - o jogador tóxico tem uma influência negativa sobre o desempenho de seu time.
 
-Tempo de jogo dos aliados do ofensor
-<!--kazuki, tem como colocar esses dois lado a lado, eu não tou conseguindo D:-->
-```{r echo=FALSE}
-summary(allies.win["time.played"])
+## Influência na duração da partida
+
+Existe uma diferença significativa entre o tempo de jogo de aliados do jogador tóxico e seus adversários quando estes ganham uma partida. Os aliados (_ally_) atingem um tempo médio de 2076 segundos, contra 1938 segundos dos adversários (_enemy_). Com isso podemos deduzir que os aliados de um jogador tóxico, mesmo quando ganham uma partida, têm uma dificuldade maior de ganhar, corraborando nossa hipótese de que o jogador tóxico influencia negativamente o desempenho do seu time. Os histogramas da duração da partida nos dois casos são mostrados abaixo.
+
+```{r echo = FALSE, warning = FALSE, fig.height = 8, fig.width = 8}
+grid.arrange(allies.win.time.played.hist, enemies.win.time.played.hist, nrow = 2)
 ```
 
+Podemos testar se a diferença no tempo da partida quando os aliados vencem e quando os adversários vencem é estatisticamente significativa através de um teste _t_ para duas amostras. Note que não temos motivos para considerar que as variâncias das amostras são iguais.
 
-Tempo de jogo dos inimigos do ofensor
-```{r echo=FALSE}
-summary(enemies.win["time.played"])
+```{r echo = FALSE}
+t.test(allies.win$time.played, enemies.win$time.played)
 ```
-Existe uma diferença significativa entre o tempo de jogo de aliados do jogador tóxico e inimigos deste quando estes ganham uma partida. Os aliados(ally) atingem um tempo médio de 2013 segundos, contra 1964 segundos dos inimigos(enemy), de onde nós podemos deduzir que os aliados de um jogador tóxico, mesmo quando ganham uma partida, tem uma dificuldade maior de ganhar, corrobando ainda mais nossa hipótese de que o jogador tóxico influencia negativamente o desempenho do seu time.
 
+Com um nível de confiança de 5%, rejeitamos a hipótese nula de que as médias são iguais. Assim, podemos concluir que os aliados tendem realmente a demorar mais para a vitória do que os adversários.
 
+## Influência na recompensa
+
+Podemos notar a influência negativa do jogador ofensor no seu time aliado pela menor recompensa que é dada ao seu time em relação ao time adversário. Os jogadores aliados recebem em média 8927 de ouro, enquanto os adversários recebem 10166. Note que consideramos as amostras totais dos aliados e dos adversários independentemente de vitória ou derrota. Abaixo são apresentados os histogramas relativos à recompensa dada aos dois times.
+
+```{r echo = FALSE, warning = FALSE, fig.height = 8, fig.width = 8}
+grid.arrange(allies.gold.hist, enemies.gold.hist, nrow = 2)
+```
+
+Apesar da média dos adversários ser maior do que dos aliados para as amostras consideradas, não podemos afirmar que esse padrão ocorre em geral. Novamente, a fim de avaliar se a diferença nas duas médias de recompensas é estatisticamente significativa, recorreremos ao teste _t_ para a média de duas amostras.
+
+```{r echo = FALSE}
+t.test(allies$gold, enemies$gold)
+```
+
+O teste _t_ mostra que a diferença nas médias é diferente de zero a qualquer nível de confiança prático. Com isso temos mais um motivo para crer que o jogador ofensor exerce uma influência negativa sobre os seus companheiros de time.
 
 # Conclusão 
-Da nossa análise acima, podemos concluir claramente que o jogador tóxico influencia negativamente no desempenho da equipe. Também podemos concluir que os aliados de um jogador tóxico são suas principais ‘vítimas’, assim fazendo sentido considerá-los como jogadores ‘contaminados’. Atualmente não há nenhuma evidência da influência do jogador tóxico no desempenho do time adversário, então decidimos considerá-los como jogadores ‘limpos’. 
 
-Também a partir da análise dos dados, ficou mais claro o que poderia ser obtido através deles, e que objetivos deveríamos almejar. Também conseguimos confirmar importantes hipóteses iniciais, e adquirimos mais confiança de que nossos objetivos finais são sim, possíveis de se conseguir a partir destes dados
+Da análise anterior, podemos concluir que o jogador tóxico influencia negativamente no desempenho da equipe com fortes indícios. Também podemos concluir que os aliados de um jogador tóxico são suas principais ‘vítimas’, assim fazendo sentido considerá-los como jogadores ‘contaminados’. Atualmente, não há fortes evidências da influência do jogador tóxico no desempenho do time adversário, então decidimos considerá-los como jogadores ‘limpos’.
 
-Finalmente, gostariamos de agradecer a (Blackburn et. al. 2014) por ter gentilmente cedido o dataset utilizado neste trabalho.
+Também a partir da análise, ficou mais claro o que poderia ser obtido através dos dados dispostos e quais objetivos podemos almejar. Também conseguimos confirmar importantes hipóteses iniciais e adquirimos mais confiança de que nossos objetivos finais são possíveis de se conseguir a partir das nossas amostras. Finalmente, gostariamos de agradecer a (Blackburn et al. 2014) por ter gentilmente cedido o _dataset_ utilizado neste trabalho.
+
+# Referências
+
+Jeremy Blackburn e Haewoon Kwak, STFU NOOB! Predicting Crowdsourced Decisions on Toxic Behavior in Online Games, __CoRR__, abs/1404.5905, maio de 2014.

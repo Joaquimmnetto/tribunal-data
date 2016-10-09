@@ -1,27 +1,31 @@
 players <- read.csv("data/csv/players.csv", header = FALSE)
-matchs <- read.csv("data/csv/matchs.csv", header = FALSE)
+matches <- read.csv("data/csv/matches.csv", header = FALSE)
 
-names(matchs) <- c("case", "match", "premade", "most.common.offense",
+names(matches) <- c("case", "match", "premade", "most.common.offense",
                    "reports.allies", "reports.enemies", "reports.case", "time.played")
 
 names(players) <- c("case", "match", "relation.offender", "champion", "kills", "deaths",
                     "assists", "gold", "outcome")
 
-matchs.players <- matchs %>% left_join(players, by = c("case", "match"))
-matchs.players <- matchs.players %>% mutate(kda = (kills + assists)/(deaths + 1))
+matches$premade <- factor(matches$premade)
+levels(matches$premade) <- c("No", "Yes")
 
-allies <- matchs.players %>% filter(relation.offender == "ally")
-enemies <- matchs.players %>% filter(relation.offender == "enemy")
-offenders <- matchs.players %>% filter(relation.offender == "offender")
+players <- players %>% mutate(KDA = (kills + assists)/(deaths + 1))
 
-reason.by.team <- unique(matchs.players[, 1:8]) %>%
+matches.players <- matches %>% left_join(players, by = c("case", "match"))
+
+allies <- matches.players %>% filter(relation.offender == "ally")
+enemies <- matches.players %>% filter(relation.offender == "enemy")
+offenders <- matches.players %>% filter(relation.offender == "offender")
+
+reason.by.team <- unique(matches.players[, 1:8]) %>%
     select(most.common.offense, reports.allies, reports.enemies) %>%
     mutate(total.reports = reports.allies + reports.enemies)
 
 reports.by.reason <- aggregate(total.reports ~ most.common.offense, 
                                data = reason.by.team, FUN = sum)
 
-case.match <- unique(matchs.players %>%
+case.match <- unique(matches.players %>%
                          select(case, match, relation.offender, outcome))
 
 allies.win <- allies %>% filter(outcome == "Win")
