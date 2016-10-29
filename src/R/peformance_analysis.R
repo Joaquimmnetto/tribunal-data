@@ -1,3 +1,7 @@
+#matchs was a mistake.
+matches.players <- matchs.players
+rm(matchs.players)
+
 #grouping gold by case and match, and assigning the info to a new frame.
 aggr.perf.sum <- aggregate(gold ~ case+match, data=matches.players,FUN=sum)
 
