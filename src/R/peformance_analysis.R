@@ -31,17 +31,48 @@ matches.players <- matches.players %>% mutate(perc.kda = (kda/match.kda) )
 matches.players <- matches.players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) ) 
 #further proof for the metric on \img folder.
 
-#Reproducing one of the failed metrics here. The assumption is still that the toxicity has a negative influence on peformance(and I think it have) 
-#see /img folder boxplot_perf_outcome_offender.png, win column.
-#its a veeeery small difference, so Kazuki plz use some statistical magic to see if its meaningful or not.
 
-#Anyway, the idea is to compare the players to the average performance of enemy team on its best(the winning matches). 
-#It didnt worked. Make some boxplots and its evident.
-mean.enemy.perf <- mean( (matches.players %>% filter(relation.offender=='enemy') %>% filter(outcome=='Win'))$performance )
-matches.players <- matches.players %>% mutate(toxicity.fail = mean.enemy.perf - performance)
+#Now, after all the failures to make a toxic behavior metric based on player performance,
+#we try to make a metric for toxic behavior for each match, based on report data.
+
+#removing the noise from most.common.ofense
+matchs <- matchs %>% filter(most.common.offense != "")
+reports.by.reason<- reports.by.reason %>% filter(most.common.offense != "")
+
+#Puting the frequency on with each type of report occours on matches
+reports.by.reason <- reports.by.reason %>% mutate( frequency = as.vector(table(matchs$most.common.offense))[2:8] )
+
+#Making the ratio of total.reports/frequency.
+#With this we have the report ratio for each match where that type of toxic behavior occours.
+#We use this to determine which types of toxic behavior are more annoying to the player.
+reports.by.reason <- reports.by.reason %>% mutate(ratio = total.reports/frequency)
+
+#passing the ratio created above to the matchs table, so that we have the ratios for each match.
+for(i in 1:nrow(matchs)) { 
+  matchs[i, "report.gravity"] <- reports.by.reason[matchs[i, "most.common.offense"] == reports.by.reason$most.common.offense, 4]
+}
+rm(i)
+
+#We propose a formula for the toxicity level on each match based on the reports occoured on that match.
+#The formula is based on weights, where we first divide the reports of each team by its number of players, so we get the player/report ratio for the match
+#on the ally team we remove the offensor, because he can't report himself, even if he wanted to, due to game UI limitations.
+
+# Then we give a greater weight to the enemy report due the fact that the enemy isn't usualy affected by the toxic behavior, so, on most cases it have
+#less motivations to make a report. Then a enemy report must mean that the toxic player allies had to go out of their way 
+#to ask the enemy team for reports, or that the toxic behavior was so bad that the enemy team noticed and reported anyway, even if it was beneficial to them.
+
+#finnaly, we recognize that are some kinds of toxic behavior that are more accute than others, and use the report gravity calculated previsiouly as a weight.
+
+enemy.ally.report.ratio <- sum(matchs$reports.allies)/sum(matchs$reports.enemies)
+matchs <- matchs %>% mutate( contamination = report.gravity * ((reports.allies/4) + 2*(reports.enemies/5)) )
+
+
+#then, we normalize it by the highest toxic behavior value possible(highest value of report.gravity, and every player has reported).
+#The value is 6.928208
+
+matchs <- matchs %>% mutate( contamination = contamination/max(contamination) )
 
 #Ideas for the future: Work with a concept of 'match toxicity', using the reports to measure, and then try to split that on each player.
-
 #Ou FODASSE essa história e repensar os objetivos.
 #TODO: arquivo para plotar os gráficos.
 
