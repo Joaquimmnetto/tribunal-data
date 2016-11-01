@@ -15,24 +15,23 @@ from threading import Semaphore
 from threading import Thread
 
 finished = False
-numProducers = 2
+numProducers = 1
 consumers = []
 
 
 prodSem = Semaphore(numProducers)
 
-folder = os.path.dirname(__file__)+'/dataset'
-#tmpDir = tempfile.mkdtemp()
+folder = '../../dataset'
 
 corpus_fl = open('chat_corpus.txt', 'wb')
 
-chat_fl = open('chat.csv', "wb")
+chat_fl = open('../../chat.csv', "wb")
 chat_wr = csv.writer(chat_fl)
 
-players_fl = open('players.csv','wb')
+players_fl = open('../../players.csv','wb')
 players_wr = csv.writer(players_fl)
 
-matches_fl = open('matches.csv','wb')
+matches_fl = open('../../matches.csv','wb')
 matches_wr = csv.writer(matches_fl)
 
 chat_buffer = None
@@ -50,13 +49,13 @@ def corpus_chat(case):
 	return ' '.join(corpus_lst)
 
 
-def put_NA(match_players):
-	for row in match_players:
-		for i,value in enumerate(row):
-			if row[i] is None or str(row[i]).strip() == '':
-				row[i] = 'NA'
-
-	return match_players
+# def put_NA(match_players):
+# 	for row in match_players:
+# 		for i,value in enumerate(row):
+# 			if row[i] is None or str(row[i]).strip() == '':
+# 				row[i] = 'NA'
+#
+# 	return match_players
 
 
 
@@ -81,20 +80,16 @@ def process_csv(case, chat_atrs = None, ply_atrs = None, match_atrs = None):
 	for match_num,match in enumerate(case):
 		if len(chat_atrs) > 0:
 			match_chat = process_chat(match_num, match, chat_atrs)
-
 			if match_chat is None:
 				pass
-			match_chat = put_NA(match_chat)
 			case_chat += match_chat
 
 		if len(ply_atrs) > 0:
 			match_players = process_players(match_num,match,ply_atrs)
-			match_players = put_NA(match_players)
 			case_players += match_players
 
 		if len(match_atrs) > 0:
 			match_info = process_info(match_num,match, match_atrs)
-			match_info = put_NA(match_info)
 			case_matches += match_info
 
 	return case_chat,case_players,case_matches
@@ -134,9 +129,50 @@ def process_players(match_num,match,atrs):
 			else:
 				value = entry[atr]
 			csv_array.append(value)
+
 		match_players.append(csv_array)
 
 	return match_players
+
+# def fix_relation_offender(atrs, players_arrays):
+# 	ally_outcome = None
+# 	enemy_outcome = None
+# 	offender_count = 0
+#
+# 	for entry in players_arrays:
+# 		relation_offender = entry[atrs.index("association_to_offender")+2].strip().lower()
+# 		outcome = entry[atrs.index("outcome")+2]
+#
+# 		if relation_offender == 'ally':
+# 			ally_outcome = outcome
+# 		elif relation_offender =='enemy':
+# 			enemy_outcome = outcome
+# 		elif relation_offender == 'offender':
+# 			offender_count+=1
+#
+# 	for entry in players_arrays:
+# 		relation_offender = entry[atrs.index("association_to_offender")+2].strip().lower()
+# 		outcome = entry[atrs.index("outcome")+2]
+#
+# 		if not relation_offender:
+# 			if (not ally_outcome is None) and outcome==ally_outcome:
+# 				if offender_count == 0:
+# 					relation_offender = 'offender'
+# 				else:
+# 					relation_offender = 'ally'
+# 			elif (not enemy_outcome is None) and outcome==enemy_outcome:
+# 				relation_offender = 'enemy'
+#
+# 			entry[atrs.index("association_to_offender")] = relation_offender
+# 			return len(relation_offender) > 0
+#
+#
+# 	return True
+
+
+
+
+
 
 
 def process_info(match_num, match, atrs):

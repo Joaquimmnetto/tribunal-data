@@ -1,6 +1,6 @@
 #matchs was a mistake.
-matches.players <- matchs.players
-rm(matchs.players)
+#matches.players <- matchs.players
+#rm(matchs.players)
 
 #grouping gold by case and match, and assigning the info to a new frame.
 aggr.perf.sum <- aggregate(gold ~ case+match, data=matches.players,FUN=sum)
@@ -36,7 +36,7 @@ matches.players <- matches.players %>% mutate( performance = sqrt(perc.gold^2+pe
 #we try to make a metric for toxic behavior for each match, based on report data.
 
 #removing the noise from most.common.ofense
-matchs <- matchs %>% filter(most.common.offense != "")
+#matchs <- matchs %>% filter(most.common.offense != "")
 reports.by.reason<- reports.by.reason %>% filter(most.common.offense != "")
 
 #Puting the frequency on with each type of report occours on matches

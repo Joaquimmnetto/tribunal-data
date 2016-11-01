@@ -1,3 +1,18 @@
+library(ggplot2)
+
+case.match <- unique(matches.players %>%
+                       select(case, match, relation.offender, outcome))
+
+allies <- matches.players %>% filter(relation.offender == "ally")
+enemies <- matches.players %>% filter(relation.offender == "enemy")
+offenders <- matches.players %>% filter(relation.offender == "offender")
+
+allies.win <- allies %>% filter(outcome == "Win")
+enemies.win <- enemies %>% filter(outcome == "Win")
+offenders.win <- offenders %>% filter(outcome == "Win")
+
+
+
 common.offense.barplot <- ggplot(data = matches, aes(x = most.common.offense)) +
     geom_bar() +
     xlab("Tipos de ofensas") + ylab("Número de partidas") +
@@ -65,3 +80,46 @@ enemies.gold.hist <- ggplot(data = enemies) +
                          ggtitle("Recompensa dos adversários") +
                          annotate("text", x = 13700, y = 3780, color = "red",
                                   label = "Média = 10166 (ouro)")
+rm(allies.win)
+rm(enemies.win)
+rm(offenders.win)
+
+rm(allies)
+rm(enemies)
+rm(offenders)
+
+rm(case.match)
+
+mtpl.view <- matches.players
+mtpl.view <- mtpl.view[mtpl.view$relation.offender!="",]
+
+#--------------Métrica de desempenho--------------------
+
+#boxplot de performance X outcome. Mostra que a métrica cobre bem os jogadores vencedores.
+perf.outcome.box <- ggplot(data=mtpl.view,aes(x=outcome,y=performance)) + geom_boxplot()
+#boxplot de performance x relattion.offender. Mostra que o time aliado tem um desempenho levemente pior do que o inimigo.
+perf.offender.box <- ggplot(data = mtpl.view,aes(x=relation.offender,y=performance)) + geom_boxplot()
+#boxplot de performance x relation x outcome. Reforça a métrica, e mostra que a diferença de performance 
+#entre times vencedores de diferentes realation.offender é minima.
+perf.offender.outcome.box <- ggplot(data=mtpl.view,aes(x=relation.offender,y=performance)) + geom_boxplot()
+
+
+mtpl.view <- mtpl.view[mtpl.view$most.common.offense!="",]
+#mtpl.view <- mtpl.view %>% mutate(most.common.offense != "")
+
+#--------------Métrica de toxicidade por partida--------------------
+
+#nuvem de pontos bonita, boa pra mostrar a distribuição visualmente
+perf.mtox.outcome.points <- ggplot(data = mtpl.view, aes(x=match.contamination,y=performance,color= outcome)) + geom_point()
+
+#Distribuição da contaminação. Não é bonitinha mas é tecnica.
+mtox.hist <- ggplot(data=mtpl.view,aes(x=match.contamination)) +geom_histogram(bins=10)
+
+#Mostra como o desempenho no geral cai com a contaminação
+perf.mtox.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance),method=lm)
+
+#Mostra como ally e offender caem com a contaminação, enquando o enemy sobe
+perf.mtox.offender.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance,color=relation.offender),method=lm)
+
+
+rm(mtpl.view)
