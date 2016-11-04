@@ -105,7 +105,7 @@ perf.offender.outcome.box <- ggplot(data=mtpl.view,aes(x=relation.offender,y=per
 
 
 mtpl.view <- mtpl.view[mtpl.view$most.common.offense!="",]
-#mtpl.view <- mtpl.view %>% mutate(most.common.offense != "")
+#mtpl.view <- mtpl.view %>% mutate(most.common.offense != "") s
 
 #--------------Métrica de toxicidade por partida--------------------
 
