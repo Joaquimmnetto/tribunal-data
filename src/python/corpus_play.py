@@ -18,8 +18,6 @@ fdist = nltk.FreqDist(corpus)
 print '\n'.join([str((word,count)) for word,count in fdist.most_common() if word not in stopwords][:500])
 
 
-
-
 english_vocab = set(w.lower() for w in nltk.corpus.words.words())
 
 corpus_vocab = set(corpus) - set(stopwords)
