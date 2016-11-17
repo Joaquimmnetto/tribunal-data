@@ -18,20 +18,23 @@ finished = False
 numProducers = 1
 consumers = []
 
+import sys
+tardir = sys.argv[1]
 
 prodSem = Semaphore(numProducers)
 
-folder = '../../dataset'
+#folder = '../../dataset'
+folder = tardir
 
-corpus_fl = open('chat_corpus.txt', 'wb')
+corpus_fl = open('../../chat_corpus.txt', 'ab')
 
-chat_fl = open('../../chat.csv', "wb")
+chat_fl = open('../../chat.csv', "ab")
 chat_wr = csv.writer(chat_fl)
 
-players_fl = open('../../players.csv','wb')
+players_fl = open('../../players.csv','ab')
 players_wr = csv.writer(players_fl)
 
-matches_fl = open('../../matches.csv','wb')
+matches_fl = open('../../matches.csv','ab')
 matches_wr = csv.writer(matches_fl)
 
 chat_buffer = None
@@ -225,17 +228,17 @@ def process_tar(tarName, tmp_dir):
 			jsonsFile = open(tmp_dir + '/' + jsonsname, 'rb')
 			jsons = process_jsons(jsonsFile)
 
-			chat_data,players_data,match_data = process_csv(jsons,
-										    chat_atrs=["association_to_offender", "champion_name", "message"],
-										    ply_atrs=['association_to_offender','champion_name','kills','deaths','assists','gold_earned','outcome'],
-			                                match_atrs=['premade','most_common_report_reason','allied_report_count',
-			                                            'enemy_report_count','case_total_reports','time_played'])
+			#chat_data,players_data,match_data = process_csv(jsons,
+			#							    chat_atrs=["association_to_offender", "champion_name", "message"],
+			#							    ply_atrs=['association_to_offender','champion_name','kills','deaths','assists','gold_earned','outcome'],
+			#                               match_atrs=['premade','most_common_report_reason','allied_report_count',
+			#                                            'enemy_report_count','case_total_reports','time_played'])
 			corpus_data = corpus_chat(jsons)
 
-			feed_consumer(chat_buffer,chat_data)
+			#feed_consumer(chat_buffer,chat_data)
 			feed_consumer(corpus_buffer,corpus_data)
-			feed_consumer(players_buffer,players_data)
-			feed_consumer(matches_buffer,match_data)
+			#feed_consumer(players_buffer,players_data)
+			#feed_consumer(matches_buffer,match_data)
 
 			jsonsFile.close()
 
@@ -298,14 +301,17 @@ def create_text_consumer(txt_file,txt_buffer):
 
 
 #---------------------Main-----------------
-chat_buffer = Queue()
-create_csv_consumer(chat_wr, chat_buffer)
-players_buffer = Queue()
-create_csv_consumer(players_wr,players_buffer)
-matches_buffer = Queue()
-create_csv_consumer(matches_wr,matches_buffer)
-#corpus_buffer = Queue()
-#create_text_consumer(corpus_fl, corpus_buffer)
+#chat_buffer = Queue()
+#create_csv_consumer(chat_wr, chat_buffer)
+#players_buffer = Queue()
+#create_csv_consumer(players_wr,players_buffer)
+#matches_buffer = Queue()
+#create_csv_consumer(matches_wr,matches_buffer)
+corpus_buffer = Queue()
+create_text_consumer(corpus_fl, corpus_buffer)
+
+
+
 
 dirs = []
 for tarName in os.listdir(folder):
