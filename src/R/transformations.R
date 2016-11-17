@@ -1,5 +1,5 @@
 library(dplyr)
-
+#knitr::opts_chunk$set(dev = 'png')
 players <- read.csv("data/csv/players.csv", header = FALSE)
 matches <- read.csv("data/csv/matches.csv", header = FALSE)
 
@@ -55,10 +55,14 @@ rm(aggr.perf.sum)
 matches.players <- matches.players %>% mutate(perc.gold = (gold/match.gold) )
 matches.players <- matches.players %>% mutate(perc.kda = (kda/match.kda) )
 
+matches.players <- matches.players %>% mutate(perc.mean.gold = (gold/mean(matches.players$match.gold)) )
+matches.players <- matches.players %>% mutate(perc.mean.kda = (kda/mean(matches.players$match.kda)) )
+
 #finnaly, performance metric. Its the euclidean distance from origin to (perc.gold,perc.kda).
 #normalized by sqrt(2) because its the highest performance achievable(player amassed 100%(1) kda and 100%(1) gold)
 #hence, its the (1,1) point and its performance its sqrt(2).
-matches.players <- matches.players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) ) 
+matches.players <- matches.players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) )
+matches.players <- matches.players %>% mutate( performance.mean = sqrt(perc.gold^2+perc.kda^2)) 
 #further proof for the metric on \img folder.
 
 
@@ -116,3 +120,11 @@ rm(matches.tox)
 #Ideas for the future: Work with a concept of 'match toxicity', using the reports to measure, and then try to split that on each player.
 #Ou FODASSE essa história e repensar os objetivos.
 #TODO: arquivo para plotar os gráficos.
+
+########################################################################
+
+#Retirar tipos de ofensas que auxiliam diretamente o inimigo, e ver os resultados
+#Jantar!
+#mtpl.2 <- matches.players %>% filter(most.common.offense != 'Assisting Enemy Team') %>% filter(most.common.offense != "Intentionally Feeding")
+
+

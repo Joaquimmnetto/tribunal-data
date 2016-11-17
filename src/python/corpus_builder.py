@@ -301,16 +301,15 @@ def create_text_consumer(txt_file,txt_buffer):
 
 
 #---------------------Main-----------------
-#chat_buffer = Queue()
-#create_csv_consumer(chat_wr, chat_buffer)
-#players_buffer = Queue()
-#create_csv_consumer(players_wr,players_buffer)
-#matches_buffer = Queue()
-#create_csv_consumer(matches_wr,matches_buffer)
+
+chat_buffer = Queue()
+create_csv_consumer(chat_wr, chat_buffer)
+players_buffer = Queue()
+create_csv_consumer(players_wr,players_buffer)
+matches_buffer = Queue()
+create_csv_consumer(matches_wr,matches_buffer)
 corpus_buffer = Queue()
 create_text_consumer(corpus_fl, corpus_buffer)
-
-
 
 
 dirs = []
