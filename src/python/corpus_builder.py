@@ -7,6 +7,7 @@ import thread
 import random
 import string
 import traceback
+import datetime
 
 
 
@@ -19,6 +20,7 @@ numProducers = 1
 consumers = []
 
 import sys
+print sys.argv
 tardir = sys.argv[1]
 
 prodSem = Semaphore(numProducers)
@@ -26,7 +28,7 @@ prodSem = Semaphore(numProducers)
 #folder = '../../dataset'
 folder = tardir
 
-corpus_fl = open('../../chat_corpus.txt', 'ab')
+corpus_fl = open(sys.argv[2], 'ab')
 
 chat_fl = open('../../chat.csv', "ab")
 chat_wr = csv.writer(chat_fl)
@@ -42,12 +44,33 @@ players_buffer = None
 matches_buffer = None
 corpus_buffer = None
 
+TIME_WINDOW = 5
 
 def corpus_chat(case):
 	corpus_lst = list()
+	players_buffer = {}
+	players_t0 = {}
 	for match_num,match in enumerate(case):
 		for entry in match['chat_log']:
-			corpus_lst.append(entry['message'].encode('utf-8'))
+			player = (entry['association_to_offender'],entry['champion_name'])
+			timestamp = datetime.strptime(entry['time'],"%H:%M:%S").total_seconds()
+
+			if not player in players_t0.keys():
+				players_t0[player] = timestamp
+
+			if timestamp - players_t0[player] > TIME_WINDOW:
+				corpus_lst.append(players_buffer[player].encode("utf-8"))
+				players_buffer[player] = ""
+				players_t0[player] = timestamp
+
+			if not player in players_buffer.keys():
+				players_buffer[player] = ""
+
+			players_buffer[player] += entry['message'] + " "
+
+
+
+
 
 	return ' '.join(corpus_lst)
 
@@ -228,17 +251,17 @@ def process_tar(tarName, tmp_dir):
 			jsonsFile = open(tmp_dir + '/' + jsonsname, 'rb')
 			jsons = process_jsons(jsonsFile)
 
-			#chat_data,players_data,match_data = process_csv(jsons,
-			#							    chat_atrs=["association_to_offender", "champion_name", "message"],
-			#							    ply_atrs=['association_to_offender','champion_name','kills','deaths','assists','gold_earned','outcome'],
-			#                               match_atrs=['premade','most_common_report_reason','allied_report_count',
-			#                                            'enemy_report_count','case_total_reports','time_played'])
+			chat_data,players_data,match_data = process_csv(jsons,
+										    chat_atrs=["association_to_offender", "champion_name", "message"],
+										    ply_atrs=['association_to_offender','champion_name','kills','deaths','assists','gold_earned','outcome'],
+			                               match_atrs=['premade','most_common_report_reason','allied_report_count',
+			                                            'enemy_report_count','case_total_reports','time_played'])
 			corpus_data = corpus_chat(jsons)
 
-			#feed_consumer(chat_buffer,chat_data)
+			feed_consumer(chat_buffer,chat_data)
 			feed_consumer(corpus_buffer,corpus_data)
-			#feed_consumer(players_buffer,players_data)
-			#feed_consumer(matches_buffer,match_data)
+			feed_consumer(players_buffer,players_data)
+			feed_consumer(matches_buffer,match_data)
 
 			jsonsFile.close()
 
