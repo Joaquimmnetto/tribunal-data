@@ -2,12 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1506e283-d04f-4568-8f15-94b36b5b7167" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/shell/pp.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/python/chat_corpus.txt" afterPath="$PROJECT_DIR$/src/python/build_w2v.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/python/preprocessing.py" afterPath="$PROJECT_DIR$/src/python/corpus_builder.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/consumer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/matches_producer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/process_chat.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/process_match.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/process_players.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/processor.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/stuff/agrupar_usr.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/stuff/build_w2v.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/stuff/corpus_play.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/TribunalDB.iml" afterPath="$PROJECT_DIR$/.idea/TribunalDB.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/R/graphs.R" afterPath="$PROJECT_DIR$/src/R/graphs.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/R/peformance_analysis.R" afterPath="$PROJECT_DIR$/src/R/peformance_analysis.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/R/transformations.R" afterPath="$PROJECT_DIR$/src/R/transformations.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/corpus_builder.py" afterPath="$PROJECT_DIR$/src/python/corpus_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shell/build_vocab.sh" afterPath="$PROJECT_DIR$/src/shell/build_vocab.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shell/pp.sh" afterPath="$PROJECT_DIR$/src/shell/pp.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/text/EDA.Rmd" afterPath="$PROJECT_DIR$/text/EDA.Rmd" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/text/ideia.txt" afterPath="$PROJECT_DIR$/text/ideia.txt" />
     </list>
     <ignored path="TribunalDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,21 +43,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="agrupar_usr.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/python/agrupar_usr.py">
+      <file leaf-file-name="process_chat.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/process_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1377">
+              <caret line="82" column="29" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="29" />
+              <folding>
+                <element signature="e#16#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="process_match.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/process_match.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="corpus_play.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/python/corpus_play.py">
+      <file leaf-file-name="process_players.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/process_players.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -50,23 +78,56 @@
       <file leaf-file-name="corpus_builder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/python/corpus_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+            <state relative-caret-position="511">
+              <caret line="135" column="26" selection-start-line="135" selection-start-column="26" selection-end-line="135" selection-end-column="26" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#16#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build_w2v.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/python/build_w2v.py">
+      <file leaf-file-name="consumer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/consumer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="459">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
-                <element signature="e#0#40#0" expanded="true" />
+                <element signature="e#16#39#0" expanded="true" />
+                <marker date="1479573132876" expanded="true" signature="16:21" ph="import ..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gzip.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../Python35/Lib/gzip.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7905">
+              <caret line="469" column="0" selection-start-line="469" selection-start-column="0" selection-end-line="469" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="matches_producer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/matches_producer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1071">
+              <caret line="73" column="41" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
+              <folding>
+                <element signature="e#16#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="processor.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/python/processor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,22 +153,41 @@
         <option value="$PROJECT_DIR$/matchs.csv" />
         <option value="$PROJECT_DIR$/chat_corpus.txt" />
         <option value="$PROJECT_DIR$/corpus_play.py" />
-        <option value="$PROJECT_DIR$/players.csv" />
         <option value="$PROJECT_DIR$/win_loss.py" />
         <option value="$PROJECT_DIR$/sort.sh" />
         <option value="$PROJECT_DIR$/agrupar_usr.py" />
         <option value="$PROJECT_DIR$/preprocessing.py" />
         <option value="$PROJECT_DIR$/src/shell/mass_preprocess.sh" />
         <option value="$PROJECT_DIR$/src/python/preprocessing.py" />
-        <option value="$PROJECT_DIR$/src/shell/pp.sh" />
         <option value="$PROJECT_DIR$/src/python/build_w2v.py" />
+        <option value="$PROJECT_DIR$/src/python/process_corpus.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/producer.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/process_tar.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/read_tar.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/consumer.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/match_producer.py" />
+        <option value="$PROJECT_DIR$/src/shell/pp.sh" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/corpus_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/process_chat.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/process_match.py" />
+        <option value="$PROJECT_DIR$/src/python/json_pp/process_players.py" />
+        <option value="$PROJECT_DIR$/src/python/pp.sh" />
+        <option value="$PROJECT_DIR$/players.csv" />
+        <option value="$PROJECT_DIR$/src/python/process_chat.py" />
+        <option value="$PROJECT_DIR$/src/python/matches_producer.py" />
+        <option value="$PROJECT_DIR$/src/python/processor.py" />
+        <option value="$PROJECT_DIR$/src/python/process_match.py" />
+        <option value="$PROJECT_DIR$/src/python/process_players.py" />
+        <option value="$PROJECT_DIR$/src/python/consumer.py" />
+        <option value="$PROJECT_DIR$/src/python/corpus_builder.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="27" />
-    <option name="width" value="1920" />
-    <option name="height" value="1053" />
+    <option name="x" value="86" />
+    <option name="y" value="-8" />
+    <option name="width" value="1842" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -134,8 +214,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -167,10 +247,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -200,7 +276,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="dataset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sampley_de_guitarra" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -215,62 +295,18 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python" />
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\stuff" />
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\shell" />
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\json_pp" />
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\dataset\sample" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Dev\Python-Workspace\TribunalDB\datasets" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.build_w2v">
-    <configuration default="false" name="preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/preprocessing.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="agrupar_usr" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agrupar_usr.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="corpus_play" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/corpus_play.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.corpus_builder">
     <configuration default="false" name="build_w2v" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -283,7 +319,83 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/build_w2v.py" />
+      <option name="SCRIPT_NAME" value="C:\Dev\Python-Workspace\tribunaldb\src\python\stuff\build_w2v.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Nosetests in tribunaldb" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="corpus_builder" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/corpus_builder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Nosetests in tribunaldb (1)" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="process_chat" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/process_chat.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -433,18 +545,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Python.preprocessing" />
-      <item index="1" class="java.lang.String" itemvalue="Python.agrupar_usr" />
-      <item index="2" class="java.lang.String" itemvalue="Python.corpus_play" />
-      <item index="3" class="java.lang.String" itemvalue="Python.build_w2v" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.build_w2v" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests in tribunaldb" />
+      <item index="2" class="java.lang.String" itemvalue="Python.corpus_builder" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests in tribunaldb (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.process_chat" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.build_w2v" />
-        <item index="1" class="java.lang.String" itemvalue="Python.preprocessing" />
-        <item index="2" class="java.lang.String" itemvalue="Python.agrupar_usr" />
-        <item index="3" class="java.lang.String" itemvalue="Python.corpus_play" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.corpus_builder" />
+        <item index="1" class="java.lang.String" itemvalue="Python.process_chat" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests in tribunaldb (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests in tribunaldb" />
+        <item index="4" class="java.lang.String" itemvalue="Python.build_w2v" />
       </list>
     </recent_temporary>
   </component>
@@ -464,23 +578,40 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Nosetests_in_tribunaldb - 2016.11.19 at 00h 08m 54s.xml">
+      <configuration name="Nosetests in tribunaldb" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_tribunaldb_(1) - 2016.11.19 at 01h 27m 47s.xml">
+      <configuration name="Nosetests in tribunaldb (1)" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="false" />
+    <frame x="86" y="-8" width="1842" height="1096" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15031646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15354767" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33125648" sideWeight="0.50332594" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.4978094" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32502595" sideWeight="0.4978094" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32601535" sideWeight="0.49667406" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30737278" sideWeight="0.49667406" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -526,49 +657,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
-      <option name="time" value="45" />
+      <option name="time" value="83" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/tools/python2/Lib/threading.py" />
-    <entry file="file://$PROJECT_DIR$/preprocessing.py" />
-    <entry file="file://C:/tools/python2/Lib/threading.py" />
-    <entry file="file://$PROJECT_DIR$/preprocessing.py" />
-    <entry file="file://C:/tools/python2/Lib/threading.py" />
-    <entry file="file://$PROJECT_DIR$/preprocessing.py" />
-    <entry file="file://$PROJECT_DIR$/results_corpus.txt" />
-    <entry file="file://$PROJECT_DIR$/10001-11000.jsons.csv" />
-    <entry file="file://$PROJECT_DIR$/srt_corpus.trigrams" />
-    <entry file="file://$PROJECT_DIR$/srt_corpus.bigrams" />
-    <entry file="file://$PROJECT_DIR$/srt_corpus.unigrams" />
-    <entry file="file://$PROJECT_DIR$/results.csv" />
-    <entry file="file://$PROJECT_DIR$/results_corpus.txt" />
-    <entry file="file://$PROJECT_DIR$/corpus.nextwords" />
-    <entry file="file://$PROJECT_DIR$/corpus.words" />
-    <entry file="file://$PROJECT_DIR$/corpus.trigrams" />
-    <entry file="file://$PROJECT_DIR$/corpus.nextnextwords" />
-    <entry file="file://$PROJECT_DIR$/lower_corpus.txt" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="939" column="0" selection-start-line="939" selection-start-column="0" selection-end-line="939" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/tools/python2/Lib/site-packages/nltk/tokenize/regexp.py" />
-    <entry file="file://$PROJECT_DIR$/preprocess_game.py" />
-    <entry file="file://$PROJECT_DIR$/agr_in.csv" />
-    <entry file="file://C:/tools/python2/Lib/shutil.py" />
-    <entry file="file://C:/tools/python2/Lib/threading.py" />
-    <entry file="file://C:/tools/python2/Lib/tarfile.py" />
     <entry file="file://$PROJECT_DIR$/play_res.txt" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_monkey.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -581,36 +674,21 @@
     <entry file="file://$USER_HOME$/anaconda2/lib/python2.7/genericpath.py" />
     <entry file="file://$USER_HOME$/anaconda2/lib/python2.7/json/__init__.py" />
     <entry file="file://$USER_HOME$/anaconda2/lib/python2.7/json/decoder.py" />
-    <entry file="file://$PROJECT_DIR$/chat_corpus.txt" />
     <entry file="file://$PROJECT_DIR$/corpus_play.py" />
     <entry file="file://C:/tools/python2/Lib/Queue.py" />
     <entry file="file://$PROJECT_DIR$/matchs.csv" />
     <entry file="file://C:/tools/python2/Lib/subprocess.py" />
     <entry file="file://$PROJECT_DIR$/win_loss.py" />
     <entry file="file://$PROJECT_DIR$/sort.sh" />
-    <entry file="file://$PROJECT_DIR$/chat.csv" />
     <entry file="file://$PROJECT_DIR$/agr_out.csv" />
     <entry file="file://$PROJECT_DIR$/preprocessing.py" />
-    <entry file="file://$PROJECT_DIR$/players.csv" />
-    <entry file="file://$PROJECT_DIR$/matches.csv" />
     <entry file="file://$PROJECT_DIR$/agrupar_usr.py" />
-    <entry file="file://$PROJECT_DIR$/src/python/agrupar_usr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus_play.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shell/mass_preprocess.sh" />
+    <entry file="file://$PROJECT_DIR$/src/python/stuff/build_w2v.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/process_corpus.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/stuff/corpus_play.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/stuff/agrupar_usr.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/json_pp/producer.py" />
     <entry file="file://$PROJECT_DIR$/src/shell/sort.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -618,30 +696,133 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/json_pp/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/tools/python2/Lib/traceback.py" />
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_monkey_qt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/tools/python2/Lib/locale.py" />
+    <entry file="file://C:/tools/python2/Lib/re.py" />
+    <entry file="file://C:/tools/python2/Lib/sre_parse.py" />
+    <entry file="file://C:/tools/python2/Lib/tarfile.py" />
+    <entry file="file://C:/tools/python2/Lib/encodings/__init__.py" />
+    <entry file="file://C:/tools/python2/Lib/_strptime.py" />
+    <entry file="file://C:/tools/python2/Lib/codecs.py" />
+    <entry file="file://C:/tools/python2/Lib/encodings/utf_8.py" />
     <entry file="file://$PROJECT_DIR$/src/shell/pp.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-501284283/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="3977" column="13" selection-start-line="3977" selection-start-column="8" selection-end-line="3977" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-501284283/datetime.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="213" column="8" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/tools/python2/Lib/threading.py" />
+    <entry file="file://$PROJECT_DIR$/chat_corpus.txt" />
+    <entry file="file://$PROJECT_DIR$/matches.csv" />
+    <entry file="file://$PROJECT_DIR$/players.csv" />
+    <entry file="file://$PROJECT_DIR$/chat.csv" />
+    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/encodings/cp1252.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/gzip.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7905">
+          <caret line="469" column="0" selection-start-line="469" selection-start-column="0" selection-end-line="469" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/process_players.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/consumer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#16#39#0" expanded="true" />
+            <marker date="1479573132876" expanded="true" signature="16:21" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/process_match.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/process_chat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="82" column="29" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="29" />
+          <folding>
+            <element signature="e#16#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/matches_producer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="73" column="41" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
+          <folding>
+            <element signature="e#16#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/python/corpus_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+        <state relative-caret-position="511">
+          <caret line="135" column="26" selection-start-line="135" selection-start-column="26" selection-end-line="135" selection-end-column="26" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#16#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/build_w2v.py">
+    <entry file="file://$PROJECT_DIR$/src/python/processor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="425">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
