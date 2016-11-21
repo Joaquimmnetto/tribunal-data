@@ -1,14 +1,17 @@
 # encoding=utf8
-from src.python.processor import Processor
+from .processor import Processor
 
 class MatchProcessor(Processor):
 
-	def __init__(self, atrs, consumer):
-		Processor.__init__(self, atrs, consumer)
+	def __init__(self, atrs, consumer, filters=None):
+		Processor.__init__(self, atrs, consumer, filters)
 
 	def process(self,match_num, match):
+
+		if not self.apply_filter(match):
+			return False
+
 		case_id = match['case_id']
-		match_players = []
 		csv_array = list()
 		csv_array.append(case_id)
 		csv_array.append(match_num)
@@ -22,5 +25,3 @@ class MatchProcessor(Processor):
 			csv_array.append(value)
 
 		self.consumer.feed(csv_array)
-
-		return match_players

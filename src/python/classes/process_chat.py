@@ -1,14 +1,17 @@
 #encoding=utf8
 
 from datetime import datetime as dt
-from src.python.processor import Processor
+
+from .processor import Processor
 
 
 class ChatProcessor(Processor):
 
 	def __init__(self, atrs, csv_consumer, corpus_consumer, **kwargs):
-		Processor.__init__(self, atrs, csv_consumer)
+		Processor.__init__(self, atrs, csv_consumer,[])
 		self.corpus_consumer = corpus_consumer
+
+		self.filters = kwargs['filters'] if 'filter' in kwargs else list()
 		self.csv = kwargs['csv'] if 'csv' in kwargs else True
 		self.corpus = kwargs['corpus'] if 'corpus' in kwargs else False
 
@@ -58,12 +61,13 @@ class ChatProcessor(Processor):
 		if 'time' in self.atrs and 'message' in self.atrs:
 			chat = self.create_time_context(match, 5)
 
-
-
-
 		for entry in chat:
+
+			if not self.apply_filter(entry):
+				continue
+
 			if csv:
-				csv_array = []
+				csv_array = list()
 				csv_array.append(case_id)
 				csv_array.append(match_num)
 			if corpus:
@@ -73,7 +77,6 @@ class ChatProcessor(Processor):
 					if not any(entry[attr]):
 						print("empty")
 						csv_array.append("") if csv else None
-
 					else:
 						corpus_lst.append(entry[attr]) if corpus else None
 						csv_array.append(entry[attr]) if csv else None
@@ -82,5 +85,4 @@ class ChatProcessor(Processor):
 
 			self.consumer.feed(csv_array) if csv else None
 
-			self.corpus_consumer.feed(' '.join(corpus_lst)) if corpus else None
-
+			self.corpus_consumer.feed(' '.join(corpus_lst) + '\n') if corpus else None

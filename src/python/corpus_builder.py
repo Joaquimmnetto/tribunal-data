@@ -1,41 +1,32 @@
 # encoding=utf8
-import codecs
-#import unicodecsv as csv
-import csv
-import os
-import traceback
 
+import os
+import sys
+import codecs
+import csv
+import asyncio
+
+import traceback
 from threading import Semaphore
 
-import sys
+from classes.consumer import Consumer
+from classes.matches_producer import ProducersManager
+from classes.matches_producer import TarReader
+from classes.process_chat import ChatProcessor
+from classes.process_players import PlayerProcessor
 
-from src.python.matches_producer import TarReader
-from src.python.matches_producer import ProducersManager
-
-from src.python.consumer import Consumer
-from src.python.process_chat import ChatProcessor
-from src.python.process_players import PlayerProcessor
-from src.python.process_match import MatchProcessor
+from classes.process_match import MatchProcessor
 
 print(("Arguments:" + str(sys.argv)))
 
-# tars_dir = sys.argv[1]
-# dest_dir = sys.argv[2]
-# num_producers = int(sys.argv[3])
+tars_dir = "../../sampley_de_guitarra" if len(sys.argv) < 2 else sys.argv[1]
+dest_dir = "../.." if len(sys.argv) < 3 else sys.argv[2]
+num_producers = 3 if len(sys.argv) < 4 else int(sys.argv[3])
 
-tars_dir = "../../dataset/sampley_de_guitarra"
-dest_dir = "../.."
-num_producers = 3
-
-process_chat_csv = True
-process_chat_corpus = True
-process_players = True
-process_matches = True
-
-
-
-
-
+chat_csv_name = 'chat.csv' if len(sys.argv) < 5 else str(sys.argv[4])
+chat_corpus_name = 'chat_corpus.txt' if len(sys.argv) < 6  else str(sys.argv[5])
+players_name = 'players.csv' if len(sys.argv) < 7  else str(sys.argv[6])
+matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 # chat_atrs = ['date', 'time', 'sent_to', 'champion_name', 'message', 'association_to_offender', 'name_change'],
 # ply_atrs = ['level', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome', 'time_played',
@@ -43,16 +34,19 @@ process_matches = True
 # match_atrs = ['game_mode', 'game_type', 'premade', 'most_common_report_reason', 'allied_report_count',
 #               'enemy_report_count', 'case_total_reports', 'time_played']
 
-chat_atrs=["association_to_offender", "champion_name", "time", "message"]
-player_atrs=['association_to_offender','champion_name','kills','deaths','assists','gold_earned','outcome']
-match_atrs=['premade','most_common_report_reason','allied_report_count','enemy_report_count','case_total_reports','time_played']
+chat_atrs = ["association_to_offender", "champion_name", "time", "message"]
+player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']
+match_atrs = ['premade', 'most_common_report_reason', 'allied_report_count', 'enemy_report_count', 'case_total_reports',
+              'time_played']
 
-def text_consuming(writer,buffer):
+
+def text_consuming(writer, buffer):
 	value = buffer.get()
 	writer.write(value)
 	del value
 
-def csv_consuming(writer,buffer):
+
+def csv_consuming(writer, buffer):
 	value = buffer.get()
 	writer.writerow(value)
 	del value[:]
@@ -63,55 +57,55 @@ def set_chat_processing(consumers, processors, process_csv=True, process_corpus=
 	chat_consumer = None
 
 	if process_corpus:
-		corpus_fl = codecs.open(dest_dir+'/'+'chat_corpus.txt', 'a',encoding='utf-8')
-		corpus_consumer = Consumer(corpus_fl,text_consuming)
+		corpus_fl = codecs.open(dest_dir + '/' + chat_corpus_name, 'a', encoding='utf-8')
+		corpus_consumer = Consumer(corpus_fl, text_consuming)
 		consumers.append(corpus_consumer)
 
 	if process_csv:
-		chat_fl = codecs.open(dest_dir+'/'+'chat.csv', "a",encoding='utf-8')
+		chat_fl = codecs.open(dest_dir + '/' + chat_csv_name, "a", encoding='utf-8')
 		chat_wr = csv.writer(chat_fl)
-		chat_consumer = Consumer(chat_wr,csv_consuming)
+		chat_consumer = Consumer(chat_wr, csv_consuming)
 		consumers.append(chat_consumer)
 
 	if process_csv or process_corpus:
-		processors.append(ChatProcessor(chat_atrs, chat_consumer, corpus_consumer, corpus=process_corpus, csv=process_csv))
+		processors.append(ChatProcessor(chat_atrs, chat_consumer, corpus_consumer,
+		                                corpus=process_corpus, csv=process_csv,
+		                                filters=[lambda e: e['association_to_offender'] == 'offender']))
+
 
 def set_players_processing(consumers, processors):
-	players_fl = codecs.open(dest_dir+'/'+'players.csv','a',encoding='utf-8')
+	players_fl = codecs.open(dest_dir + '/' + players_name, 'a', encoding='utf-8')
 	players_wr = csv.writer(players_fl)
-	player_consumer = Consumer(players_wr,csv_consuming)
+	player_consumer = Consumer(players_wr, csv_consuming)
 
 	consumers.append(player_consumer)
-	processors.append(PlayerProcessor(player_atrs, player_consumer))
+	processors.append(PlayerProcessor(player_atrs, player_consumer, [lambda e: e['association_to_offender'] == 'offender']))
 
 
 def set_matches_processing(consumers, processors):
-	matches_fl = codecs.open(dest_dir+'/'+'matches.csv','a',encoding='utf-8')
+	matches_fl = codecs.open(dest_dir + '/' + matches_name, 'a', encoding='utf-8')
 	matches_wr = csv.writer(matches_fl)
-	match_consumer = Consumer(matches_wr,csv_consuming)
+	match_consumer = Consumer(matches_wr, csv_consuming)
 
 	consumers.append(match_consumer)
 	processors.append(MatchProcessor(match_atrs, match_consumer))
 
 
-
-
-#---------------------Main-----------------
+# ---------------------Main-----------------
 
 last_thread = None
 consumers = []
 processors = []
 prod_sem = Semaphore(num_producers)
 
-if process_chat_csv or process_chat_corpus:
-	set_chat_processing(consumers, processors, process_chat_csv, process_chat_corpus)
+if bool(chat_csv_name) or bool(chat_corpus_name):
+	set_chat_processing(consumers, processors, bool(chat_csv_name), bool(chat_corpus_name) )
 
-if process_players:
+if bool(players_name):
 	set_players_processing(consumers, processors)
 
-if process_matches:
+if bool(matches_name):
 	set_matches_processing(consumers, processors)
-
 
 for consumer in consumers:
 	consumer.start()
@@ -129,26 +123,18 @@ for tar_name in os.listdir(tars_dir):
 	except:
 		traceback.print_exc()
 
-
 last_thread.join() if last_thread is not None else None
-
 
 for consumer in consumers:
 	consumer.stop()
 
+print("Esperando pelos consumidores...")
 for consumer in consumers:
 	consumer.join()
 
 print('Organizando resultados...')
 import subprocess
-subprocess.call(['bash','sort','chat.csv','chat.csv'])
-subprocess.call(['bash','sort','players.csv','players.csv'])
-subprocess.call(['bash','sort','matches.csv','matches.csv'])
 
-
-
-
-
-
-
-
+subprocess.call(['bash', 'sort', 'chat.csv', 'chat.csv'])
+subprocess.call(['bash', 'sort', 'players.csv', 'players.csv'])
+subprocess.call(['bash', 'sort', 'matches.csv', 'matches.csv'])

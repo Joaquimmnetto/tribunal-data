@@ -1,6 +1,7 @@
 # encoding=utf8
-from queue import Queue
+from multiprocessing import Queue
 from threading import Thread
+import traceback
 
 
 class Consumer(Thread):
@@ -12,20 +13,23 @@ class Consumer(Thread):
 		self.consume = consume
 
 		self.buffer = Queue()
-		self.stop = False
+		self.mstop = False
 
 	def feed(self,value):
 		self.buffer.put(value)
 
 	def stop(self):
-		self.stop = True
+		self.mstop = True
 
 	def run(self):
-		while not (self.stop and self.buffer.empty()):
-			self.consume(self.writer, self.buffer)
+		while not (self.mstop and self.buffer.empty()):
+			try:
+				self.consume(self.writer, self.buffer)
+			except:
+				traceback.print_exc()
 
 		print('consumer stopped')
-		self.writer.close()
+		#self.writer.close()
 
 
 
