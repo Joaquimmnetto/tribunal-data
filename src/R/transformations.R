@@ -127,4 +127,6 @@ rm(matches.tox)
 #Jantar!
 #mtpl.2 <- matches.players %>% filter(most.common.offense != 'Assisting Enemy Team') %>% filter(most.common.offense != "Intentionally Feeding")
 
-
+#write.csv(chat$V6,sep='',file = "corpus_line.txt",row.names= FALSE,quote=FALSE)
+#check.names=FALSE
+#perc.nwords <- t(t(n.words)/rowSums(n.words))

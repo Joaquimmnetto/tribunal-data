@@ -4,7 +4,6 @@ import os
 import sys
 import codecs
 import csv
-import asyncio
 
 import traceback
 from threading import Semaphore
