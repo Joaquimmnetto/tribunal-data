@@ -11,7 +11,7 @@ class Consumer(Thread):
 
 		self.writer = writer
 		self.consume = consume
-
+		self.daemon = True
 		self.buffer = Queue()
 		self.mstop = False
 

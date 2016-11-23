@@ -7,7 +7,7 @@ corpus_fl = "../../corpus_line.txt" if len(sys.argv) < 2 else sys.argv
 ct = 0
 last_ct = 0
 
-with open("vocab_freq.pkl",'rb') as vf_fl:
+with open("words.pkl",'rb') as vf_fl:
 	vocab_freq = pickle.load(vf_fl)
 
 with open(corpus_fl,'r',encoding='utf-8') as corpus, open("corpus_trimmed.txt",'w',encoding='utf-8') as corpus_trim:

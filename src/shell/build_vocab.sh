@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-tr 'A-Z' 'a-z' < $1 | tr -sc 'a-z:)(=' '\n' | sort | uniq -c | sort -nr
+
+tr -s ' ' '\n' < $1 | sort | uniq -c | sort -nr | tr -s ' ' ' '

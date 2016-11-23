@@ -8,10 +8,11 @@ from .processor import Processor
 class ChatProcessor(Processor):
 
 	def __init__(self, atrs, csv_consumer, corpus_consumer, **kwargs):
-		Processor.__init__(self, atrs, csv_consumer,[])
-		self.corpus_consumer = corpus_consumer
+		_filters = kwargs['filters'] if 'filters' in kwargs else list()
 
-		self.filters = kwargs['filters'] if 'filter' in kwargs else list()
+		Processor.__init__(self, atrs, csv_consumer, _filters)
+
+		self.corpus_consumer = corpus_consumer
 		self.csv = kwargs['csv'] if 'csv' in kwargs else True
 		self.corpus = kwargs['corpus'] if 'corpus' in kwargs else False
 
@@ -62,7 +63,6 @@ class ChatProcessor(Processor):
 			chat = self.create_time_context(match, 5)
 
 		for entry in chat:
-
 			if not self.apply_filter(entry):
 				continue
 
@@ -78,10 +78,10 @@ class ChatProcessor(Processor):
 						print("empty")
 						csv_array.append("") if csv else None
 					else:
-						corpus_lst.append(entry[attr]) if corpus else None
-						csv_array.append(entry[attr]) if csv else None
+						corpus_lst.append(entry[attr] ) if corpus else None
+						csv_array.append(entry[attr] ) if csv else None
 				else:
-					csv_array.append(entry[attr]) if csv else None
+					csv_array.append(entry[attr] ) if csv else None
 
 			self.consumer.feed(csv_array) if csv else None
 

@@ -3,46 +3,46 @@ import pickle
 import sys
 from nltk.tokenize import TweetTokenizer
 
-corpus_fl = "../../corpus_line.txt" if len(sys.argv) < 2 else sys.argv[1]
+#vocab construido por build_vocab.sh
+corpus_vocab_fl = "../../../data/corpus/offender_vocab.txt" if len(sys.argv) < 2 else sys.argv[1]
+save_freq = False
 
 ct = 0
 last_ct = 0
 vocab_freq = dict()
-first_words = set()
 
-with open(corpus_fl,'r',encoding='utf-8') as corpus:
+
+with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 	print("Building Vocabulary")
-	for line in corpus:
-		if ct - last_ct > 500000:
+	for line in vocab:
+		if ct - last_ct > 10000:
 			print(datetime.datetime.now())
 			last_ct = ct
 		ct = ct + 1
 		tk_line = TweetTokenizer(reduce_len=True).tokenize(line.lower())
+		#tk_line = line.replace('\n', '').split(sep=" ")
 
-		first_words.add(tk_line[0]) if len(tk_line) > 0 else None
-
-		for token in tk_line:
-			if token not in vocab_freq.keys():
-				vocab_freq[token] = 0
-			vocab_freq[token] += 1
-
-to_remove = []
-for word,freq in vocab_freq.items():
-	if freq < 50:
-		to_remove.append(word)
-
-for word in to_remove:
-	del vocab_freq[word]
-	try:
-		first_words.remove(word)
-	except:
-		pass
+		if tk_line[0].strip() == '':
+			freq = int(tk_line[1])
+			word = tk_line[2]
+		else:
+			freq = int(tk_line[0])
+			word = tk_line[1]
 
 
+		if freq >= 50:
+			vocab_freq[word] = freq
+		else:
+			break
 
-print("Saving vocab_freq binary")
-with open("vocab_freq.pkl", 'wb') as output:
-	pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)
-print("Saving first_words binary")
-with open("first_words.pkl",'wb') as output:
-	pickle.dump(first_words, output, pickle.HIGHEST_PROTOCOL)
+words = sorted(vocab_freq.keys())
+
+if save_freq:
+	print("Saving vocab_freq binary")
+	with open("bin/vocab_freq.pkl", 'wb') as output:
+		pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)
+else:
+	print("Saving words binary")
+	with open("bin/words.pkl", 'wb') as output:
+		pickle.dump(words, output, pickle.HIGHEST_PROTOCOL)
+
