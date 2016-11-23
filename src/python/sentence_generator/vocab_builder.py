@@ -1,11 +1,12 @@
 import datetime
 import pickle
 import sys
-from nltk.tokenize import TweetTokenizer
+#from nltk.tokenize import TweetTokenizer
 
 #vocab construido por build_vocab.sh
-corpus_vocab_fl = "../../../data/corpus/offender_vocab.txt" if len(sys.argv) < 2 else sys.argv[1]
-save_freq = False
+corpus_vocab_fl = "../../../cht_vocab.txt" if len(sys.argv) < 2 else sys.argv[1]
+min_freq = 20
+save_freq = True
 
 ct = 0
 last_ct = 0
@@ -19,8 +20,8 @@ with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 			print(datetime.datetime.now())
 			last_ct = ct
 		ct = ct + 1
-		tk_line = TweetTokenizer(reduce_len=True).tokenize(line.lower())
-		#tk_line = line.replace('\n', '').split(sep=" ")
+		#tk_line = TweetTokenizer(reduce_len=True).tokenize(line.lower())
+		tk_line = line.replace('\n', '').split(sep=" ")
 
 		if tk_line[0].strip() == '':
 			freq = int(tk_line[1])
@@ -30,7 +31,7 @@ with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 			word = tk_line[1]
 
 
-		if freq >= 50:
+		if freq >= min_freq:
 			vocab_freq[word] = freq
 		else:
 			break
