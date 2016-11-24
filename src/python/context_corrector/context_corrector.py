@@ -1,7 +1,16 @@
+import sys
 from gensim.models import word2vec
 import pickle
 import csv
 import math
+import datetime
+
+begin_time = datetime.datetime.now()
+
+vocab_file = "bin/vocab_freq.pkl" if len(sys.argv) < 2 else sys.argv[1]
+w2v_file = "bin/corpus_w2v.bin" if len(sys.argv) < 3 else sys.argv[2]
+min_sim = 0.65 if len(sys.argv) < 4 else float(sys.argv[3])
+min_word_sim = 0.50 if len(sys.argv) < 5 else float(sys.argv[4])
 
 #maneiras mais interessantes
 #distancia de teclado
@@ -25,29 +34,38 @@ def similar(s1,s2,sim_ratio,vocab_freq):
 
 	return len(intersect) >= math.floor(sim_ratio * len(bigger))
 
-model = word2vec.Word2Vec.load("bin/corpus_w2v.bin")
+
+print("Loading word2vec file...")
+model = word2vec.Word2Vec.load("bin/offender_w2v.bin")
+model.init_sims(replace=False)
+
 
 inserted_words = set()
 vocab_freq_pair = sorted(vocab_freq.items(),key=lambda x:x[1],reverse=True)
 
-sim_ratio = 0.5
-synonms = dict()
+print("Looking for synonms and errors")
+
+synonyms = dict()
 errors = dict()
+
+syn_wr.writerow(['word','synonyms'])
+syn_wr.writerow(['word','possible_errors'])
+
 for word,freq in vocab_freq_pair:
 
 	#if word not in inserted_words:
-	similars = model.most_similar(word,topn=10)
+	similars = model.most_similar(word,topn=100)
+	errors[word] = [w for w, s in similars if s > min_sim and similar(w, word, min_word_sim, vocab_freq)]
+	synonyms[word] = [w for w, s in similars if s > min_sim and w not in errors[word]]
 
-	synonms[word] = [w for w,s in similars if s > 0.65]
-	errors[word] = [w for w,s in similars if  s > 0.65 and similar(w,word,sim_ratio,vocab_freq)]
 
-	syn_wr.writerow( [word]+['|'.join(synonms[word])] )
+	syn_wr.writerow( [word] + ['|'.join(synonyms[word])] )
 	err_wr.writerow( [word]+['|'.join(errors[word])] )
 
 
 #inserted_words = inserted_words + errors
 
-
+print("Time Elapsed:",begin_time-datetime.datetime.now())
 
 
 

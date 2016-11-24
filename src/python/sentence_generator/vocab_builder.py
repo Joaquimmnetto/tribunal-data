@@ -4,9 +4,8 @@ import sys
 #from nltk.tokenize import TweetTokenizer
 
 #vocab construido por build_vocab.sh
-corpus_vocab_fl = "../../../cht_vocab.txt" if len(sys.argv) < 2 else sys.argv[1]
-min_freq = 20
-save_freq = True
+corpus_vocab_fl = "../../../data/vocabs/offender.vocab" if len(sys.argv) < 2 else sys.argv[1]
+min_freq = 50
 
 ct = 0
 last_ct = 0
@@ -38,12 +37,12 @@ with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 
 words = sorted(vocab_freq.keys())
 
-if save_freq:
-	print("Saving vocab_freq binary")
-	with open("bin/vocab_freq.pkl", 'wb') as output:
-		pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)
-else:
-	print("Saving words binary")
-	with open("bin/words.pkl", 'wb') as output:
-		pickle.dump(words, output, pickle.HIGHEST_PROTOCOL)
+
+print("Saving vocab_freq binary")
+with open("bin/vocab_freq.pkl", 'wb') as output:
+	pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)
+
+print("Saving words binary")
+with open("bin/words.pkl", 'wb') as output:
+	pickle.dump(words, output, pickle.HIGHEST_PROTOCOL)
 
