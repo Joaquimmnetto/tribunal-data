@@ -30,7 +30,7 @@ w_indexes = dict((w,i) for i,w in enumerate(words))
 
 vocab_len = len(words)
 print("Vocab size:",vocab_len)
-neigh = scipy.sparse.csr_matrix(numpy.zeros((vocab_len,vocab_len)))
+neigh = (numpy.zeros((vocab_len,vocab_len)))
 
 first_words = set()
 

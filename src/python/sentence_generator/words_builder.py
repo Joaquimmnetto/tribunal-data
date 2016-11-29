@@ -9,7 +9,7 @@ with open('bin/neigh.spy','rb') as neigh_input:
 print("Loading vocabulary")
 with open('bin/words.pkl','rb') as wr_input:
 	words = pickle.load(wr_input)
-
+print("Loading first words")
 with open('bin/first_words.pkl','rb') as vocab_input:
 	first_words = list(pickle.load(vocab_input))
 
@@ -18,11 +18,11 @@ print("Trimmed Vocab size:",len(words))
 #print("Trimmed Neigh Vocab size:",len(neigh))
 
 
-print("Applying random model...")
+print("Applying markov model...")
 
 
 for i in range(0,20):
-	sentence_size = numpy.random.choice(range(4,6))
+	sentence_size = numpy.random.choice(range(3,7))
 	initial = ""
 	while len(initial) < 3:
 		initial = numpy.random.choice(first_words)

@@ -52,17 +52,21 @@ rm(aggr.perf.sum)
 
 
 #percentage gold and kda metrics
-matches.players <- matches.players %>% mutate(perc.gold = (gold/match.gold) )
-matches.players <- matches.players %>% mutate(perc.kda = (kda/match.kda) )
+matches.players <- matches.players %>% mutate(perc.gold.old = (gold/match.gold) )
+matches.players <- matches.players %>% mutate(perc.kda.old = (kda/match.kda) )
 
-matches.players <- matches.players %>% mutate(perc.mean.gold = (gold/mean(matches.players$match.gold)) )
-matches.players <- matches.players %>% mutate(perc.mean.kda = (kda/mean(matches.players$match.kda)) )
+mean.gold <- mean(matches.players$gold)
+mean.kda <- mean(matches.players$kda)
+
+matches.players <- matches.players %>% mutate(perc.gold.new = (gold/mean.gold))
+matches.players <- matches.players %>% mutate(perc.kda.new = (kda/mean.kda))
 
 #finnaly, performance metric. Its the euclidean distance from origin to (perc.gold,perc.kda).
 #normalized by sqrt(2) because its the highest performance achievable(player amassed 100%(1) kda and 100%(1) gold)
 #hence, its the (1,1) point and its performance its sqrt(2).
-matches.players <- matches.players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) )
-matches.players <- matches.players %>% mutate( performance.mean = sqrt(perc.gold^2+perc.kda^2)) 
+matches.players <- matches.players %>% mutate( performance.old = sqrt(perc.gold.old^2+perc.kda.old^2) ) 
+
+matches.players <- matches.players %>% mutate( performance.new = sqrt(perc.gold.new^2*perc.kda.new^2) )
 #further proof for the metric on \img folder.
 
 
@@ -72,6 +76,10 @@ matches.players <- matches.players %>% mutate( performance.mean = sqrt(perc.gold
 #removing the noise from most.common.ofense
 #matches <- matches %>% filter(most.common.offense != "")
 
+reason.by.team <- reason.by.team %>% mutate(pnd.total.reports = reports.allies + 1.5*reports.enemies)
+tmp <- aggregate(pnd.total.reports ~ most.common.offense,data=reason.by.team,FUN=sum)
+reports.by.reason <- reports.by.reason %>% mutate( total.reports.pnd = tmp$pnd.total.reports)
+rm(tmp)
 
 #Puting the frequency on with each type of report occours on matches
 reports.by.reason <- reports.by.reason %>% mutate( frequency = as.vector(table(matches$most.common.offense)) )
@@ -79,15 +87,17 @@ reports.by.reason <- reports.by.reason %>% mutate( frequency = as.vector(table(m
 #Making the ratio of total.reports/frequency.
 #With this we have the report ratio for each match where that type of toxic behavior occours.
 #We use this to determine which types of toxic behavior are more annoying to the player.
-reports.by.reason <- reports.by.reason %>% mutate(report.ratio = total.reports/frequency)
+reports.by.reason <- reports.by.reason %>% mutate(report.ratio = total.reports.pnd/frequency)
 
 
 
 #passing the ratio created above to the matches table, so that we have the ratios for each match.
 for(i in 1:nrow(matches)) { 
-  matches[i, "report.ratio"] <- reports.by.reason[matches[i, "most.common.offense"] == reports.by.reason$most.common.offense, 4]
+  matches[i, "report.ratio"] <- reports.by.reason[matches[i, "most.common.offense"] == reports.by.reason$most.common.offense, 5]
 }
 rm(i)
+  
+matches.players <- matches.players %>% left_join( matches %>% select(case,match,report.ratio), by=c("case","match"))
 
 #reports.by.reason<- reports.by.reason %>% filter(most.common.offense != "")
 
@@ -103,13 +113,14 @@ rm(i)
 #finnaly, we recognize that are some kinds of toxic behavior that are more accute than others, and use the report gravity calculated previsiouly as a weight.
 
 #enemy.ally.report.ratio <- sum(matches$reports.allies)/sum(matches$reports.enemies)
-matches <- matches %>% mutate( match.contamination = report.ratio * ((reports.allies/4) + 2*(reports.enemies/5)) )
+#matches <- matches %>% mutate( match.contamination = report.ratio * ((reports.allies/4) + 2*(reports.enemies/5)) )
+matches <- matches %>% mutate( match.contamination = report.ratio * (reports.allies/4 + reports.enemies/5) )
 
 
 #then, we normalize it by the highest toxic behavior value possible(highest value of report.gravity, and every player has reported).
 #The value is 6.928208
 
-matches <- matches %>% mutate( match.contamination = match.contamination/max(match.contamination) )
+#matches <- matches %>% mutate( match.contamination = match.contamination/max(match.contamination) )
 
 matches.tox <- data.frame(matches$case,matches$match,matches$match.contamination)
 names(matches.tox) <- c('case','match','match.contamination')

@@ -52,9 +52,10 @@ syn_wr.writerow(['word','synonyms'])
 syn_wr.writerow(['word','possible_errors'])
 
 for word,freq in vocab_freq_pair:
-
+	if word in inserted_words:
+		continue
 	#if word not in inserted_words:
-	similars = model.most_similar(word,topn=100)
+	similars = model.most_similar(word,topn=50)
 	errors[word] = [w for w, s in similars if s > min_sim and similar(w, word, min_word_sim, vocab_freq)]
 	synonyms[word] = [w for w, s in similars if s > min_sim and w not in errors[word]]
 
