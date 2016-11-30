@@ -8,7 +8,7 @@ t.test(scale(matches.players$performance.new),range01(matches.players$performanc
 #Isso não faz sentido na comparação com os gráficos, pode ser só eu lendo info. estatistica de maneira errada mesmo.
 cor(matches.players$match.contamination,matches.players$performance.new)
 
-matches.players <- matches.players %>% mutate(team.contamination = ifelse(relation.offender=='enemy', report.ratio*reports.enemies/5, report.ratio*reports.allies/4) )
+matches.players <- matches.players %>% mutate( team.contamination = ifelse(relation.offender=='enemy', report.ratio*reports.enemies/5, report.ratio*reports.allies/4) )
 
 ally.team <- matches.players[matches.players$relation.offender!='enemy',]
 enemy.team <- matches.players[matches.players$relation.offender=='enemy',]

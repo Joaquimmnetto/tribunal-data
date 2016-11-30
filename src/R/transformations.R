@@ -1,4 +1,7 @@
 library(dplyr)
+
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+
 #knitr::opts_chunk$set(dev = 'png')
 players <- read.csv("data/csv/players.csv", header = FALSE)
 matches <- read.csv("data/csv/matches.csv", header = FALSE)
@@ -67,6 +70,7 @@ matches.players <- matches.players %>% mutate(perc.kda.new = (kda/mean.kda))
 matches.players <- matches.players %>% mutate( performance.old = sqrt(perc.gold.old^2+perc.kda.old^2) ) 
 
 matches.players <- matches.players %>% mutate( performance.new = sqrt(perc.gold.new^2*perc.kda.new^2) )
+
 #further proof for the metric on \img folder.
 
 

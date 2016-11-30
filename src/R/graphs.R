@@ -92,13 +92,17 @@ rm(case.match)
 
 mtpl.view <- matches.players
 
+mtpl.view$performance.new <- range01(mtpl.view$performance.new)
+mtpl.view$team.contamination <- range01(mtpl.view$team.contamination)
+mtpl.view$match.contamination <- range01(mtpl.view$match.contamination)
+
 mtpl.view <- mtpl.view[mtpl.view$relation.offender!="",]
 
 #--------------Métrica de desempenho--------------------
 
-perc.outcome.point <- ggplot(data=mtpl.view,aes(x=perc.gold,y=perc.kda,color=outcome))+geom_point() 
+perc.outcome.point <- ggplot(data=mtpl.view,aes(x=perc.gold.new,y=perc.kda.new,color=outcome))+geom_point() 
 #boxplot de performance X outcome. Mostra que a métrica cobre bem os jogadores vencedores.
-perf.outcome.box <- ggplot(data=mtpl.view) + geom_boxplot(aes(x=outcome,y=performance))
+perf.outcome.box <- ggplot(data=mtpl.view) + geom_boxplot(aes(x=outcome,y=performance.new))
 #boxplot de performance x relattion.offender. Mostra que o time aliado tem um desempenho levemente pior do que o inimigo.
 perf.offender.box <- ggplot(data = mtpl.view) + geom_boxplot(aes(x=relation.offender,y=performance.new))
 #boxplot de performance x relation x outcome. Reforça a métrica, e mostra que a diferença de performance 
@@ -109,12 +113,10 @@ perf.outcome.offender.box <- ggplot(data=mtpl.view,aes(x=outcome,y=performance.n
 
 perf.hist <- ggplot(data=mtpl.view) + geom_histogram(aes(x=performance.new),bins=20)
 
-ggplot(matches,aes(x = match.toxicity,fill = most.common.offense)) + 
-  geom_bar(position = "fill",stat = "identity") + 
-  scale_y_continuous(labels = percent_format())
-
 mtpl.view <- mtpl.view[mtpl.view$most.common.offense!="",]
 #mtpl.view <- mtpl.view %>% mutate(most.common.offense != "")
+
+
 
 #--------------Métrica de toxicidade por partida--------------------
 
@@ -125,23 +127,25 @@ perf.mtox.outcome.points <- ggplot(data = mtpl.view, aes(x=match.contamination,y
 mtox.hist <- ggplot(data=mtpl.view,aes(x=match.contamination)) +geom_histogram(bins=10)
 
 #Mostra como o desempenho no geral cai com a contaminação
-perf.mtox.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance.new),method=lm)
+#perf.mtox.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance.new),method=lm)
 
 #Mostra como ally e offender caem com a contaminação, enquando o enemy sobe
 perf.mtox.offender.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance.new,color=relation.offender),method=lm)
 
-report.mtox.spl = ggplot(data=matches,aes(x=match.contamination,y=reports.allies+reports.enemies)) + geom_smooth()
+#report.mtox.pre.spl = ggplot(data=matches,aes(x=match.contamination,y=reports.allies+reports.enemies,color=premade)) + geom_smooth()
 
-report.mtox.pre.spl = ggplot(data=matches,aes(x=match.contamination,y=reports.allies+reports.enemies,color=premade)) + geom_smooth()
 
-#####
+#---------------Comparações com tipos de ofensa--------------------------------
+mtox.offense.hist <- ggplot(mtpl.view,aes(x=match.contamination, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
+perf.offense.hist <- ggplot(mtpl.view,aes(x=performance.new, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
 
-mtox.offense.fx.hist <- ggplot(mtpl.view,aes(x=match.contamination, fill=most.common.offense)) + geom_histogram(bins=10,position='fill')
-perf.offense.fx.hist <- ggplot(mtpl.view,aes(x=performance.new, fill=most.common.offense)) + geom_histogram(bins=10,position='fill')
+mtox.offense.hist.enemy <- ggplot(mtpl.view[mtpl.view$relation.offender=='enemy',],aes(x=team.contamination, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
+perf.offense.hist.enemy <- ggplot(mtpl.view[mtpl.view$relation.offender=='enemy',],aes(x=performance.new, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
+
+mtox.offense.hist.ally <- ggplot(mtpl.view[mtpl.view$relation.offender!='enemy',],aes(x=team.contamination, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
+perf.offense.hist.ally <- ggplot(mtpl.view[mtpl.view$relation.offender!='enemy',],aes(x=performance.new, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
 
 #mostra que o time aliado sofre muito mais com o comportamento tóxico do que o time inimigo.
 #contudo, não é como se o time inimigo fosse completamente 'limpo'
 ttox.density <- ggplot(mtpl.view) + geom_density(aes(x=team.contamination,color=relation.offender))
 
-#Confirma o comportamento citado acima
-ggplot(mtpl.view,aes(x=outcome,y=team.contamination,color=relation.offender)) + geom_boxplot()
