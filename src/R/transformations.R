@@ -37,8 +37,6 @@ reports.by.reason <- aggregate(total.reports ~ most.common.offense,
 
 #grouping gold by case and match, and assigning the info to a new frame.
 aggr.perf.sum <- aggregate(gold ~ case+match, data=matches.players,FUN=sum)
-
-#renaming gold column to avoid column name conflict issues on near future.
 aggr.perf.sum <- plyr::rename(aggr.perf.sum,c("gold"="match.gold"))
 
 #grouping by kda and assigning to a new column on aggr.perf.sum
@@ -58,18 +56,19 @@ rm(aggr.perf.sum)
 matches.players <- matches.players %>% mutate(perc.gold.old = (gold/match.gold) )
 matches.players <- matches.players %>% mutate(perc.kda.old = (kda/match.kda) )
 
-mean.gold <- mean(matches.players$gold)
-mean.kda <- mean(matches.players$kda)
+mean.gold <- mean(matches.players$perc.gold.old)
+mean.kda <- mean(matches.players$perc.kda.old)
 
-matches.players <- matches.players %>% mutate(perc.gold.new = (gold/mean.gold))
-matches.players <- matches.players %>% mutate(perc.kda.new = (kda/mean.kda))
+#matches.players <- matches.players %>% mutate(perc.gold.new = (perc.gold.old/mean.gold))
+#matches.players <- matches.players %>% mutate(perc.kda.new = (perc.kda.old/mean.kda))
 
 #finnaly, performance metric. Its the euclidean distance from origin to (perc.gold,perc.kda).
 #normalized by sqrt(2) because its the highest performance achievable(player amassed 100%(1) kda and 100%(1) gold)
 #hence, its the (1,1) point and its performance its sqrt(2).
-matches.players <- matches.players %>% mutate( performance.old = sqrt(perc.gold.old^2+perc.kda.old^2) ) 
+matches.players <- matches.players %>% mutate( performance.old = sqrt(perc.gold.old^2+perc.kda.old^2)/sqrt(2) ) 
 
-matches.players <- matches.players %>% mutate( performance.new = sqrt(perc.gold.new^2*perc.kda.new^2) )
+#Distância euclidiana não parece ser a melhor pegada pra esse indivíduo...
+#matches.players <- matches.players %>% mutate( performance.new = perc.gold.new*perc.kda.new )
 
 #further proof for the metric on \img folder.
 
@@ -95,6 +94,8 @@ reports.by.reason <- reports.by.reason %>% mutate(report.ratio = total.reports.p
 
 
 
+
+
 #passing the ratio created above to the matches table, so that we have the ratios for each match.
 for(i in 1:nrow(matches)) { 
   matches[i, "report.ratio"] <- reports.by.reason[matches[i, "most.common.offense"] == reports.by.reason$most.common.offense, 5]
@@ -116,8 +117,6 @@ matches.players <- matches.players %>% left_join( matches %>% select(case,match,
 
 #finnaly, we recognize that are some kinds of toxic behavior that are more accute than others, and use the report gravity calculated previsiouly as a weight.
 
-#enemy.ally.report.ratio <- sum(matches$reports.allies)/sum(matches$reports.enemies)
-#matches <- matches %>% mutate( match.contamination = report.ratio * ((reports.allies/4) + 2*(reports.enemies/5)) )
 matches <- matches %>% mutate( match.contamination = report.ratio * (reports.allies/4 + reports.enemies/5) )
 
 
@@ -130,6 +129,7 @@ matches.tox <- data.frame(matches$case,matches$match,matches$match.contamination
 names(matches.tox) <- c('case','match','match.contamination')
 
 matches.players <- matches.players %>% left_join(matches.tox,by=c('case','match'))
+matches.players <- matches.players %>% mutate( team.contamination = ifelse(relation.offender=='enemy', report.ratio*reports.enemies/5, report.ratio*reports.allies/4) )
 
 rm(matches.tox)
 #Ideas for the future: Work with a concept of 'match toxicity', using the reports to measure, and then try to split that on each player.
@@ -137,7 +137,3 @@ rm(matches.tox)
 #TODO: arquivo para plotar os gráficos.
 
 ########################################################################
-
-#Retirar tipos de ofensas que auxiliam diretamente o inimigo, e ver os resultados
-#Jantar!
-#mtpl.2 <- matches.players %>% filter(most.common.offense != 'Assisting Enemy Team') %>% filter(most.common.offense != "Intentionally Feeding")

@@ -6,7 +6,7 @@ t.test(scale(matches.players$performance.new),range01(matches.players$performanc
 
 #Não há correlação entre a performance na partida e a contaminação(oh no)
 #Isso não faz sentido na comparação com os gráficos, pode ser só eu lendo info. estatistica de maneira errada mesmo.
-cor(matches.players$match.contamination,matches.players$performance.new)
+cor(matches.players$match.contamination,matches.players$performance.old)
 
 matches.players <- matches.players %>% mutate( team.contamination = ifelse(relation.offender=='enemy', report.ratio*reports.enemies/5, report.ratio*reports.allies/4) )
 
