@@ -13,13 +13,13 @@ import traceback
 
 from nltk.tokenize import TweetTokenizer
 
-corpus_fl = "../../../data/corpus/offender_corpus_splot.txt" if len(sys.argv) < 2 else sys.argv[1]
+corpus_fl = "../../../data/corpus/offender_tkn.crp" if len(sys.argv) < 2 else sys.argv[1]
 # next_csv = "../../next_matrix.csv" if len(sys.argv) < 3 else sys.argv[2]
 
 ct = 0
 last_ct = 0
 
-
+print("Carregando Vocabuário")
 with open("bin/words.pkl",'rb') as wr_fl:
 	words = pickle.load(wr_fl)
 
@@ -29,14 +29,15 @@ print("Alocando Matriz...")
 w_indexes = dict((w,i) for i,w in enumerate(words))
 
 vocab_len = len(words)
-neigh = numpy.zeros((vocab_len,vocab_len))
+print("Vocab size:",vocab_len)
+neigh = (numpy.zeros((vocab_len,vocab_len)))
 
-first_words = []
+first_words = set()
 
 with open(corpus_fl,'r',encoding='utf-8') as corpus:
 	print('Preenchendo Matriz...')
 	for line in corpus:
-		if ct - last_ct > 10000:
+		if ct - last_ct > 1000000:
 			print(datetime.datetime.now())
 			last_ct = ct
 		ct = ct+1
@@ -50,7 +51,7 @@ with open(corpus_fl,'r',encoding='utf-8') as corpus:
 				w_index = w_indexes[token]
 				n_index = w_indexes[next_w]
 				if i==0:
-					first_words.append(tk_line[0])
+					first_words.add(token)
 				neigh[w_index][n_index] += 1
 			except:
 				pass
