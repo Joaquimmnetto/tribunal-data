@@ -144,9 +144,11 @@ mtox.offense.hist.enemy <- ggplot(mtpl.view[mtpl.view$relation.offender=='enemy'
 mtox.offense.hist.ally <- ggplot(mtpl.view[mtpl.view$relation.offender!='enemy',],aes(x=team.contamination, fill=most.common.offense)) + geom_histogram(bins=6,position='fill')
 
 perf.offense.hist <- ggplot(mtpl.view,aes(x=performance.old, fill=most.common.offense)) + geom_histogram(bins=6,position='fill') + scale_x_reverse()
-perf.offense.hist.enemy <- ggplot(mtpl.view[mtpl.view$relation.offender=='enemy',],aes(x=performance.old, fill=most.common.offense)) + geom_histogram(bins=6,position='fill') + scale_x_reverse()
-perf.offense.hist.ally <- ggplot(mtpl.view[mtpl.view$relation.offender!='enemy',],aes(x=performance.old, fill=most.common.offense)) + geom_histogram(bins=6,position='fill') + scale_x_reverse()
+perf.offense.hist.enemy <- ggplot(mtpl.view[mtpl.view$relation.offender=='enemy',],aes(x=performance.old, fill=most.common.offense)) + geom_histogram(bins=15,position='fill') + scale_x_reverse()
+perf.offense.hist.ally <- ggplot(mtpl.view[mtpl.view$relation.offender!='enemy',],aes(x=performance.old, fill=most.common.offense)) + geom_histogram(bins=15,position='fill') + scale_x_reverse()
 
 #mostra que o time aliado sofre muito mais com o comportamento tóxico do que o time inimigo.
 #contudo, não é como se o time inimigo fosse completamente 'limpo'
 ttox.density <- ggplot(mtpl.view) + geom_density(aes(x=team.contamination,color=relation.offender))
+
+ttox.ofense.box <- ggplot(mtpl.view) + geom_boxplot(aes(x=relation.offender,y=team.contamination))

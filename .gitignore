@@ -47,6 +47,10 @@ vignettes/*.pdf
 *.crp
 *.csv
 
+#Data files
+*.pkl
+*.spy
+
 #-----------------------Python--------------
 
 # Byte-compiled / optimized / DLL files

@@ -18,7 +18,6 @@ fi
 
 for dir in `ls ../../dataset/*/ -d`
 do
-
     echo "Processing dir $dir"
     if [ $i%3==0 ]; then
         $executable ../python/corpus_builder.py $dir $dest $num_prod $chat_csv $chat_corpus $players $matches

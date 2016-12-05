@@ -32,7 +32,7 @@ class TarReader():
 
 class ProducersManager(Thread):
 
-	def __init__(self, tar_path, processors, prod_semaphore):
+	def __init__(self, tar_path, processors, prod_semaphore = None):
 		Thread.__init__(self)
 		self.tar_path = tar_path
 		self.processors = processors
@@ -52,8 +52,8 @@ class ProducersManager(Thread):
 				case.append(match)
 
 			except:
-				print(('Erro na formatacao do arquivo '+jsons_name))
-				return []
+				pass
+				#return []
 
 		return case
 
@@ -75,7 +75,8 @@ class ProducersManager(Thread):
 						print(('Excecao enquanto processando '+str(match['case_id'])+ "-" + str(match_num)))
 						traceback.print_exc()
 
-		self.prod_semaphore.release()
+		if self.prod_semaphore is not None:
+			self.prod_semaphore.release()
 		print((str(jsons_dir) + " closing..."))
 		shutil.rmtree(jsons_dir)
 

@@ -5,7 +5,10 @@ import sys
 
 #vocab construido por build_vocab.sh
 corpus_vocab_fl = "../../../data/vocabs/offender.vocab" if len(sys.argv) < 2 else sys.argv[1]
-min_freq = 50
+vocab_freq_fl = "bin/vocab_freq.pkl" if len(sys.argv) < 3 else sys.argv[2]
+words_fl = "bin/words.pkl" if len(sys.argv) < 4 else sys.argv[3]
+min_freq = 50 if len(sys.argv) < 5 else int(sys.argv[4])
+
 
 ct = 0
 last_ct = 0
@@ -38,11 +41,11 @@ with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 words = sorted(vocab_freq.keys())
 
 
-print("Saving vocab_freq binary")
-with open("bin/vocab_freq.pkl", 'wb') as output:
+print("Saving vocab_freq binary on ",vocab_freq_fl)
+with open(vocab_freq_fl, 'wb') as output:
 	pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)
 
-print("Saving words binary")
-with open("bin/words.pkl", 'wb') as output:
+print("Saving words binary on ",words_fl)
+with open(words_fl, 'wb') as output:
 	pickle.dump(words, output, pickle.HIGHEST_PROTOCOL)
 

@@ -2,7 +2,7 @@
 
 import os
 import sys
-#import codecs
+import codecs
 import csv
 
 import traceback

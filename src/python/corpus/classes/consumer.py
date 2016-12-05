@@ -24,11 +24,16 @@ class Consumer(Thread):
 	def run(self):
 		while not (self.mstop and self.buffer.empty()):
 			try:
-				self.consume(self.writer, self.buffer)
+				if self.mstop:
+					item = self.buffer.get_nowait()
+				else:
+					item = self.buffer.get()
+
+				self.consume(self.writer, item)
 			except:
 				traceback.print_exc()
 
-		print('consumer stopped')
+		print('consumer stopped',self.buffer.qsize())
 		#self.writer.close()
 
 
