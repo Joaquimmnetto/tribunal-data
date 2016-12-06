@@ -1,6 +1,7 @@
 # encoding=utf8
 from multiprocessing import Queue
 from threading import Thread
+import time
 import traceback
 
 
@@ -32,7 +33,6 @@ class Consumer(Thread):
 				self.consume(self.writer, item)
 			except:
 				traceback.print_exc()
-
 		print('consumer stopped',self.buffer.qsize())
 		#self.writer.close()
 

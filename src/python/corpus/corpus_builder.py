@@ -18,9 +18,9 @@ from classes.process_match import MatchProcessor
 
 print(("Arguments:" + str(sys.argv)))
 
-tars_dir = "../../sampley_de_guitarra" if len(sys.argv) < 2 else sys.argv[1]
-dest_dir = "../.." if len(sys.argv) < 3 else sys.argv[2]
-num_producers = 6 if len(sys.argv) < 4 else int(sys.argv[3])
+tars_dir = "../../../sampley_de_guitarra" if len(sys.argv) < 2 else sys.argv[1]
+dest_dir = "../../.." if len(sys.argv) < 3 else sys.argv[2]
+num_producers = 10 if len(sys.argv) < 4 else int(sys.argv[3])
 
 chat_csv_name = 'chat.csv' if len(sys.argv) < 5 else str(sys.argv[4])
 chat_corpus_name = 'None' if len(sys.argv) < 6  else str(sys.argv[5])
@@ -39,14 +39,12 @@ match_atrs = ['premade', 'most_common_report_reason', 'allied_report_count', 'en
               'time_played']
 
 
-def text_consuming(writer, buffer):
-	value = buffer.get()
+def text_consuming(writer, value):
 	writer.write(value)
 	del value
 
 
-def csv_consuming(writer, buffer):
-	value = buffer.get()
+def csv_consuming(writer, value):
 	writer.writerow(value)
 	del value[:]
 
@@ -69,7 +67,7 @@ def set_chat_processing(consumers, processors, process_csv=True, process_corpus=
 	if process_csv or process_corpus:
 		processors.append(ChatProcessor(chat_atrs, chat_consumer, corpus_consumer,
 		                                corpus=process_corpus, csv=process_csv,
-		                                filters=[lambda e: e['association_to_offender'] == 'offender']))
+		                                filters=[]))
 
 
 def set_players_processing(consumers, processors):
@@ -78,7 +76,7 @@ def set_players_processing(consumers, processors):
 	player_consumer = Consumer(players_wr, csv_consuming)
 
 	consumers.append(player_consumer)
-	processors.append( PlayerProcessor(player_atrs, player_consumer, [lambda e: e['association_to_offender'] == 'offender']) )
+	processors.append( PlayerProcessor(player_atrs, player_consumer, []) )
 
 
 def set_matches_processing(consumers, processors):
@@ -138,11 +136,11 @@ print('Organizando resultados...')
 import subprocess
 import platform
 
-if platform.system() == "Windows":
-	subprocess.call(['bash', 'sort.sh', 'chat.csv', 'chat.csv'])
-	subprocess.call(['bash', 'sort.sh', 'players.csv', 'players.csv'])
-	subprocess.call(['bash', 'sort.sh', 'matches.csv', 'matches.csv'])
-else:
-	subprocess.call(['sort.sh', 'chat.csv', 'chat.csv'])
-	subprocess.call(['sort.sh', 'players.csv', 'players.csv'])
-	subprocess.call(['sort.sh', 'matches.csv', 'matches.csv'])
+# if platform.system() == "Windows":
+# 	subprocess.call(['bash', 'sort.sh', 'chat.csv', 'chat.csv'])
+# 	subprocess.call(['bash', 'sort.sh', 'players.csv', 'players.csv'])
+# 	subprocess.call(['bash', 'sort.sh', 'matches.csv', 'matches.csv'])
+# else:
+# 	subprocess.call(['sort.sh', 'chat.csv', 'chat.csv'])
+# 	subprocess.call(['sort.sh', 'players.csv', 'players.csv'])
+# 	subprocess.call(['sort.sh', 'matches.csv', 'matches.csv'])
