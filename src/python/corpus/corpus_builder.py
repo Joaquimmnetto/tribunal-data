@@ -2,7 +2,7 @@
 
 import os
 import sys
-import codecs
+#import codecs
 import csv
 
 import traceback
@@ -23,9 +23,9 @@ dest_dir = "../../.." if len(sys.argv) < 3 else sys.argv[2]
 num_producers = 10 if len(sys.argv) < 4 else int(sys.argv[3])
 
 chat_csv_name = 'chat.csv' if len(sys.argv) < 5 else str(sys.argv[4])
-chat_corpus_name = 'None' if len(sys.argv) < 6  else str(sys.argv[5])
-players_name = 'None' if len(sys.argv) < 7  else str(sys.argv[6])
-matches_name = 'None' if len(sys.argv) < 8 else str(sys.argv[7])
+chat_corpus_name = 'corpus.txt' if len(sys.argv) < 6  else str(sys.argv[5])
+players_name = 'players.csv' if len(sys.argv) < 7  else str(sys.argv[6])
+matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 # chat_atrs = ['date', 'time', 'sent_to', 'champion_name', 'message', 'association_to_offender', 'name_change'],
 # ply_atrs = ['level', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome', 'time_played',
@@ -71,7 +71,7 @@ def set_chat_processing(consumers, processors, process_csv=True, process_corpus=
 
 
 def set_players_processing(consumers, processors):
-	players_fl = codecs.open(dest_dir + '/' + players_name, 'at', encoding='utf-8')
+	players_fl = open(dest_dir + '/' + players_name, 'at', encoding='utf-8')
 	players_wr = csv.writer(players_fl)
 	player_consumer = Consumer(players_wr, csv_consuming)
 
@@ -80,7 +80,7 @@ def set_players_processing(consumers, processors):
 
 
 def set_matches_processing(consumers, processors):
-	matches_fl = codecs.open(dest_dir + '/' + matches_name, 'at', encoding='utf-8')
+	matches_fl = open(dest_dir + '/' + matches_name, 'at', encoding='utf-8')
 	matches_wr = csv.writer(matches_fl)
 	match_consumer = Consumer(matches_wr, csv_consuming)
 
