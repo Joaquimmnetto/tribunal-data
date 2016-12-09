@@ -10,7 +10,7 @@ class Processor:
 		self.atrs = atrs
 		self.consumer = consumer
 		self.filters = filters if filters is not None else []
-
+		self.header = True
 		self.threads = []
 
 	def add_filter(self,cmp_lmb):
@@ -26,8 +26,16 @@ class Processor:
 
 		return valid
 
-	def process(self,match_num,match):
+	def process(self, match_num, match):
 		pass
+
+	def apply_header(self):
+		pass
+		if not self.header:
+			headers = ['case','match'] + self.atrs
+			self.consumer.feed(headers)
+			self.header = True
+
 
 	# def set_params(self,match_num,match,semaphore):
 	# 	self.match_num = match_num

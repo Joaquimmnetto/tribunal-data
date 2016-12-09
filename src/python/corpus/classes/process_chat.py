@@ -55,6 +55,8 @@ class ChatProcessor(Processor):
 		csv = self.csv
 		corpus = self.corpus
 
+		self.apply_header() if csv else None
+
 		case_id = match['case_id']
 
 		chat = match['chat_log']

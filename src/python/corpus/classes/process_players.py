@@ -8,6 +8,8 @@ class PlayerProcessor(Processor):
 		Processor.__init__(self, atrs, consumer, filters)
 
 	def process(self, match_num, match):
+		self.apply_header()
+
 		case_id = match['case_id']
 
 		for entry in match['players']:

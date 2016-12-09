@@ -35,7 +35,7 @@ matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 chat_atrs = ["association_to_offender", "champion_name", "time", "message"]
 player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']
-match_atrs = ['premade', 'most_common_report_reason', 'allied_report_count', 'enemy_report_count', 'case_total_reports',
+match_atrs = ['game_type', 'most_common_report_reason','reports.comments_ally','reports.comments_enemy', 'allied_report_count', 'enemy_report_count',
               'time_played']
 
 
@@ -132,9 +132,10 @@ print("Esperando pelos consumidores...")
 for consumer in consumers:
 	consumer.join(timeout=10)
 
-print('Organizando resultados...')
-import subprocess
-import platform
+print('Finalizado!')
+
+#import subprocess
+#import platform
 
 # if platform.system() == "Windows":
 # 	subprocess.call(['bash', 'sort.sh', 'chat.csv', 'chat.csv'])
