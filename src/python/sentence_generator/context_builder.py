@@ -36,6 +36,7 @@ def create_neigh(words,corpus):
 	first_words = set()
 	w_indexes = dict((w, i) for i, w in enumerate(words))
 
+
 	print('Preenchendo Matriz...')
 
 	for line in corpus:
@@ -46,16 +47,18 @@ def create_neigh(words,corpus):
 
 		# tk_line = TweetTokenizer(reduce_len=True).tokenize(line.lower())
 		tk_line = line.replace('\n', '').split(sep=" ")
-
+		#print(tk_line)
 		for i, token in enumerate(tk_line[:len(tk_line) - 1]):
 			next_w = tk_line[i + 1]
 			try:
 				w_index = w_indexes[token]
 				n_index = w_indexes[next_w]
+
 				if i == 0:
 					first_words.add(token)
-				neigh[w_index][n_index] += 1
+				neigh[w_index,n_index] += 1
 			except:
+				#print("Word not found (",token,")")
 				pass
 			# traceback.print_exc()
 	return neigh,first_words

@@ -41,6 +41,8 @@ with open(corpus_vocab_fl,'r',encoding='utf-8') as vocab:
 words = sorted(vocab_freq.keys())
 
 
+
+
 print("Saving vocab_freq binary on ",vocab_freq_fl)
 with open(vocab_freq_fl, 'wb') as output:
 	pickle.dump(vocab_freq, output, pickle.HIGHEST_PROTOCOL)

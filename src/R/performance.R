@@ -26,30 +26,33 @@ rm(perf)
 players <- players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) )
 
 #Team peformance
-team.performance <- aggregate( performance~case+match+relation.offender, data=players, FUN=sum )
+team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )
+
 
 allies.performance <- team.performance %>%  
-  filter(relation.offender == 'ally') %>%
-  select(case, match, performance) %>%
-  mutate(performance = performance/4) %>% 
-  rename(ally.performance = performance) 
+                       filter(relation.offender == 'ally') %>% 
+                       select(case, match, performance) %>%
+                       mutate(performance = performance/4) %>% 
+                       rename(ally.performance = performance) 
+
 enemies.performance <- team.performance %>%  
-  filter(relation.offender == 'enemy') %>%
-  select(case, match, performance) %>%
-  mutate(performance = performance/5) %>% 
-  rename(enemy.performance = performance) 
+                      filter(relation.offender == 'enemy') %>%
+                      select(case, match, performance) %>%
+                      mutate(performance = performance/5) %>% 
+                      rename(enemy.performance = performance) 
 
 
 offender.performance <- team.performance[team.performance$relation.offender == 'offender',c("case","match","performance")] %>% 
-  rename(offender.performance = performance)
+                          rename(offender.performance = performance)
 
 matches <- matches %>% left_join(allies.performance,by=c('case','match')) %>% 
-  left_join(enemies.performance,by=c('case','match')) %>% 
-  left_join(offender.performance,by=c('case','match'))
+                          left_join(enemies.performance,by=c('case','match')) %>% 
+                          left_join(offender.performance,by=c('case','match'))
 
 perf <- aggregate(performance ~ case+match, data=players, FUN=sum)
 
-#rm(team.performance)
-#rm(allies.performance)
-#rm(enemies.performance)
-#rm(offender.performance)
+rm(team.performance)
+rm(allies.performance)
+rm(enemies.performance)
+rm(offender.performance)
+rm(perf)

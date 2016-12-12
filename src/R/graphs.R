@@ -113,17 +113,19 @@ perf.outcome.offender.box <- ggplot(data=players,aes(x=outcome,y=performance,col
 
 perf.hist <- ggplot(data=players) + geom_histogram(aes(x=performance),bins=20)
 
-#mtpl.view <- mtpl.view[mtpl.view$most.common.offense!="",]
+#mtpl.view <- mtpl.view[mtpl.view$most.common.ofense!="",]
 
 
 #--------------Métrica de toxicidade por partida--------------------
 
 #nuvem de pontos bonita, boa pra mostrar a distribuição visualmente
-perf.mtox.outcome.points <- ggplot(data = mtpl.view, aes(x=match.contamination,y=performance,color= outcome)) + geom_point()
+perf.mtox.outcome.points <- ggplot(data = matches, 
+                                   aes(x=match.contamination, y = ally.performance + enemy.performance + offender.performance, color= outcome)) + 
+                                   geom_point()
 
 
 #Distribuição da contaminação. Não é bonitinha mas é tecnica.
-mtox.hist <- ggplot(data=matches,aes(x=match.contamination)) +geom_histogram(bins=10)
+mtox.hist <- ggplot(data=matches,aes(x=match.contamination)) + geom_histogram(bins=10)
 
 #Mostra como o desempenho no geral cai com a contaminação
 #perf.mtox.lm <- ggplot(data = mtpl.view) + geom_smooth(aes(x=match.contamination,y=performance),method=lm)

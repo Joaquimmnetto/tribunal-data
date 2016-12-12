@@ -23,14 +23,23 @@ matches$reports.case = NULL
 players$champion = NULL
 
 players <- players %>% mutate(casematch = paste(case,match))
+players <- players %>% mutate(count = rep.int(1,nrow(players)))
 matches <- matches %>% mutate(casematch = paste(case,match))
 
 
-removal <- append(players[players$relation.offender == "",c('casematch')], matches[matches$most.common.offense == "",c('casematch')])
+
+
+removal <- append(players[players$relation.offender == "",c('casematch')], 
+                  matches[matches$most.common.offense == "",c('casematch')])
+removal <- append(removal,(aggregate(count~casematch,data=players,FUN=sum) %>% filter(count < 10))$casematch)
+removal <- unique(removal)
+
 
 players <- players[!(players$casematch %in% removal),]
 matches <- matches[!(matches$casematch %in% removal),]
 
+players$count = NULL
+players$casematch = NULL
 
 
 players$relation.offender <- factor(players$relation.offender)
