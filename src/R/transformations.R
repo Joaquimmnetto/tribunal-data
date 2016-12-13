@@ -11,7 +11,8 @@ source("src/R/preprocessing.R")
 system.time({
 source("src/R/performance.R")
 })
-
+#save.image("performance.RData")
 system.time({
 source("src/R/contamination.R")
 })
+#save.image("full_data.RData")

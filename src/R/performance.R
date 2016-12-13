@@ -17,7 +17,8 @@ matches <- plyr::rename(matches,c("kda"="match.kda"))
 perf <- players[c("id","case","match","gold","kda")] %>% 
   left_join( matches[ c("case","match","match.gold","match.kda") ],by=c("case","match") ) %>%
   mutate(perc.gold = (gold/match.gold)) %>%
-  mutate(perc.kda = (kda/match.kda))
+  mutate(perc.kda = ifelse(match.kda>0,kda/match.kda,0) )
+  
 
 players <- players %>% left_join(perf[c("id","perc.gold","perc.kda")],by=c("id"))
 rm(perf)
@@ -26,6 +27,7 @@ rm(perf)
 players <- players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) )
 
 #Team peformance
+team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )
 team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )
 
 
@@ -50,10 +52,7 @@ matches <- matches %>% left_join(allies.performance,by=c('case','match')) %>%
                           left_join(offender.performance,by=c('case','match'))
               
 
-perf <- aggregate(performance ~ case+match, data=players, FUN=sum)
-
 rm(team.performance)
 rm(allies.performance)
 rm(enemies.performance)
 rm(offender.performance)
-rm(perf)
