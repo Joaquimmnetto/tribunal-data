@@ -48,6 +48,7 @@ offender.performance <- team.performance[team.performance$relation.offender == '
 matches <- matches %>% left_join(allies.performance,by=c('case','match')) %>% 
                           left_join(enemies.performance,by=c('case','match')) %>% 
                           left_join(offender.performance,by=c('case','match'))
+              
 
 perf <- aggregate(performance ~ case+match, data=players, FUN=sum)
 

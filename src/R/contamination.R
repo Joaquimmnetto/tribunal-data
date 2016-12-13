@@ -24,4 +24,4 @@ matches <- matches %>% mutate(ally.contamination = report.ratio*reports.allies/4
 matches <- matches %>% mutate(enemy.contamination = report.ratio*reports.enemies/5)
 matches <- matches %>% mutate(match.contamination = ally.contamination+enemy.contamination)
 
-#matches$report.ratio <- NULL
+matches$report.ratio <- NULL

@@ -4,10 +4,13 @@
 i=0
 
 dest="../.."
-num_prod=12
-chat_csv=chat_full.${1}.csv
-chat_corpus=corpus_full.${1}.csv
-players=players_full.${1}.csv
+num_prod=8
+#chat_csv=chat_full.${1}.csv
+#chat_corpus=corpus_full.${1}.csv
+#players=players_full.${1}.csv
+chat_csv=None
+chat_corpus=None
+players=None
 matches=matches_full.${1}.csv
 
 executable='python'

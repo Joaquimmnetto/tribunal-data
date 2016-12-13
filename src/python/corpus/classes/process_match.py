@@ -34,9 +34,9 @@ class MatchProcessor(Processor):
 				times.sort(reverse=True)
 				value = times[0]
 			elif atr == 'reports.comments_ally':
-				value = reports['ally']
+				value = reports['ally'].replace('\n',' ')
 			elif atr == 'reports.comments_enemy':
-				value = reports['enemy']
+				value = reports['enemy'].replace('\n',' ')
 			else:
 				value = match[atr]
 			csv_array.append(value)
