@@ -3,7 +3,8 @@ require(data.table)
 
 players_fl <- "data/csv/players_full.csv"
 matches_fl <- "data/csv/matches_full.csv"
-
+#players_fl <- "data/csv/players.csv"
+#matches_fl <- "data/csv/matches.csv"
 
 #Problemas na construção do csv:
 #1. Duplicação de dados
@@ -63,6 +64,8 @@ removal <- unique(removal)
 
 players <- players[!(players$casematch %in% removal),]
 matches <- matches[!(matches$casematch %in% removal),]
+
+matches <- matches %>% mutate(reports.allies = ifelse(reports.allies==5,4L,reports.allies))
 
 #Removendo colunas auxiliares que não irão ser mais necessárias.
 players$count = NULL

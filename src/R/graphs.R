@@ -1,112 +1,26 @@
 require(ggplot2)
+require(dplyr)
 
 save_graph <- function(plot){
   ggsave(paste(deparse(substitute(plot)),'.png',sep=''), plot=plot, device='png')
 }
 
-# case.match <- unique(matches.players %>%
-#                        select(case, match, relation.offender, outcome))
-# 
-# allies <- matches.players %>% filter(relation.offender == "ally")
-# enemies <- matches.players %>% filter(relation.offender == "enemy")
-# offenders <- matches.players %>% filter(relation.offender == "offender")
-# 
-# allies.win <- allies %>% filter(outcome == "Win")
-# enemies.win <- enemies %>% filter(outcome == "Win")
-# offenders.win <- offenders %>% filter(outcome == "Win")
-# 
-# 
-# 
-# common.offense.barplot <- ggplot(data = matches, aes(x = most.common.offense)) +
-#     geom_bar() +
-#     xlab("Tipos de ofensas") + ylab("Número de partidas") +
-#     annotate("text", x = 1, y = 3200, label = "1 partida sem ofensa",
-#              angle = 90, color = "red") +
-#     theme(axis.text.x=element_text(angle = 45, hjust = 1))
-# 
-# reports.by.reason.barplot <- ggplot(data = reports.by.reason) +
-#     geom_bar(aes(x = most.common.offense, y = total.reports),
-#              stat = "identity") +
-#     xlab("Tipos de ofensas") + ylab("Número de denúncias") +
-#     annotate("text", x = 1, y = 5400, label = "nenhuma denúncia",
-#              angle = 90, color = "red") +
-#     theme(axis.text.x=element_text(angle = 45, hjust = 1))
-# 
-# time.played.hist <- ggplot(data = matches, aes(x = time.played)) +
-#     geom_histogram(bins = 100) +
-#     xlab("Duração da partida (segundos)") + ylab("Número de partidas") +
-#     annotate("text", x = 1800, y = 2400, color = "red",
-#              label = "Tempo mínimo de permanência (20 min)") + 
-#     geom_line(arrow = arrow(ends = "first", type = "closed"),
-#               data = data.frame(x = c(2000, 1400), y = c(2250, 1900)),
-#               aes(x = x, y = y), color = "red")
-# 
-# outcome.relation.barplot <- ggplot(data = players) +
-#     geom_bar(aes(x = relation.offender, fill = outcome)) +
-#     xlab("Associação com ofensor") + ylab("Número de partidas")
-# 
-# allies.win.time.played.hist <- ggplot(data = allies.win) +
-#                                geom_histogram(aes(x = time.played), bins = 100) +
-#                                geom_vline(xintercept = mean(allies.win$time.played), color = "red") +
-#                                xlim(0, 5000) + 
-#                                xlab("Duração da partida (segundos)") +
-#                                ylab("Número de partidas") +
-#                                ggtitle("Vitória dos aliados") +
-#                                annotate("text", x = 3000, y = 1700,
-#                                         color = "red", label = "Média = 2075.5 segundos")
-# 
-# enemies.win.time.played.hist <- ggplot(data = enemies.win) +
-#                                 geom_histogram(aes(x = time.played), bins = 100) +
-#                                 geom_vline(xintercept = mean(enemies.win$time.played), color = "red") +
-#                                 xlim(0, 5000) +
-#                                 xlab("Duração da partida (segundos)") +
-#                                 ylab("Número de partidas") +
-#                                 ggtitle("Vitória dos adversários") +
-#                                         annotate("text", x = 2900, y = 7800,
-#                                         color = "red", label = "Média = 1938.2 segundos")
-# 
-# allies.gold.hist <- ggplot(data = allies) +
-#                     geom_histogram(aes(x = gold), bins = 100) +
-#                     geom_vline(xintercept = mean(allies$gold), color = "red") +
-#                     xlim(0, 20500) +
-#                     xlab("Recompensa (ouro)") +
-#                     ylab("Número de partidas") +
-#                     ggtitle("Recompensa dos aliados") +
-#                     annotate("text", x = 12500, y = 3100, color = "red",
-#                              label = "Média = 8927.2 (ouro)")
-# 
-# enemies.gold.hist <- ggplot(data = enemies) +
-#                          geom_histogram(aes(x = gold), bins = 100) +
-#                          geom_vline(xintercept = mean(enemies$gold), color = "red") +
-#                          xlim(0, 20500) +
-#                          xlab("Recompensa (ouro)") +
-#                          ylab("Número de partidas") +
-#                          ggtitle("Recompensa dos adversários") +
-#                          annotate("text", x = 13700, y = 3780, color = "red",
-#                                   label = "Média = 10166 (ouro)")
-# rm(allies.win)
-# rm(enemies.win)
-# rm(offenders.win)
-# 
-# rm(allies)
-# rm(enemies)
-# rm(offenders)
-# 
-# rm(case.match)
-
-#mtpl.view <- matches.players
-
-
-#mtpl.view$team.contamination <- range01(mtpl.view$team.contamination)
-#mtpl.view$match.contamination <- range01(mtpl.view$match.contamination)
-
-#mtpl.view <- mtpl.view[mtpl.view$relation.offender!="",]
+#coluna match.winner:mostra qual o time que venceu a partida(ally,enemy)
+matches <- matches %>% 
+  left_join(
+    players %>%
+      select(case,match,relation.offender,outcome) %>%
+      filter(outcome=='Win' & relation.offender!='offender') %>%
+      unique() %>%
+      rename(match.winner = relation.offender) %>%
+      select(case,match,match.winner)
+  )
 
 #--------------Métrica de desempenho--------------------
 
-perc.outcome.point <- ggplot(data=players,aes(x=perc.gold,y=perc.kda,color=outcome))+geom_point()
-save_graph(perc.outcome.point)
-rm(perc.outcome.point)
+#perc.outcome.point <- ggplot(data=players,aes(x=perc.gold,y=perc.kda,color=outcome))+geom_point()
+#save_graph(perc.outcome.point)
+#rm(perc.outcome.point)
 
 #boxplot de performance X outcome. Mostra que a métrica cobre bem os jogadores vencedores.
 perf.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance))
@@ -129,6 +43,7 @@ rm(perf.offender.outcome.box)
 #rm(perf.outcome.offender.box)
 
 perf.hist <- ggplot(data=players) + geom_histogram(aes(x=performance),bins=20)
+
 save_graph(perf.hist)
 rm(perf.hist)
 
@@ -136,14 +51,16 @@ rm(perf.hist)
 #--------------Métrica de toxicidade por partida--------------------
 
 #nuvem de pontos bonita, boa pra mostrar a distribuição visualmente
-perf.mtox.outcome.points <- ggplot(data = matches) + 
-                                    geom_point(aes(x=ally.contamination, y = ally.performance),color='blue') +
-                                    geom_point(aes(x=enemy.contamination, y = enemy.performance),color='red')
-save_graph(perf.mtox.outcome.points)
-rm(perf.mtox.outcome.points)
+perf.mtox.points <- ggplot(data = matches) + 
+  geom_point(aes(x=ally.contamination, y = ally.performance, color=match.winner)) 
+  geom_point(aes(x=enemy.contamination, y = enemy.performance, color=match.winner))
+
+save_graph(perf.mtox.points)
+rm(perf.mtox.points)
 
 #Distribuição da contaminação. Não é bonitinha mas é tecnica.
 mtox.hist <- ggplot(data=matches,aes(x=match.contamination)) + geom_histogram(bins=10)
+
 save_graph(mtox.hist)
 rm(mtox.hist)
 
@@ -152,61 +69,94 @@ rm(mtox.hist)
 
 #Mostra como ally e offender caem com a contaminação, enquando o enemy sobe
 #Remover outliers para plotar isso.
-perf.mtox.offender.lm <- ggplot(data = matches) + geom_smooth(aes(x=ally.contamination,y=ally.performance), method=lm, color='blue') + 
-                                                    geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method=lm, color='red') + 
-                                                    geom_smooth(aes(x=ally.contamination,y=offender.performance), method=lm, color='purple')
+matches.no.out <- matches
+threshold <- min(boxplot(matches.no.out[,c("ally.contamination")])$out)
+matches.no.out <- matches.no.out %>% filter(ally.contamination <= threshold)
+
+threshold <- min(boxplot(matches.no.out[,c("ally.performance")])$out)
+matches.no.out <- matches.no.out %>% filter(ally.performance <= threshold)
+
+threshold <- min(boxplot(matches.no.out[,c("enemy.contamination")])$out)
+matches.no.out <- matches.no.out %>% filter(enemy.contamination <= threshold)
+
+threshold <- min(boxplot(matches.no.out[,c("enemy.performance")])$out)
+matches.no.out <- matches.no.out %>% filter(enemy.performance <= threshold)
+
+threshold <- min(boxplot(matches.no.out %>% select(offender.performance))$out)
+matches.no.out <- matches.no.out %>% filter(offender.performance <= threshold)
+
+noout.perf.mtox.offender.lm <- ggplot(data = matches.no.out) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance), method="lm", color='purple')+
+  labs(x="contamination",y="performance")
+
+save_graph(noout.perf.mtox.offender.lm)
+rm(noout.perf.mtox.offender.lm)
+
+
+
+perf.mtox.offender.lm <- ggplot(data = matches) + geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance), method="lm", color='purple')+
+  labs(x="contamination",y="performance")
+
 save_graph(perf.mtox.offender.lm)
 rm(perf.mtox.offender.lm)
-
-#report.mtox.pre.spl = ggplot(data=matches,aes(x=match.contamination,y=reports.allies+reports.enemies,color=premade)) + geom_smooth()
 
 
 #---------------Comparações com tipos de ofensa--------------------------------
 
 #
 mtox.offense.hist <- ggplot(matches) + 
-                                  geom_histogram(aes(x=match.contamination, fill=most.common.offense), bins=15, position='fill')
+  geom_histogram(aes(x=match.contamination, fill=most.common.offense), bins=15, position='fill')
+
 save_graph(mtox.offense.hist)
 rm(mtox.offense.hist)
 
 #
 mtox.offense.hist.enemy <- ggplot(matches) + 
-                                  geom_histogram(aes(x=enemy.contamination, fill=most.common.offense),bins=6,position='fill')
+  geom_histogram(aes(x=enemy.contamination, fill=most.common.offense),bins=15,position='fill')
+
 save_graph(mtox.offense.hist.enemy)
 rm(mtox.offense.hist.enemy)
 
 #
 mtox.offense.hist.ally <- ggplot(matches) + 
-                                  geom_histogram(aes(x=ally.contamination, fill=most.common.offense), bins=6, position='fill')
+  geom_histogram(aes(x=ally.contamination, fill=most.common.offense), bins=15, position='fill')
+
 save_graph(mtox.offense.hist.ally)
 rm(mtox.offense.hist.ally)
 
 #
 #perf.offense.hist <- ggplot(matches) + 
-#                                   geom_histogram(aes(x=match.performance, fill=most.common.offense),bins=6,position='fill') + 
+#                                   geom_histogram(aes(x=match.performance, fill=most.common.offense),bins=15,position='fill') + 
 #                                   scale_x_reverse()
-save_graph(perf.offense.hist)
-rm(perf.offense.hist)
+#save_graph(perf.offense.hist)
+#rm(perf.offense.hist)
 
 #
 perf.offense.hist.enemy <- ggplot(matches) + 
-                                  geom_histogram(aes(x=enemy.performance, fill=most.common.offense), bins=15, position='fill') + 
-                                  scale_x_reverse()
+  geom_histogram(aes(x=enemy.performance, fill=most.common.offense), bins=15, position='fill') + 
+  scale_x_reverse()
+
 save_graph(perf.offense.hist.enemy)
 rm(perf.offense.hist.enemy)
 
 #
 perf.offense.hist.ally <- ggplot(matches) + 
-                                  geom_histogram(aes(x=ally.performance, fill=most.common.offense), bins=15,position='fill') + 
-                                  scale_x_reverse()
+  geom_histogram(aes(x=ally.performance, fill=most.common.offense), bins=15,position='fill') + 
+  scale_x_reverse()
+
 save_graph(perf.offense.hist.ally)
 rm(perf.offense.hist.ally)
 
 #mostra que o time aliado sofre muito mais com o comportamento tóxico do que o time inimigo.
 #contudo, não é como se o time inimigo fosse completamente 'limpo'
 ttox.ofense.box <- ggplot(matches) + 
-                                  geom_boxplot(aes(x='enemy',y=enemy.contamination)) +
-                                  geom_boxplot(aes(x='ally',y=ally.contamination)) +
-                                  labs(x='team',y='contamination')
+  geom_boxplot(aes(x='enemy',y=enemy.contamination)) +
+  geom_boxplot(aes(x='ally',y=ally.contamination)) +
+  labs(x='team',y='contamination')
+
 save_graph(ttox.ofense.box)
 rm(ttox.ofense.box)
