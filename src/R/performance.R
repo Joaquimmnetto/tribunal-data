@@ -28,7 +28,6 @@ players <- players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2
 
 #Team peformance
 team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )
-team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )
 
 
 allies.performance <- team.performance %>%  
@@ -47,9 +46,10 @@ enemies.performance <- team.performance %>%
 offender.performance <- team.performance[team.performance$relation.offender == 'offender',c("case","match","performance")] %>% 
                           rename(offender.performance = performance)
 
-matches <- matches %>% left_join(allies.performance,by=c('case','match')) %>% 
-                          left_join(enemies.performance,by=c('case','match')) %>% 
-                          left_join(offender.performance,by=c('case','match'))
+matches <- matches %>% left_join(allies.performance) %>% 
+                          left_join(enemies.performance) %>% 
+                          left_join(offender.performance) %>%
+                          mutate(match.performance = (4*ally.performance)+(5*enemy.performance)+offender.performance)
               
 
 rm(team.performance)

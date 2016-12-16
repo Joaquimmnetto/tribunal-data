@@ -18,9 +18,10 @@ matches <- matches %>%
 
 #--------------Métrica de desempenho--------------------
 
-#perc.outcome.point <- ggplot(data=players,aes(x=perc.gold,y=perc.kda,color=outcome))+geom_point()
-#save_graph(perc.outcome.point)
-#rm(perc.outcome.point)
+sm.perc.outcome.point <- ggplot(players %>% kmn.smoother(1000,x=perc.gold,y=perc.kda)) +
+                            geom_point(aes(x=perc.gold,y=perc.kda,color=outcome))
+save_graph(sm.perc.outcome.point)
+rm(sm.perc.outcome.point)
 
 #boxplot de performance X outcome. Mostra que a métrica cobre bem os jogadores vencedores.
 perf.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance))
@@ -51,16 +52,20 @@ rm(perf.hist)
 #--------------Métrica de toxicidade por partida--------------------
 
 #nuvem de pontos bonita, boa pra mostrar a distribuição visualmente
-perf.mtox.points <- ggplot(data = matches) + 
-  geom_point(aes(x=ally.contamination, y = ally.performance, color=match.winner)) 
-  geom_point(aes(x=enemy.contamination, y = enemy.performance, color=match.winner))
+#perf.mtox.points <- ggplot(data = matches) + 
+#  geom_point(aes(x=ally.contamination, y = ally.performance, color=match.winner)) 
+#  geom_point(aes(x=enemy.contamination, y = enemy.performance, color=match.winner))
+#save_graph(perf.mtox.points)
+#rm(perf.mtox.points)
 
-save_graph(perf.mtox.points)
-rm(perf.mtox.points)
+sm.perf.mtox.points <- ggplot(matches %>% kmn.smoother(1000,match.contamination,match.performance)) + 
+                        geom_point(aes(x=match.contamination,y=match.performance)) + 
+                        geom_smooth(aes(x=match.contamination,y=match.performance))
+save_graph(sm.perf.mtox.points)
+rm(sm.perf.mtox.points)
 
 #Distribuição da contaminação. Não é bonitinha mas é tecnica.
 mtox.hist <- ggplot(data=matches,aes(x=match.contamination)) + geom_histogram(bins=10)
-
 save_graph(mtox.hist)
 rm(mtox.hist)
 
@@ -69,21 +74,13 @@ rm(mtox.hist)
 
 #Mostra como ally e offender caem com a contaminação, enquando o enemy sobe
 #Remover outliers para plotar isso.
-matches.no.out <- matches
-threshold <- min(boxplot(matches.no.out[,c("ally.contamination")])$out)
-matches.no.out <- matches.no.out %>% filter(ally.contamination <= threshold)
 
-threshold <- min(boxplot(matches.no.out[,c("ally.performance")])$out)
-matches.no.out <- matches.no.out %>% filter(ally.performance <= threshold)
-
-threshold <- min(boxplot(matches.no.out[,c("enemy.contamination")])$out)
-matches.no.out <- matches.no.out %>% filter(enemy.contamination <= threshold)
-
-threshold <- min(boxplot(matches.no.out[,c("enemy.performance")])$out)
-matches.no.out <- matches.no.out %>% filter(enemy.performance <= threshold)
-
-threshold <- min(boxplot(matches.no.out %>% select(offender.performance))$out)
-matches.no.out <- matches.no.out %>% filter(offender.performance <= threshold)
+matches.no.out <- matches %>% 
+                    remove.outliers(ally.contamination) %>% 
+                    remove.outliers(ally.performance) %>% 
+                    remove.outliers(enemy.contamination) %>% 
+                    remove.outliers(enemy.performance) %>%
+                    remove.outliers(offender.performance)
 
 noout.perf.mtox.offender.lm <- ggplot(data = matches.no.out) + 
   geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
