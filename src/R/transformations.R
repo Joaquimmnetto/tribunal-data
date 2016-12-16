@@ -33,14 +33,14 @@ source("src/R/performance.R")
 system.time({
 source("src/R/contamination.R")
 })
-save.image("sample_data.RData")
+#save.image("sample_data.RData")
 
 
-matches.no.out <- matches %>% remove.outliers(match.contamination) %>% remove.outliers(match.performance)
+#matches.no.out <- matches %>% remove.outliers(match.contamination) %>% remove.outliers(match.performance)
 
 
 #plotando com menos densidade
-medians <- matches %>% kmn.smoother(100, match.contamination, match.performance)
-require(ggplot2)
-ggplot(medians) + geom_point(aes(x=match.contamination,y=match.performance)) + 
-                                  geom_smooth(aes(x=match.contamination,y=match.performance))
+#medians <- matches %>% kmn.smoother(100, match.contamination, matc#h.performance)
+#require(ggplot2)
+#ggplot(medians) + geom_point(aes(x=match.contamination,y=match.per#formance)) + 
+ #                                 geom_smooth(aes(x=match.contamin#ation,y=match.performance))
