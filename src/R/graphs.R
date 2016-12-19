@@ -64,6 +64,18 @@ sm.perf.mtox.points <- ggplot(matches %>% kmn.smoother(1000,match.contamination,
 save_graph(sm.perf.mtox.points)
 rm(sm.perf.mtox.points)
 
+sm.perf.mtox.team.points <- ggplot() + 
+  geom_point(data = matches %>% kmn.smoother(1000,ally.contamination,ally.performance), 
+              aes(x=ally.contamination,y=ally.performance), color='blue') + 
+  geom_point(data = matches %>% kmn.smoother(1000,enemy.contamination,enemy.performance), 
+              aes(x=enemy.contamination,y=enemy.performance), color='red') + 
+  geom_point(data = matches %>% kmn.smoother(1000,ally.contamination,offender.performance), 
+              aes(x=ally.contamination,y=offender.performance), color='purple')+
+  labs(x="contamination",y="performance")
+save_graph(sm.perf.mtox.team.points)
+rm(sm.perf.mtox.team.points)
+
+
 #Distribuição da contaminação. Não é bonitinha mas é tecnica.
 mtox.hist <- ggplot(data=matches,aes(x=match.contamination)) + geom_histogram(bins=10)
 save_graph(mtox.hist)
@@ -83,17 +95,28 @@ matches.no.out <- matches %>%
                     remove.outliers(offender.performance)
 
 noout.perf.mtox.offender.lm <- ggplot(data = matches.no.out) + 
-  geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
-  geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method="lm", color='red') + 
-  geom_smooth(aes(x=ally.contamination,y=offender.performance), method="lm", color='purple')+
+  geom_smooth(aes(x=ally.contamination,y=ally.performance), method='lm', color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method='lm', color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance), method='lm', color='purple')+
   labs(x="contamination",y="performance")
 
 save_graph(noout.perf.mtox.offender.lm)
 rm(noout.perf.mtox.offender.lm)
 
+sm.perf.mtox.team.lm <- ggplot() + 
+  geom_smooth(data = matches %>% kmn.smoother(1000,ally.contamination,ally.performance), 
+             aes(x=ally.contamination,y=ally.performance), method='lm', color='blue') + 
+  geom_smooth(data = matches %>% kmn.smoother(1000,enemy.contamination,enemy.performance), 
+             aes(x=enemy.contamination,y=enemy.performance), method='lm', color='red') + 
+  geom_smooth(data = matches %>% kmn.smoother(1000,ally.contamination,offender.performance), 
+             aes(x=ally.contamination,y=offender.performance), method='lm', color='purple')+
+  labs(x="contamination",y="performance")
+save_graph(sm.perf.mtox.team.lm)
+rm(sm.perf.mtox.team.lm)
 
 
-perf.mtox.offender.lm <- ggplot(data = matches) + geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
+perf.mtox.offender.lm <- ggplot(data = matches) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
   geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method="lm", color='red') + 
   geom_smooth(aes(x=ally.contamination,y=offender.performance), method="lm", color='purple')+
   labs(x="contamination",y="performance")

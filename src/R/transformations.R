@@ -7,7 +7,7 @@ remove.outliers <- function(dt,col__){
   threshold <- min(boxplot(dt[,c(col_name)])$out)
   ret <- dt %>% filter_(paste(col_name,'<=',threshold))
   return(ret)
-}
+} 
 
 
 kmn.smoother <- function(dt,group_size,x,y){ 
