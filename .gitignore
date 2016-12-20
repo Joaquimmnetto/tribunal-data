@@ -52,6 +52,7 @@ vignettes/*.pdf
 *.spy
 *.bat
 *.npy
+*.bin
 
 #-----------------------Python--------------
 
