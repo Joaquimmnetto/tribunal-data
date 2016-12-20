@@ -19,14 +19,32 @@ matches <- fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE)
 
 names(players) <- c("case", "match", "relation.offender", "champion", "kills", "deaths",
                     "assists", "gold", "outcome")
-names(matches) <- c("case", "match", "match.type", "most.common.offense",'report.text.allies','report.text.enemies',"reports.allies", "reports.enemies", "time.played")
+names(matches) <- c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
+                    "reports.allies", "reports.enemies", "time.played") 
+
+#atribuindo tipos corretos para as colunas:
+#Players
+players$case <- as.integer(players$case)
+players$match <- as.integer(players$match)
+players$relation.offender <- factor(players$relation.offender)
+players$champion <- factor(players$champion)
+players$kills <- as.integer(players$kills)
+players$deaths <- as.integer(players$deaths)
+players$assists <- as.integer(players$assists)
+players$gold <- as.integer(players$gold)
+players$outcome <- factor(players$outcome)
+#Matches
+matches$case <- as.integer(matches$case)
+matches$match <- as.integer(matches$match)
+matches$match.type <- factor(matches$match.type)
+matches$most.common.offense <- factor(matches$most.common.offense)
+matches$reports.allies <- as.integer(matches$reports.allies)
+matches$reports.enemies <- as.integer(matches$reports.enemies)
+matches$time.played <- as.integer(matches$time.played)
 
 #Removendo possíveis duplicatas(Não me pergunte como elas foram parar ai, ver isso depois)
 players <- unique(players)
 matches <- unique(matches)
-
-#Salvando imagem dos dados sem pre-processamento
-#save.image(file = "raw_csv.RData")
 
 #transformando colunas de categoria em factors.
 matches$match.type <- factor(matches$match.type)
