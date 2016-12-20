@@ -22,9 +22,9 @@ tars_dir = "../../../sampley_de_guitarra" if len(sys.argv) < 2 else sys.argv[1]
 dest_dir = "../../.." if len(sys.argv) < 3 else sys.argv[2]
 num_producers = 10 if len(sys.argv) < 4 else int(sys.argv[3])
 
-chat_csv_name = 'chat.csv' if len(sys.argv) < 5 else str(sys.argv[4])
-chat_corpus_name = 'corpus.txt' if len(sys.argv) < 6  else str(sys.argv[5])
-players_name = 'players.csv' if len(sys.argv) < 7  else str(sys.argv[6])
+chat_csv_name = 'None' if len(sys.argv) < 5 else str(sys.argv[4])
+chat_corpus_name = 'None' if len(sys.argv) < 6 else str(sys.argv[5])
+players_name = 'None' if len(sys.argv) < 7 else str(sys.argv[6])
 matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 # chat_atrs = ['date', 'time', 'sent_to', 'champion_name', 'message', 'association_to_offender', 'name_change'],
@@ -35,7 +35,8 @@ matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 chat_atrs = ["association_to_offender", "champion_name", "time", "message"]
 player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']
-match_atrs = ['game_type', 'most_common_report_reason','allied_report_count', 'enemy_report_count', 'time_played']
+match_atrs = ['game_type', 'most_common_report_reason','reports.comments_ally','reports.comments_enemy',
+              'allied_report_count', 'enemy_report_count', 'time_played']
 
 
 def text_consuming(writer, value):
@@ -58,7 +59,7 @@ def set_chat_processing(consumers, processors, process_csv=True, process_corpus=
 		consumers.append(corpus_consumer)
 
 	if process_csv:
-		chat_fl = open(dest_dir + '/' + chat_csv_name, "at", encoding='utf-8')
+		chat_fl = open(dest_dir + '/' + chat_csv_name, "at", encoding='utf-8',newline="")
 		chat_wr = csv.writer(chat_fl)
 		chat_consumer = Consumer(chat_wr, csv_consuming)
 		consumers.append(chat_consumer)
@@ -70,7 +71,7 @@ def set_chat_processing(consumers, processors, process_csv=True, process_corpus=
 
 
 def set_players_processing(consumers, processors):
-	players_fl = open(dest_dir + '/' + players_name, 'at', encoding='utf-8')
+	players_fl = open(dest_dir + '/' + players_name, 'at', encoding='utf-8', newline="")
 	players_wr = csv.writer(players_fl)
 	player_consumer = Consumer(players_wr, csv_consuming)
 
@@ -79,8 +80,8 @@ def set_players_processing(consumers, processors):
 
 
 def set_matches_processing(consumers, processors):
-	matches_fl = open(dest_dir + '/' + matches_name, 'at', encoding='utf-8')
-	matches_wr = csv.writer(matches_fl)
+	matches_fl = open(dest_dir + '/' + matches_name, 'at', encoding='utf-8', newline="")
+	matches_wr = csv.writer(matches_fl,quoting=csv.QUOTE_NONNUMERIC)
 	match_consumer = Consumer(matches_wr, csv_consuming)
 
 	consumers.append(match_consumer)
@@ -132,15 +133,3 @@ for consumer in consumers:
 	consumer.join(timeout=10)
 
 print('Finalizado!')
-
-#import subprocess
-#import platform
-
-# if platform.system() == "Windows":
-# 	subprocess.call(['bash', 'sort.sh', 'chat.csv', 'chat.csv'])
-# 	subprocess.call(['bash', 'sort.sh', 'players.csv', 'players.csv'])
-# 	subprocess.call(['bash', 'sort.sh', 'matches.csv', 'matches.csv'])
-# else:
-# 	subprocess.call(['sort.sh', 'chat.csv', 'chat.csv'])
-# 	subprocess.call(['sort.sh', 'players.csv', 'players.csv'])
-# 	subprocess.call(['sort.sh', 'matches.csv', 'matches.csv'])

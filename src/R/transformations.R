@@ -4,8 +4,11 @@ require(data.table)
 
 remove.outliers <- function(dt,col__){
   col_name <- deparse(substitute(col__))
-  threshold <- min(boxplot(dt[,c(col_name)])$out)
-  ret <- dt %>% filter_(paste(col_name,'<=',threshold))
+  summ <- summary(as.matrix(dt[,col_name])[,1])
+  iqr = summ[5] - summ[2]
+  upper_thresh = summ[5] + 1.5*iqr
+  lower_thresh = summ[2] - 1.5*iqr
+  ret <- dt %>% filter_(paste(col_name,'<=',upper_thresh,' & ',col_name,'>=',lower_thresh))
   return(ret)
 } 
 
@@ -33,14 +36,9 @@ source("src/R/performance.R")
 system.time({
 source("src/R/contamination.R")
 })
-#save.image("sample_data.RData")
 
+save.image("full_data_text.RData")
 
-#matches.no.out <- matches %>% remove.outliers(match.contamination) %>% remove.outliers(match.performance)
-
-
-#plotando com menos densidade
-#medians <- matches %>% kmn.smoother(100, match.contamination, matc#h.performance)
-#require(ggplot2)
-#ggplot(medians) + geom_point(aes(x=match.contamination,y=match.per#formance)) + 
- #                                 geom_smooth(aes(x=match.contamin#ation,y=match.performance))
+system.time({
+   source("src/R/graphs.R")
+})

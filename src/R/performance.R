@@ -24,7 +24,7 @@ players <- players %>% left_join(perf[c("id","perc.gold","perc.kda")],by=c("id")
 rm(perf)
 
 #Player performance
-players <- players %>% mutate( performance = sqrt(perc.gold^2+perc.kda^2)/sqrt(2) )
+players <- players %>% mutate( performance = (perc.gold+perc.kda)/2 )
 
 #Team peformance
 team.performance <- aggregate(performance ~ case+match+relation.offender, data=players, FUN=sum )

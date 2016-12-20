@@ -1,10 +1,10 @@
 require(dplyr)
 require(data.table)
 
-#players_fl <- "data/csv/players_full.csv"
-#matches_fl <- "data/csv/matches_full.csv"
-players_fl <- "data/csv/players_sampley.csv"
-matches_fl <- "data/csv/matches_sampley.csv"
+players_fl <- "data/csv/players_full.csv"
+matches_fl <- "data/csv/matches_full.csv"
+#players_fl <- "data/csv/players_sampley.csv"
+#matches_fl <- "data/csv/matches_sampley.csv"
 
 #Problemas na construção do csv:
 #1. Duplicação de dados
@@ -14,12 +14,12 @@ matches_fl <- "data/csv/matches_sampley.csv"
 
 #Carregando dados...
 #Alguns dados estão disjuntos(matches sem players equivalentes e vice-versa) ver issaí. Por enquanto só retirando esses casos do dataset.
-players <- fread(players_fl, header = FALSE, sep=',')
-matches <- fread(matches_fl, header = FALSE, sep=',')
+players <- fread(players_fl, header = FALSE, sep=',',showProgress=TRUE)
+matches <- fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE)
 
 names(players) <- c("case", "match", "relation.offender", "champion", "kills", "deaths",
                     "assists", "gold", "outcome")
-names(matches) <- c("case", "match", "match.type", "most.common.offense","reports.allies", "reports.enemies", "time.played")
+names(matches) <- c("case", "match", "match.type", "most.common.offense",'report.text.allies','report.text.enemies',"reports.allies", "reports.enemies", "time.played")
 
 #Removendo possíveis duplicatas(Não me pergunte como elas foram parar ai, ver isso depois)
 players <- unique(players)

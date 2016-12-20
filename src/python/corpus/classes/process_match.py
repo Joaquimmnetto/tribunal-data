@@ -18,14 +18,14 @@ class MatchProcessor(Processor):
 		csv_array = list()
 		csv_array.append(case_id)
 		csv_array.append(match_num)
-		reports = {'ally':'','enemy':''}
+		reports = {'ally':[], 'enemy':[]}
 
 		if ('reports.comments_ally' in self.atrs) or ('reports.comments_enemy' in self.atrs):
 			for report in match['reports']:
 				if report['association_to_offender'] == 'ally':
-					reports['ally']+= report['comment']
+					reports['ally'].append(report['comment']) if len(report['comment'].strip()) > 0 else None
 				elif report['association_to_offender'] == 'enemy':
-					reports['enemy'] += report['comment']
+					reports['enemy'].append(report['comment']) if len(report['comment'].strip()) > 0 else None
 			pass
 
 		for atr in self.atrs:
@@ -34,11 +34,14 @@ class MatchProcessor(Processor):
 				times.sort(reverse=True)
 				value = times[0]
 			elif atr == 'reports.comments_ally':
-				value = reports['ally'].replace('\n',' ')
+				value = '.'.join(reports['ally']).replace('\n','').replace('\r','') if len(reports['ally']) > 0 else ""
+				#value = '\"' + value + '\"' if len(value) > 0 else ''
 			elif atr == 'reports.comments_enemy':
-				value = reports['enemy'].replace('\n',' ')
+				value = '.'.join(reports['enemy']) if len(reports['enemy']) > 0 else ""
+				#value = '\"' + value + '\"' if len(value) > 0 else ''
 			else:
 				value = match[atr]
+
 			csv_array.append(value)
 
 		self.consumer.feed(csv_array)

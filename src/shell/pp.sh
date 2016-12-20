@@ -10,7 +10,7 @@ num_prod=8
 #players=players_full.${1}.csv
 chat_csv=None
 chat_corpus=None
-players=players_full.${1}.csv
+players=None
 matches=matches_full.${1}.csv
 
 executable='python'
