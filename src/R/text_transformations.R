@@ -1,7 +1,24 @@
-#vocab <- read.csv('vocab.txt', sep=' ', header = FALSE)
+require(tm)
+require(wordcloud)
+require(SnowballC)
+require(data.table)
+require(dtplyr)
 
-read.csv("chat_offender.csv",sep=',',header=FALSE)
-write.csv(chat$V6,sep='',file = "corpus_offender_line.txt",row.names=FALSE,quote=FALSE)
-#
-#read.csv(neigh_matrix.csv,check.names=FALSE)
-#perc.nwords <- t(t(n.words)/rowSums(n.words))
+#matches.in <- matches[matches$most.common.offense=="Helping enemy",]
+#matches.in <- matches[matches$most.common.offense=="Verbal offense",]
+#matches.in <- matches[matches$most.common.offense=="Negative Attitude",]
+#matches.in <- matches[matches$most.common.offense=="Others",]
+
+
+ally.text <- Corpus(VectorSource(matches.in$report.text.allies)) %>% 
+              tm_map(PlainTextDocument) %>% 
+              tm_map(removePunctuation) %>% 
+              tm_map(removeWords,stopwords('english'))
+enemy.text <- Corpus(VectorSource(matches.in$report.text.enemies)) %>% 
+                tm_map(PlainTextDocument) %>% 
+                tm_map(removePunctuation) %>% 
+                tm_map(removeWords,stopwords('english'))
+
+
+wordcloud(ally.text,max.words=100,random.order=FALSE)
+wordcloud(enemy.text,max.words=100,random.order=FALSE)

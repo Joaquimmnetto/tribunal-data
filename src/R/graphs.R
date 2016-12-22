@@ -1,6 +1,6 @@
 require(ggplot2)
 require(dplyr)
-
+require(gridExtra)
 save_graph <- function(plot){
   ggsave(paste('graphs/graphs_perf_sum/',deparse(substitute(plot)),'.png',sep=''), plot=plot, device='png')
 }
@@ -29,8 +29,8 @@ matches.no.out <- matches %>%
 #--------------Métrica de desempenho--------------------
 sm.perc.point <- ggplot(players %>% kmn.smoother(1000,x=perc.gold,y=perc.kda)) +
                              geom_point(aes(x=perc.gold,y=perc.kda))
-save_graph(sm.perc.outcome.point)
-rm(sm.perc.outcome.point)
+save_graph(sm.perc.point)
+rm(sm.perc.point)
 
 #boxplot de performance X outcome. Mostra que a métrica cobre bem os jogadores vencedores.
 perf.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance))
@@ -64,7 +64,56 @@ perf.team.dist <- ggplot(data=players) + geom_density(aes(x=performance,color=re
 save_graph(perf.team.dist)
 rm(perf.team.dist)
 
+#---
+perfs.density <- ggplot(players) + 
+  geom_density(aes(x=performance),color='red') + 
+  geom_density(aes(x=performance2),color='blue') + 
+  geom_density(aes(x=performance3),color="green") + 
+  geom_density(aes(x=performance4),color="black")
+save_graph(perfs.density)
+rm(perfs.density)
 
+perf1.mtox.offender.lm <- ggplot(data = matches) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance), method="lm", color='purple')+
+  labs(title="Euclidean Dist", x="contamination",y="performance")
+
+perf2.mtox.offender.lm <- ggplot(data = matches) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance2), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance2), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance2), method="lm", color='purple')+
+  labs(title="Sum", x="contamination",y="performance")
+
+perf3.mtox.offender.lm <- ggplot(data = matches) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance3), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance3), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance3), method="lm", color='purple')+
+  labs(title="Perc Gold", x="contamination",y="performance")
+perf4.mtox.offender.lm <- ggplot(data = matches) + 
+  geom_smooth(aes(x=ally.contamination,y=ally.performance4), method="lm", color='blue') + 
+  geom_smooth(aes(x=enemy.contamination,y=enemy.performance4), method="lm", color='red') + 
+  geom_smooth(aes(x=ally.contamination,y=offender.performance4), method="lm", color='purple')+
+  labs(title="Perc KDA", x="contamination",y="performance")
+perf.mtox.team.lm.grid <- grid.arrange(perf1.mtox.offender.lm,perf2.mtox.offender.lm,perf3.mtox.offender.lm,perf4.mtox.offender.lm)
+save_graph(perf.mtox.team.lm.grid)
+rm(perf1.mtox.offender.lm)
+rm(perf2.mtox.offender.lm)
+rm(perf3.mtox.offender.lm)
+rm(perf4.mtox.offender.lm)
+rm(perf.mtox.team.lm.grid)
+
+perf1.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance)) + labs(title="Euclidean") + geom_hline(yintercept=mean(players$performance),color="red") + geom_hline(yintercept=median(players$performance),color="green")
+perf2.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance2)) + labs(title="Sum") + geom_hline(yintercept=mean(players$performance2),color="red") + geom_hline(yintercept=median(players$performance2),color="green")
+perf3.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance3)) + labs(title="Gold") + geom_hline(yintercept=mean(players$performance3),color="red") + geom_hline(yintercept=median(players$performance3),color="green")
+perf4.outcome.box <- ggplot(data=players) + geom_boxplot(aes(x=outcome,y=performance4)) + labs(title="KDA") + geom_hline(yintercept=mean(players$performance4),color="red") + geom_hline(yintercept=median(players$performance4),color="green")
+perf.outcome.box.grid <- grid.arrange(perf1.outcome.box,perf2.outcome.box,perf3.outcome.box,perf4.outcome.box)
+save_graph(perf.outcome.box.grid)
+rm(perf1.outcome.box)
+rm(perf2.outcome.box)
+rm(perf3.outcome.box)
+rm(perf4.outcome.box)
+rm(perf.outcome.box.grid)
 
 #--------------Métrica de toxicidade por partida--------------------
 

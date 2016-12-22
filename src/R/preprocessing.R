@@ -1,4 +1,5 @@
 require(dplyr)
+require(dtplyr)
 require(data.table)
 
 players_fl <- "data/csv/players_full.csv"
@@ -14,13 +15,15 @@ matches_fl <- "data/csv/matches_full.csv"
 
 #Carregando dados...
 #Alguns dados estão disjuntos(matches sem players equivalentes e vice-versa) ver issaí. Por enquanto só retirando esses casos do dataset.
-players <- fread(players_fl, header = FALSE, sep=',',showProgress=TRUE)
-matches <- fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE)
+players <- setDT(fread(players_fl, header = FALSE, sep=',',showProgress=TRUE))
+matches <- setDT(fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE))
 
-names(players) <- c("case", "match", "relation.offender", "champion", "kills", "deaths",
-                    "assists", "gold", "outcome")
-names(matches) <- c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
-                    "reports.allies", "reports.enemies", "time.played") 
+setnames(players, names(players),
+                c("case", "match", "relation.offender", "champion", "kills", "deaths",
+                      "assists", "gold", "outcome"))
+setnames(matches,names(matches),
+                c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
+                    "reports.allies", "reports.enemies", "time.played") )
 
 #atribuindo tipos corretos para as colunas:
 #Players
@@ -50,41 +53,60 @@ matches <- unique(matches)
 matches$match.type <- factor(matches$match.type)
 matches$most.common.offense <- factor(matches$most.common.offense)
 
+setkey(matches,case,match)
+setkey(players,case,match,relation.offender)
+
 #Não é usado por nada!
 players$champion = NULL
 
 #Criando colunas auxiliares
 #Id é um valor sequencial para dar a cada jogador um identificador único
-players <- players %>% mutate(id = seq.int(nrow(players)))
+players <- players[,id := seq.int(nrow(players))]
+#players <- players %>% mutate(id = )
+
 #Casematch é um identificador único para partidas, que nada mais é do que a junção de $case e $match.
-players <- players %>% mutate(casematch = paste(case,match))
-matches <- matches %>% mutate(casematch = paste(case,match))
+players <- players[,casematch := paste(case,match)]
+#players <- players %>% mutate(casematch = paste(case,match))
+matches <- matches[,casematch := paste(case,match)]
+#matches <- matches %>% mutate(casematch = paste(case,match))
+
 #Count é uma coluna auxiliar para contar a quantidade de jogadores em cada partida. A coluna é completamente preenchida por 1s.
-players <- players %>% mutate(count = rep.int(1,nrow(players)))
+players <- players[,count := rep.int(1,nrow(players))]
+#players <- players %>% mutate(count = rep.int(1,nrow(players)))
 
 #Remoção de partidas inválidas. Uma partida é inválida se:
   #1. Se uma entrada em matches não tiver seu equivalente em players, e vice-versa.   
   #2. relation.offender ou most.common.offense == ""
   #3. Uma partida não tiver 10 jogadores no seu total.
-  
-
-
 #1
   removal <- setdiff(union(matches$casematch,players$casematch),intersect(matches$casematch,players$casematch))
 #2
-  removal <- append(removal, players[players$relation.offender == "",c('casematch')])
-  removal <- append(removal, matches[matches$most.common.offense == "",c('casematch')])
+  removal <- append(removal, players[players$relation.offender == "",casematch])
+  removal <- append(removal, matches[matches$most.common.offense == "",casematch])
 #3
-  removal <- append(removal,(aggregate(count~casematch,data=players,FUN=sum) %>% filter(count < 10))$casematch)
+  removal <- append(removal,players[,.(count = sum(count)), by=casematch][count < 10,casematch])
 #Removendo possíveis duplicatas.
 removal <- unique(removal)
 
 
-players <- players[!(players$casematch %in% removal),]
-matches <- matches[!(matches$casematch %in% removal),]
+players <- players[!(players$casematch %in% removal)]
+matches <- matches[!(matches$casematch %in% removal)]
 
-matches <- matches %>% mutate(reports.allies = ifelse(reports.allies==5,4L,reports.allies))
+matches <- matches[,reports.allies := ifelse(reports.allies==5,4L,reports.allies)]
 
+#Agrupando tipos de ofensa:
+#Offensive Language, Verbal abuse -> Verbal offense
+#Intentionally feeding, Assisting enemy team -> Helping enemy
+#Spamming, Inapropiate name -> Others
+matches <- matches[,most.common.offense :=
+                                ifelse(most.common.offense=="Assisting Enemy Team" | most.common.offense=="Intentionally Feeding",
+                                  "Helping enemy",
+                                ifelse(most.common.offense=="Offensive Language" | most.common.offense=="Verbal Abuse",
+                                  "Verbal offense",
+                                ifelse(most.common.offense=="Inappropriate Name" | most.common.offense=="Spamming",
+                                  "Others",
+                                "Negative Attitude")))
+                  ]
 #Removendo colunas auxiliares que não irão ser mais necessárias.
 players$count = NULL
 players$casematch = NULL
