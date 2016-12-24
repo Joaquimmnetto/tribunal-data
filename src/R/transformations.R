@@ -1,5 +1,5 @@
 require(dplyr)
-require(dtplyr)
+library(dtplyr)
 require(data.table)
 #library(multidplyr)
 
@@ -9,7 +9,7 @@ remove.outliers <- function(dt,col__){
   iqr = summ[5] - summ[2]
   upper_thresh = summ[5] + 1.5*iqr
   lower_thresh = summ[2] - 1.5*iqr
-  ret <- dt %>% filter_(paste(col_name,'<=',upper_thresh,' & ',col_name,'>=',lower_thresh))
+  ret <- dt[get(col_name) <= upper_thresh & get(col_name) >= lower_thresh]
   return(ret)
 } 
 
@@ -17,15 +17,17 @@ remove.outliers <- function(dt,col__){
 kmn.smoother <- function(dt,group_size,x,y){ 
   x_name <- deparse(substitute(x))
   y_name <- deparse(substitute(y))
-  num_groups = as.integer(nrow(dt)/group_size) + 1
+  num_groups <- as.integer(nrow(dt)/group_size) + 1
   
-  kmn <- dt %>% select_(x_name,y_name) %>% 
-    kmeans(centers=num_groups)
-  medians <- dt %>% select_(x_name,y_name)
-  medians$cl = kmn$cluster
-  medians <- medians %>% group_by(cl) 
-  medians <- medians %>% summarise_each(funs(median))
-  return(medians)
+  points <- dt[,.(get(x_name),get(y_name))] 
+  setnames(points, names(points),c(x_name,y_name))
+  kmn <-  points %>% kmeans(centers=num_groups)
+  
+  points$cl <- kmn$cluster
+  
+  points <- points[ ,c(x_name,y_name) := .(median(get(x_name)),median(get(y_name))),by=cl ]
+  points <- unique(points)
+  return(points)
 }
 
 system.time({
@@ -36,10 +38,4 @@ source("src/R/performance.R")
 })
 system.time({
 source("src/R/contamination.R")
-})
-
-save.image("full_data_text.RData")
-
-system.time({
-   source("src/R/graphs.R")
 })

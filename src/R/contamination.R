@@ -6,23 +6,12 @@ alpha = 1.5
 nallies = 4
 nenemies = 5
 
-reports.by.reason <- 
-  aggregate(pnd.total.reports ~ most.common.offense, 
-            data = matches %>% mutate(pnd.total.reports = reports.allies + alpha*reports.enemies), FUN = sum) %>% 
-  mutate(frequency = as.vector(table(matches$most.common.offense))) %>%
-  mutate(report.ratio = pnd.total.reports/frequency) %>%
-  mutate(report.ratio = report.ratio/max(report.ratio))
-
-
-f <- function(match_mco){
-  return((reports.by.reason %>% filter(most.common.offense == match_mco))$report.ratio)
-}
-matches <- matches %>% rowwise() %>% mutate(report.ratio = f(most.common.offense) )
-rm(f)
+matches <- matches[, report.ratio := sum(reports.allies + alpha*reports.enemies)/.N, by = most.common.offense]
+matches <- matches[, report.ratio := report.ratio/max(report.ratio)]
 
 #calculo das contaminações
-matches <- matches %>% mutate(ally.contamination = report.ratio*reports.allies/4)
-matches <- matches %>% mutate(enemy.contamination = report.ratio*reports.enemies/5)
-matches <- matches %>% mutate(match.contamination = (ally.contamination+enemy.contamination)/2)
+matches <- matches[, ally.contamination := report.ratio*reports.allies/4]
+matches <- matches[, enemy.contamination := report.ratio*reports.enemies/5]
+matches <- matches[, match.contamination := (ally.contamination+enemy.contamination)/2]
+matches <- matches[, report.ratio := NULL]
 
-matches$report.ratio <- NULL

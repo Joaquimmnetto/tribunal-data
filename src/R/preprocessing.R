@@ -2,10 +2,10 @@ require(dplyr)
 require(dtplyr)
 require(data.table)
 
-players_fl <- "data/csv/players_full.csv"
-matches_fl <- "data/csv/matches_full.csv"
-#players_fl <- "data/csv/players_sampley.csv"
-#matches_fl <- "data/csv/matches_sampley.csv"
+#players_fl <- "data/csv/players_full.csv"
+#matches_fl <- "data/csv/matches_full.csv"
+players_fl <- "data/csv/players_sampley.csv"
+matches_fl <- "data/csv/matches_sampley.csv"
 
 #Problemas na construção do csv:
 #1. Duplicação de dados
@@ -21,9 +21,13 @@ matches <- setDT(fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE))
 setnames(players, names(players),
                 c("case", "match", "relation.offender", "champion", "kills", "deaths",
                       "assists", "gold", "outcome"))
+# setnames(matches,names(matches),
+#                 c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
+#                     "reports.allies", "reports.enemies", "time.played") )
 setnames(matches,names(matches),
-                c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
-                    "reports.allies", "reports.enemies", "time.played") )
+                 c("case", "match", "match.type", "most.common.offense","reports.allies", "reports.enemies", "time.played") )
+
+
 
 #atribuindo tipos corretos para as colunas:
 #Players
@@ -53,7 +57,9 @@ matches <- unique(matches)
 matches$match.type <- factor(matches$match.type)
 matches$most.common.offense <- factor(matches$most.common.offense)
 
+#data.table trabalha com chaves pra melhorar o seu processamento. Aqui eu tou dizendo quais são essas chaves.
 setkey(matches,case,match)
+
 setkey(players,case,match,relation.offender)
 
 #Não é usado por nada!
@@ -62,17 +68,11 @@ players$champion = NULL
 #Criando colunas auxiliares
 #Id é um valor sequencial para dar a cada jogador um identificador único
 players <- players[,id := seq.int(nrow(players))]
-#players <- players %>% mutate(id = )
-
 #Casematch é um identificador único para partidas, que nada mais é do que a junção de $case e $match.
 players <- players[,casematch := paste(case,match)]
-#players <- players %>% mutate(casematch = paste(case,match))
 matches <- matches[,casematch := paste(case,match)]
-#matches <- matches %>% mutate(casematch = paste(case,match))
-
 #Count é uma coluna auxiliar para contar a quantidade de jogadores em cada partida. A coluna é completamente preenchida por 1s.
 players <- players[,count := rep.int(1,nrow(players))]
-#players <- players %>% mutate(count = rep.int(1,nrow(players)))
 
 #Remoção de partidas inválidas. Uma partida é inválida se:
   #1. Se uma entrada em matches não tiver seu equivalente em players, e vice-versa.   
