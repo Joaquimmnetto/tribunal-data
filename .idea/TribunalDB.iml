@@ -4,7 +4,14 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/data" />
       <excludeFolder url="file://$MODULE_DIR$/dataset" />
+      <excludeFolder url="file://$MODULE_DIR$/graphs" />
+      <excludeFolder url="file://$MODULE_DIR$/imgs" />
+      <excludeFolder url="file://$MODULE_DIR$/src/python/context_corrector/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/src/python/context_corrector/out" />
       <excludeFolder url="file://$MODULE_DIR$/src/python/corpus/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/src/python/sentence_generator/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/src/shell/out" />
+      <excludeFolder url="file://$MODULE_DIR$/src/shell/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/text" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.5.2 (C:\Dev\Python35\python.exe)" jdkType="Python SDK" />

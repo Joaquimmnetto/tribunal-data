@@ -1,38 +1,49 @@
 import sys
 from gensim.models import word2vec
+from nltk.metrics.distance import edit_distance
 import pickle
 import csv
-import math
 import datetime
+
+#Generalized levenstein distance
+def gld(s1,s2):
+	return edit_distance(s1, s2)
+
+#http://ieeexplore.ieee.org/document/4160958/
+#Normalized Generalized levenstein distance
+def ngld(s1,s2):
+	alpha = 1
+	dist = gld(s1,s2)
+	ndist = 2 * dist / alpha * (len(s1) + len(s2)) + dist
+	return ndist
+
+
+def similar(s1,s2,max_edit_dist):
+	dist = ngld(s1,s2)
+	return dist < max_edit_dist
+
 
 begin_time = datetime.datetime.now()
 
-vocab_file = "bin/vocab_freq.pkl" if len(sys.argv) < 2 else sys.argv[1]
+vocab_fn = "bin/vocab_freq.pkl" if len(sys.argv) < 2 else sys.argv[1]
 w2v_file = "bin/corpus_w2v.bin" if len(sys.argv) < 3 else sys.argv[2]
-min_sim = 0.65 if len(sys.argv) < 4 else float(sys.argv[3])
-min_word_sim = 0.50 if len(sys.argv) < 5 else float(sys.argv[4])
+max_edit_dist = 0.5 if len(sys.argv) < 4 else float(sys.argv[3])
+syn_fn = "out/synonms.csv" if len(sys.argv) < 5 else float(sys.argv[4])
+err_fn = "out/errors.csv" if len(sys.argv) < 6 else float(sys.argv[5])
 
 #maneiras mais interessantes
 #distancia de teclado
 #coisa la que tem no slide de nlp
 
-with open("bin/vocab_freq.pkl","rb") as vocab_fl:
+with open(vocab_fn,"rb") as vocab_fl:
 	vocab_freq = pickle.load(vocab_fl)
 
-syn_fl = open("synonms.csv",'w')
+syn_fl = open(syn_fn,'w')
 syn_wr = csv.writer(syn_fl)
-err_fl = open("errors.csv",'w')
+err_fl = open(err_fn,'w')
 err_wr = csv.writer(err_fl)
 
-def similar(s1,s2,sim_ratio,vocab_freq):
-	smaller = s1 if s1<s2 else s2
-	bigger = s2 if smaller ==s1 else s1
 
-	intersect = [c for c in smaller if c in bigger]
-
-	#right = smaller if vocab_freq[smaller] > vocab_freq[bigger] else bigger
-
-	return len(intersect) >= math.floor(sim_ratio * len(bigger))
 
 
 print("Loading word2vec file...")
@@ -56,8 +67,8 @@ for word,freq in vocab_freq_pair:
 		continue
 	#if word not in inserted_words:
 	similars = model.most_similar(word,topn=50)
-	errors[word] = [w for w, s in similars if s > min_sim and similar(w, word, min_word_sim, vocab_freq)]
-	synonyms[word] = [w for w, s in similars if s > min_sim and w not in errors[word]]
+	errors[word] = [w for w, s in similars if s > max_edit_dist and similar(w, word, max_edit_dist)]
+	synonyms[word] = [w for w, s in similars if s > max_edit_dist and w not in errors[word]]
 
 
 	syn_wr.writerow( [word] + ['|'.join(synonyms[word])] )
