@@ -25,7 +25,7 @@ pkl_vocab=out/${bname}_vocab_freq.pkl
 pkl_words=/dev/null
 ${pyexec} ../python/sentence_generator/vocab_builder.py ${tkn_vocab} ${pkl_vocab} ${pkl_words} 0
 
-w2v_tkn_model=${bname}_tkn_w2v.bin
+w2v_tkn_model=out/${bname}_tkn_w2v.bin
 ${pyexec} ../python/context_corrector/w2v_builder.py out/${tkn_corpus} ${w2v_tkn_model}
 
 max_dist=0.5

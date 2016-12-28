@@ -28,8 +28,8 @@ begin_time = datetime.datetime.now()
 vocab_fn = "bin/vocab_freq.pkl" if len(sys.argv) < 2 else sys.argv[1]
 w2v_file = "bin/corpus_w2v.bin" if len(sys.argv) < 3 else sys.argv[2]
 max_edit_dist = 0.5 if len(sys.argv) < 4 else float(sys.argv[3])
-syn_fn = "out/synonms.csv" if len(sys.argv) < 5 else float(sys.argv[4])
-err_fn = "out/errors.csv" if len(sys.argv) < 6 else float(sys.argv[5])
+syn_fn = "out/synonms.csv" if len(sys.argv) < 5 else sys.argv[4]
+err_fn = "out/errors.csv" if len(sys.argv) < 6 else sys.argv[5]
 
 #maneiras mais interessantes
 #distancia de teclado
