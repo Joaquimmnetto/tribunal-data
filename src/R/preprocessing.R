@@ -2,10 +2,10 @@ require(dplyr)
 require(dtplyr)
 require(data.table)
 
-#players_fl <- "data/csv/players_full.csv"
-#matches_fl <- "data/csv/matches_full.csv"
-players_fl <- "data/csv/players_sampley.csv"
-matches_fl <- "data/csv/matches_sampley.csv"
+players_fl <- "data/csv/players_full.csv"
+matches_fl <- "data/csv/matches_full.csv"
+#players_fl <- "data/csv/players_sampley.csv"
+#matches_fl <- "data/csv/matches_sampley.csv"
 
 #Problemas na construção do csv:
 #1. Duplicação de dados
