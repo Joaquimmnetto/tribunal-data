@@ -30,6 +30,6 @@ ${pyexec} ../python/context_corrector/w2v_builder.py ${tkn_corpus} ${w2v_tkn_mod
 
 max_dist=0.5
 min_sim=0.60
-syn_out=out/${bname}_syn.csv
-err_out=out/${bname}_err.csv
-${pyexec} ../python/context_corrector/context_corrector.py ${pkl_vocab} ${w2v_tkn_model} ${max_dist} ${min_sim} ${syn_out} ${err_out}
+syn_out=out/${bname}_correct.pkl
+err_out=out/${bname}_err.pkl
+${pyexec} ../python/context_corrector/corrector_builder.py ${pkl_vocab} ${w2v_tkn_model} ${max_dist} ${min_sim} ${syn_out} ${err_out}

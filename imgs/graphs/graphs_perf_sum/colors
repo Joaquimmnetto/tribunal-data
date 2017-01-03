@@ -1,0 +1,4 @@
+  geom_density(aes(x=performance),color='red') + 
+  geom_density(aes(x=performance2),color='blue') + 
+  geom_density(aes(x=performance3),color="green") + 
+  geom_density(aes(x=performance4),color="black")
