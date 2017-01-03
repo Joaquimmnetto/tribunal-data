@@ -22,7 +22,7 @@ tkn_vocab=out/${bname}_tkn.vocab
 ./build_vocab.sh ${tkn_corpus} > ${tkn_vocab}
 
 pkl_vocab=out/${bname}_vocab_freq.pkl
-pkl_words=/dev/null
+pkl_words=out/${bname}_words.pkl
 ${pyexec} ../python/sentence_generator/vocab_builder.py ${tkn_vocab} ${pkl_vocab} ${pkl_words} 50
 
 w2v_tkn_model=out/${bname}_tkn_w2v.bin
