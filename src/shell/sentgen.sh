@@ -8,7 +8,7 @@ if [[ "$unamestr" == 'Linux' ]]; then
 fi
 echo Executing Tokenizer...
 $executable ../python/unicode_tokenizer.py ${1} > tmp/token.tmp
-#./text_tokenizer.sh ${1} > tmp/token.tmp
+
 echo Building vocabulary...
 ./build_vocab.sh tmp/token.tmp > tmp/vocab.tmp
 
