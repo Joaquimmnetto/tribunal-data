@@ -14,12 +14,14 @@ import traceback
 from nltk.tokenize import TweetTokenizer
 
 #tmp/token.tmp out/${1}_words.pkl out/${1}_neigh.spy out/${1}_fw.pkl
-corpus_fl = "../../../data/corpus/offender_tkn.crp" if len(sys.argv) < 2 else sys.argv[1]
-words_fl = "bin/words.pkl" if len(sys.argv) < 3 else sys.argv[2]
-neigh_fl = "bin/neigh.spy" if len(sys.argv) < 4 else sys.argv[3]
-fwords_fl = "bin/first_words.pkl" if len(sys.argv) < 5 else sys.argv[4]
 
-# next_csv = "../../next_matrix.csv" if len(sys.argv) < 3 else sys.argv[2]
+model_dir = "../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
+out_dir = model_dir if len(sys.argv) < 3 else sys.argv[2]
+
+corpus_fl = model_dir+"/chat_tkn.crp" if len(sys.argv) < 2 else sys.argv[1]
+words_fl = out_dir+"/words.pkl" if len(sys.argv) < 3 else sys.argv[2]
+neigh_fl = out_dir+"/neigh.spy" if len(sys.argv) < 4 else sys.argv[3]
+fwords_fl = out_dir+"/first_words.pkl" if len(sys.argv) < 5 else sys.argv[4]
 
 
 def create_neigh(words,corpus):
@@ -30,7 +32,6 @@ def create_neigh(words,corpus):
 	print("Vocab size:", vocab_len)
 
 	print("Alocando Matriz...")
-	#neigh = (numpy.zeros((vocab_len, vocab_len)))
 	neigh = scipy.sparse.coo_matrix((vocab_len, vocab_len)).todok()
 
 	first_words = set()
@@ -62,6 +63,16 @@ def create_neigh(words,corpus):
 				pass
 			# traceback.print_exc()
 	return neigh,first_words
+
+def save_matrices(neigh, first_words, neigh_fl, fwords_fl):
+	with open(neigh_fl, 'wb') as output:
+		# file object
+		scipy.io.mmwrite(output, neigh.tocsr())
+
+	with open(fwords_fl, 'wb') as output:
+		# object file
+		pickle.dump(first_words, output, pickle.HIGHEST_PROTOCOL)
+
 #-----------------------------------------------------------------
 print("Carregando Vocabuário from ",words_fl)
 with open(words_fl,'rb') as wr_fl:
@@ -70,16 +81,7 @@ with open(words_fl,'rb') as wr_fl:
 with open(corpus_fl,'r',encoding='utf-8') as _corpus:
 	neigh,first_words = create_neigh(_words,_corpus)
 
-
-print("Saving neigh on ",neigh_fl)
-with open(neigh_fl,'wb') as output:
-	#file object
-	scipy.io.mmwrite(output, neigh.tocsr())
-
-print("Saving first_words on ",fwords_fl)
-with open(fwords_fl,'wb') as output:
-	#object file
-	pickle.dump(first_words, output, pickle.HIGHEST_PROTOCOL)
+save_matrices(neigh,first_words,neigh_fl,first_words)
 
 
 

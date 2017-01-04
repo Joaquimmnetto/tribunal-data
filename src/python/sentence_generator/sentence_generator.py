@@ -1,16 +1,19 @@
 import pickle
 import numpy
 import scipy.io
+import sys
 
+
+model_dir = "../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
 
 print("Loading neighbors matrix")
-with open('bin/neigh.spy','rb') as neigh_input:
+with open(model_dir+'/neigh.spy','rb') as neigh_input:
 	neigh = scipy.io.mmread(neigh_input)
 print("Loading vocabulary")
-with open('bin/words.pkl','rb') as wr_input:
+with open(model_dir+'/words.pkl','rb') as wr_input:
 	words = pickle.load(wr_input)
 print("Loading first words")
-with open('bin/first_words.pkl','rb') as vocab_input:
+with open(model_dir+'/first_words.pkl','rb') as vocab_input:
 	first_words = list(pickle.load(vocab_input))
 
 
