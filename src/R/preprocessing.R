@@ -2,8 +2,8 @@ require(dplyr)
 require(dtplyr)
 require(data.table)
 
-players_fl <- "data/csv/players_full.csv"
-matches_fl <- "data/csv/matches_full.csv"
+players_fl <- "data/full/players.csv"
+matches_fl <- "data/full/matches.csv"
 #players_fl <- "data/csv/players_sampley.csv"
 #matches_fl <- "data/csv/matches_sampley.csv"
 
@@ -21,13 +21,9 @@ matches <- setDT(fread(matches_fl, header = FALSE, sep=',',showProgress=TRUE))
 setnames(players, names(players),
                 c("case", "match", "relation.offender", "champion", "kills", "deaths",
                       "assists", "gold", "outcome"))
-# setnames(matches,names(matches),
-#                 c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
-#                     "reports.allies", "reports.enemies", "time.played") )
-setnames(matches,names(matches),
-                 c("case", "match", "match.type", "most.common.offense","reports.allies", "reports.enemies", "time.played") )
-
-
+ setnames(matches,names(matches),
+                 c("case", "match", "match.type", "most.common.offense", 'report.text.allies', 'report.text.enemies',
+                     "reports.allies", "reports.enemies", "time.played") )
 
 #atribuindo tipos corretos para as colunas:
 #Players

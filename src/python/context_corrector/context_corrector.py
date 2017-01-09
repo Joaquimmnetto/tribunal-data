@@ -2,7 +2,7 @@ import sys
 import pickle
 import datetime
 
-model_dir = "../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
+model_dir = "../../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
 out_dir = model_dir if len(sys.argv) < 3 else sys.argv[2]
 
 corpus_fn = model_dir+"/chat_tkn.crp" if len(sys.argv) < 4 else sys.argv[3]
