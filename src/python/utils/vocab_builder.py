@@ -4,7 +4,7 @@ import sys
 #from nltk.tokenize import TweetTokenizer
 
 #vocab construido por build_vocab.sh
-model_dir = "../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
+model_dir = "../../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
 out_dir = model_dir if len(sys.argv) < 3 else sys.argv[2]
 min_freq = 50 if len(sys.argv) < 4 else int(sys.argv[3])
 vocab_fn = model_dir + "/chat_tkn.vocab" if len(sys.argv) < 5 else sys.argv[4]
