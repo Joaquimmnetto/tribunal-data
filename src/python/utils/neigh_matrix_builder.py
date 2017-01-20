@@ -1,28 +1,10 @@
 import sys
 import datetime
 import pickle
-import copy
-import random
-import numpy
 import scipy.sparse
 import scipy.io
 
-import traceback
-
-
-
-from nltk.tokenize import TweetTokenizer
-
-#tmp/token.tmp out/${1}_words.pkl out/${1}_neigh.spy out/${1}_fw.pkl
-
-model_dir = "../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
-out_dir = model_dir if len(sys.argv) < 3 else sys.argv[2]
-
-corpus_fl = model_dir+"/chat_tkn.crp" if len(sys.argv) < 2 else sys.argv[1]
-words_fl = out_dir+"/words.pkl" if len(sys.argv) < 3 else sys.argv[2]
-neigh_fl = out_dir+"/neigh.spy" if len(sys.argv) < 4 else sys.argv[3]
-fwords_fl = out_dir+"/first_words.pkl" if len(sys.argv) < 5 else sys.argv[4]
-
+import args_proc as args
 
 def create_neigh(words,corpus):
 	ct = 0
@@ -37,9 +19,7 @@ def create_neigh(words,corpus):
 	first_words = set()
 	w_indexes = dict((w, i) for i, w in enumerate(words))
 
-
 	print('Preenchendo Matriz...')
-
 	for line in corpus:
 		if ct - last_ct > 1000000:
 			print(datetime.datetime.now())
@@ -58,10 +38,9 @@ def create_neigh(words,corpus):
 				if i == 0:
 					first_words.add(token)
 				neigh[w_index,n_index] += 1
-			except:
-				#print("Word not found (",token,")")
+			except KeyError:
 				pass
-			# traceback.print_exc()
+
 	return neigh,first_words
 
 def save_matrices(neigh, first_words, neigh_fl, fwords_fl):
@@ -74,14 +53,14 @@ def save_matrices(neigh, first_words, neigh_fl, fwords_fl):
 		pickle.dump(first_words, output, pickle.HIGHEST_PROTOCOL)
 
 #-----------------------------------------------------------------
-print("Carregando Vocabuário from ",words_fl)
-with open(words_fl,'rb') as wr_fl:
+print("Carregando Vocabuário from ",args.words)
+with open(args.words,'rb') as wr_fl:
 	_words = pickle.load(wr_fl)
 
-with open(corpus_fl,'r',encoding='utf-8') as _corpus:
+with open(args.corpus,'r',encoding='utf-8') as _corpus:
 	neigh,first_words = create_neigh(_words,_corpus)
 
-save_matrices(neigh,first_words,neigh_fl,first_words)
+save_matrices(neigh,first_words,args.neigh,first_words)
 
 
 

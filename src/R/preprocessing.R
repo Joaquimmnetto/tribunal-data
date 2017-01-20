@@ -103,6 +103,8 @@ matches <- matches[,most.common.offense :=
                                   "Others",
                                 "Negative Attitude")))
                   ]
+
+#Assisting Enemy Team, Intentionally Feeding, Offensive Language, Verbal Abuse, Inappropriate Name, Spamming
 #Removendo colunas auxiliares que não irão ser mais necessárias.
 players$count = NULL
 players$casematch = NULL

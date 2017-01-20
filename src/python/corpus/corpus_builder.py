@@ -10,7 +10,6 @@ from threading import Semaphore
 
 from classes.consumer import Consumer
 from classes.matches_producer import ProducersManager
-from classes.matches_producer import TarReader
 from classes.process_chat import ChatProcessor
 from classes.process_players import PlayerProcessor
 
@@ -26,12 +25,6 @@ chat_csv_name = 'None' if len(sys.argv) < 5 else str(sys.argv[4])
 chat_corpus_name = 'None' if len(sys.argv) < 6 else str(sys.argv[5])
 players_name = 'None' if len(sys.argv) < 7 else str(sys.argv[6])
 matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
-
-# chat_atrs = ['date', 'time', 'sent_to', 'champion_name', 'message', 'association_to_offender', 'name_change'],
-# ply_atrs = ['level', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome', 'time_played',
-#             'association_to_offender', 'champion_name'],
-# match_atrs = ['game_mode', 'game_type', 'premade', 'most_common_report_reason', 'allied_report_count',
-#               'enemy_report_count', 'case_total_reports', 'time_played']
 
 chat_atrs = ["association_to_offender", "champion_name", "time", "message"]
 player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']
@@ -81,7 +74,7 @@ def set_players_processing(consumers, processors):
 
 def set_matches_processing(consumers, processors):
 	matches_fl = open(dest_dir + '/' + matches_name, 'at', encoding='utf-8', newline="")
-	matches_wr = csv.writer(matches_fl,quoting=csv.QUOTE_NONNUMERIC)
+	matches_wr = csv.writer(matches_fl)
 	match_consumer = Consumer(matches_wr, csv_consuming)
 
 	consumers.append(match_consumer)

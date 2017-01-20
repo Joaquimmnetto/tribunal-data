@@ -1,112 +1,74 @@
 import scipy.sparse
 import scipy.io
-import sys
 import pickle
 import datetime
-import csv
-import nltk.corpus
 
+from doc_iterator import DocIterator
 from sklearn.feature_extraction.text import CountVectorizer
+import args_proc as args
 
+min_freq = int(args.params.get('min_freq', 150))
 
-model_dir ="../../../data/full" if len(sys.argv) < 3 else sys.argv[2]
-out_dir = model_dir if len(sys.argv) < 4 else sys.argv[3]
+# stwords = nltk.corpus.stopwords.words("english")
 
-chat_fn = model_dir+"/chat.csv" if len(sys.argv) < 5 else sys.argv[4]
-corpus_fn = model_dir+"/chat_tkn.crp" if len(sys.argv) < 6 else sys.argv[5]
-matches_fn = model_dir+"/matches.csv" if len(sys.argv) < 7 else sys.argv[6]
-words_fn = model_dir+"/words.pkl" if len(sys.argv) < 8 else sys.argv[7]
-
-stwords = nltk.corpus.stopwords.words("english")
-
-with open(words_fn,'rb') as inp:
+with open(args.words, 'rb') as inp:
 	vocab_words = pickle.load(inp)
-	vocab_words = [word for word in vocab_words if word not in stwords]
 
 
-class DocIterator(object):
+# vocab_words = [word for word in vocab_words if word not in stwords]
 
-	def __init__(self, chat_fn, corpus_fn):
-		self.chat_fn = chat_fn
-		self.corpus_fn = corpus_fn
-		self.docs = dict()
 
+class CountDocIterator(object):
+	def __init__(self, doc_iter):
+		self.docs = doc_iter
+		self.row_doc = dict()
 
 	def __iter__(self):
-		i = 0
-		with open(self.chat_fn) as cht, open(self.corpus_fn) as crp:
-			csv_rd = csv.reader(cht)
-			case = 0
-			match = 0
-			doc_num = 0
-			chats = {'ally': list(), 'enemy': list(), 'offender': list()}
+		stop = False
+		index = 0
+		for case, match, team, doc in self.docs.next_doc():
+			if doc.strip('\n').strip('\t').strip('\r').strip(' ') == '':
+				continue
 
-
-			for row, crp_line in zip(csv_rd, crp):
-				i+=1
-				next_case = int(row[0])
-				next_match = int(row[1])
-				team = row[2]
-				if team.strip() == '':
-					continue
-
-				if next_case != case or next_match != match:
-					if case != 0:
-						yield ' '.join(chats['ally'])
-						yield ' '.join(chats['enemy'])
-						yield ' '.join(chats['offender'])
-
-						doc_num = build_docs(case, match, self.docs, doc_num)
-
-					del chats
-					chats = {'ally': list(), 'enemy': list(), 'offender': list()}
-					match = next_match
-					case = next_case
-
-				chats[team].append(crp_line)
-
-	def get_docs(self):
-		return self.docs
+			self.row_doc[index] = (case, match, team)
+			index += 1
+			yield doc
 
 
 def build_cnt_matrix(chat_fn, corpus_fn):
-	chat = DocIterator(chat_fn,corpus_fn)
-	cnt_model = CountVectorizer(stop_words = stwords, min_df = 50, vocabulary = vocab_words)
+	chat = CountDocIterator(DocIterator(chat_fn, corpus_fn))
+	cnt_model = CountVectorizer(min_df=min_freq)
 	matrix = cnt_model.fit_transform(chat)
+	cnt_vocab = cnt_model.get_feature_names()
 
-	return chat.get_docs(), matrix
-
-
-def build_docs(case, match, docs, doc_num):
-	docs[doc_num] = (match, case, 'ally')
-	doc_num += 1
-	docs[doc_num] = (match, case, 'enemy')
-	doc_num += 1
-	docs[doc_num] = (match, case, 'offender')
-	doc_num += 1
-	return doc_num
+	return chat.row_doc, cnt_vocab, matrix
 
 
-def save_outp(docs, cnt_matrix):
-	if cnt_matrix is not None:
-		with open(out_dir+"/count_matrix.mm", 'wb') as output:
-			# file object
-			scipy.io.mmwrite(output, cnt_matrix)
-	if docs is not None:
-		with open(out_dir + "/match_index.pkl", 'wb') as output:
-			# object file
-			pickle.dump(docs, output, pickle.HIGHEST_PROTOCOL)
+def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
+	if row_doc is not None:
+		with open(row_doc_fn, 'wb') as output:
+			print("Saving row_doc")
+			pickle.dump(row_doc, output, protocol=2, fix_imports=True)
+	if vocab is not None:
+		with open(vocab_fn, 'wb') as output:
+			print("Saving vocab")
+			pickle.dump(vocab, output, protocol=2, fix_imports=True)
+	if matrix is not None:
+		with open(matrix_fn, 'wb') as output:
+			print("Saving matrix")
+			scipy.io.mmwrite(output, matrix, field='real', precision=1)
 
 
 def main():
 	before = datetime.datetime.now()
 	print("Building counting matrix")
-	docs, cnt_matrix = build_cnt_matrix(chat_fn, corpus_fn)
-	save_outp(docs, cnt_matrix)
+	docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat, args.corpus)
+	print("Saving models...")
+	save_outp(docs, args.cnt_team_r2d,
+	          cnt_vocab, args.cnt_team_vocab,
+	          cnt_matrix, args.cnt_team)
 	print("Total time elapsed:", datetime.datetime.now() - before)
 
 
 if __name__ == '__main__':
 	main()
-
-

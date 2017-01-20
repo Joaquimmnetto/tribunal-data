@@ -1,0 +1,33 @@
+Creating corpus, tokenizing and extracting vocabulary...
+Creating the .pkl files corresponding to the vocabulary
+model_dir:
+{'model_dir': ''}
+min_freq:
+{'model_dir': '', 'min_freq': ''}
+Creating the w2v model
+model_dir:
+{'model_dir': ''}
+min_freq:
+{'min_freq': '', 'model_dir': ''}
+Creating the errors and corrections dict
+model_dir:
+{'model_dir': ''}
+max_edit_dist:0.5
+{'max_edit_dist': '0.5', 'model_dir': ''}
+min_sim:0.55
+{'max_edit_dist': '0.5', 'min_sim': '0.55', 'model_dir': ''}
+Creating the count matrix
+model_dir:
+{'model_dir': ''}
+min_freq:
+{'min_freq': '', 'model_dir': ''}
+Creating the tfidf matrix
+model_dir:
+{'model_dir': ''}
+min_freq:
+{'model_dir': '', 'min_freq': ''}
+Generating the d2v model
+model_dir:
+{'model_dir': ''}
+min_freq:50
+{'min_freq': '50', 'model_dir': ''}

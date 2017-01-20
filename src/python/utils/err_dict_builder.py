@@ -5,35 +5,33 @@ import pickle
 import datetime
 import csv
 
-models_dir = "../../../data/full/samples" if len(sys.argv) < 2 else sys.argv[1]
-max_edit_dist = 0.5 if len(sys.argv) < 3 else float(sys.argv[2])
-min_sim = 0.50 if len(sys.argv) < 4 else float(sys.argv[3])
-out_dir = models_dir if len(sys.argv) < 5 else sys.argv[4]
+import args_proc as args
 
-vocab_fn = models_dir + "/vocab_freq.pkl" if len(sys.argv) < 6 else models_dir + "/" + sys.argv[5]
-w2v_fn = models_dir + "/w2v_model.bin" if len(sys.argv) < 7 else models_dir + "/" + sys.argv[6]
-cor_fn = out_dir + "/corrector_dict.pkl" if len(sys.argv) < 8 else out_dir + "/" + sys.argv[7]
-err_fn = out_dir + "/error_dict.pkl" if len(sys.argv) < 9 else out_dir + "/" + sys.argv[8]
+max_edit_dist = float(args.params.get('max_edit_dist', 0.5))
+min_sim = float(args.params.get('min_sim', 0.5))
 
-#-----------------Metrics
-#Generalized levenstein distance
-def gld(s1,s2):
+
+# -----------------Metrics
+# Generalized levenstein distance
+def gld(s1, s2):
 	return edit_distance(s1, s2)
 
-#http://ieeexplore.ieee.org/document/4160958/
-#Normalized Generalized levenstein distance
-def ngld(s1,s2):
+
+# http://ieeexplore.ieee.org/document/4160958/
+# Normalized Generalized levenstein distance
+def ngld(s1, s2):
 	alpha = 1
-	dist = gld(s1,s2)
+	dist = gld(s1, s2)
 	ndist = 2 * dist / (alpha * (len(s1) + len(s2)) + dist)
 	return ndist
 
-def similar(s1,s2,max_edit_dist):
-	dist = ngld(s1,s2)
+
+def similar(s1, s2, max_edit_dist):
+	dist = ngld(s1, s2)
 	return dist < max_edit_dist
 
 
-#-------------Logic
+# -------------Logic
 def load_w2v(w2v_filename):
 	print("Loading word2vec file...")
 	model = word2vec.Word2Vec.load(w2v_filename)
@@ -61,10 +59,10 @@ def _build_dicts(w2v_model, vocab_freq, sim_func, min_sim, max_edit_dist):
 		c = dict(tuples)
 		correction.update(c)
 
-	return errors,correction
+	return errors, correction
 
 
-def save_dicts(errors,correction,err_fn,cor_fn):
+def save_dicts(errors, correction, err_fn, cor_fn):
 	print("Saving errors .pkl file")
 	with open(err_fn, 'wb') as output:
 		pickle.dump(errors, output, pickle.HIGHEST_PROTOCOL)
@@ -73,18 +71,17 @@ def save_dicts(errors,correction,err_fn,cor_fn):
 	with open(cor_fn, 'wb') as output:
 		pickle.dump(correction, output, pickle.HIGHEST_PROTOCOL)
 
-def save_csvs(errors,correction,err_fn,cor_fn):
-	with open(err_fn.replace('.pkl','.csv'), 'w') as output:
+
+def save_csvs(errors, correction, err_fn, cor_fn):
+	with open(err_fn.replace('.pkl', '.csv'), 'w') as output:
 		csvwr = csv.writer(output)
-		for word,error in errors.items():
+		for word, error in errors.items():
 			csvwr.writerow([word, '|'.join(error) if len(error) > 0 else ''])
 
-	with open(cor_fn.replace('.pkl','.csv'), 'w') as output:
+	with open(cor_fn.replace('.pkl', '.csv'), 'w') as output:
 		csvwr = csv.writer(output)
-		for word,corr in correction.items():
-			csvwr.writerow([word,corr])
-
-
+		for word, corr in correction.items():
+			csvwr.writerow([word, corr])
 
 
 def build_dicts(max_edit_dist, min_sim, vocab_fn, w2v_fn, cor_fn, err_fn):
@@ -98,15 +95,11 @@ def build_dicts(max_edit_dist, min_sim, vocab_fn, w2v_fn, cor_fn, err_fn):
 	errors, correction = _build_dicts(w2v_model, vocab_freq, similar, min_sim, max_edit_dist)
 
 	save_dicts(errors, correction, err_fn, cor_fn)
-	save_csvs(errors,correction,err_fn,cor_fn)
+	save_csvs(errors, correction, err_fn, cor_fn)
 
 
 begin_time = datetime.datetime.now()
 
-build_dicts(max_edit_dist,min_sim,vocab_fn,w2v_fn,cor_fn,err_fn)
+build_dicts(max_edit_dist, min_sim, args.vocab, args.w2v, args.corr, args.err)
 
 print("Time Elapsed:", datetime.datetime.now() - begin_time)
-
-
-
-
