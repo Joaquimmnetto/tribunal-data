@@ -1,17 +1,18 @@
+import pickle
 import sys
 import datetime
+import scipy.io
 
 params = dict()
 
-
-def load_dir(arg, folder, sample):
+def load_model(arg, folder, sample):
 	module = sys.modules[__name__]
-	default_val = data_dir + "/" + folder + "/samples" if sample else data_dir + "/" + folder
+	default_val = data_dir+'/'+folder + "/samples" if sample else data_dir+'/'+folder
 	value = params.get(arg, default_val)
 
 	setattr(module, arg, value)
-
-	return getattr(module, arg, value)
+	current_model = folder.replace('/','#') + "samples" if sample else ""
+	return getattr(module, arg, value), current_model
 
 
 def load_arg(arg, fname):
@@ -26,10 +27,9 @@ def load_arg(arg, fname):
 
 def read_args(argv):
 	for arg in argv:
-		print(arg)
 		key_val = arg.split(':')
 		params[key_val[0]] = key_val[1]
-		print(params)
+	print(params)
 
 def bigrams(fn):
 	folders = fn.split('/')
@@ -37,14 +37,19 @@ def bigrams(fn):
 	return '/'.join(folders)
 
 
+
 # ---------------------------------------------------------
 if len(sys.argv) > 1:
 	read_args(sys.argv[1:])
 
 data_dir = "../../../data"
-model_dir = load_dir('model_dir', "full", sample=True)
+sys.path.append(data_dir)
+
+model_dir, current_model = load_model('model_dir', "full", sample=True)
 out_dir = params.get('out_dir', model_dir)
 
+champs = 'champs.txt'
+stwords = 'en_stopwords.txt'
 # csvs base
 chat = load_arg('chat', "chat.csv")
 players = load_arg('players', "players.csv")
@@ -66,6 +71,7 @@ d2v_team_r2d = load_arg('d2v_team_r2d', "d2v_team_r2d.pkl")
 cnt_team = load_arg('cnt_team', 'count_team.mtx')
 cnt_team_r2d = load_arg('cnt_team_r2d', "cnt_team_r2d.pkl")
 cnt_team_vocab = load_arg('cnt_team_vocab', 'count_team_vocab.pkl')
+idf_team = load_arg('idf_team', 'idf_team.pkl')
 # tfidf
 tfidf_team = load_arg('tfidf_team', "tfidf_team.mtx")
 tfidf_team_r2d = load_arg('tfidf_team_r2d', "tfidf_team_r2d.pkl")
@@ -80,10 +86,16 @@ lsi_team_model = load_arg('lsi_team_model','lsi_teams.gsm')
 lsi_team_csv = load_arg('lsi_team_csv','lsi_teams.csv')
 lsi_team_matrix = load_arg('lsi_team_matrix','lsi_teams.mtx')
 
+#modelo de tópico que não precisa de parâmetros. Parece ser bem recente.
+#hierarquical dirchlet process
 hdp_team = load_arg('hdp_team',"hdp_teams.gsm")
 hdp_team_csv = load_arg('hdp_team_csv',"hdp_teams.csv")
 
-# outputs do corretor
+team_labels = load_arg('team_labels','kmn_labels_{0}.pkl')
+aggr_kmn = load_arg('aggr_kmn_{0}',"aggr_kmn_{0}.pkl")
+aggr_lda = load_arg('aggr_lda_{0}',"aggr_lda_{0}.pkl")
+
+# outputs do corretorexit
 corr = load_arg('corr', "corrector_dict.pkl")
 err = load_arg('err', "error_dict.pkl")
 
@@ -93,11 +105,25 @@ fwords = load_arg('fwords', "first_words.pkl")
 
 #Ideias:
 #Bigramas
+#stemming?
 #Tirar nomes dos champions
 #Modificar o número de tópicos? Como definir um numero bom de tópicos?
+
 
 def measure_time(main):
 	before = datetime.datetime.now()
 	main()
 	print("Time elapsed:", datetime.datetime.now() - before)
 
+
+def save_pkl(fname, obj):
+	pickle.dump(obj, open(fname,'wb'), protocol=2, fix_imports=True)
+
+
+def load_obj(fname, gensim_class=None):
+	if fname.endswith('.pkl'):
+		return pickle.load(open(fname,'rb'))
+	if fname.endswith('.mtx'):
+		return scipy.io.mmread(fname)
+	if fname.endswith('.gsm') or fname.endswith('.bin'):
+		return gensim_class.load(fname)

@@ -2,15 +2,15 @@ import scipy.sparse
 import scipy.io
 import pickle
 import datetime
+import nltk
 
 from doc_iterator import DocIterator
 from sklearn.feature_extraction.text import CountVectorizer
 import args_proc as args
 
 min_freq = int(args.params.get('min_freq', 150))
-
-# stwords = nltk.corpus.stopwords.words("english")
-
+champs = [champ.strip('\n').strip(' ').lower() for champ in open(args.champs)]
+stwords = [sw for sw in open(args.stwords)] + champs
 with open(args.words, 'rb') as inp:
 	vocab_words = pickle.load(inp)
 
@@ -37,7 +37,7 @@ class CountDocIterator(object):
 
 def build_cnt_matrix(chat_fn, corpus_fn):
 	chat = CountDocIterator(DocIterator(chat_fn, corpus_fn))
-	cnt_model = CountVectorizer(min_df=min_freq)
+	cnt_model = CountVectorizer(min_df=min_freq, stop_words=stwords)
 	matrix = cnt_model.fit_transform(chat)
 	cnt_vocab = cnt_model.get_feature_names()
 

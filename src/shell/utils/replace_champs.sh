@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#remover stopwords
-champs=$(tr '\n' '|' < champs.txt)
-sed -E "s/(${champs})/champname/gI" < ${1} > ${2}
+champs=$(sed 's=.*=\\b&\\b=g' < champs.txt | tr '\n' '|')
+sed -E "s/(^${champs::-1}$)/champname/gI" < ${1} | tr -s " "
 

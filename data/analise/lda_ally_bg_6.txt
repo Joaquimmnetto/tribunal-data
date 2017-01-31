@@ -1,0 +1,11 @@
+model_dir:ally/bigrams
+{'model_dir': 'ally/bigrams'}
+num_topics:6
+{'num_topics': '6', 'model_dir': 'ally/bigrams'}
+lda_team:analise/lda_ally_bg_6.gsm
+{'lda_team': 'analise/lda_ally_bg_6.gsm', 'num_topics': '6', 'model_dir': 'ally/bigrams'}
+lda_team_csv:lda_ally_bg_6.csv
+{'lda_team': 'analise/lda_ally_bg_6.gsm', 'num_topics': '6', 'lda_team_csv': 'lda_ally_bg_6.csv', 'model_dir': 'ally/bigrams'}
+Loading bow matrix:
+Making lda model:
+Time elapsed: 0:17:25.973300

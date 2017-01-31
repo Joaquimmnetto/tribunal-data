@@ -13,7 +13,7 @@ min_freq = int(args.params.get('min_freq', 150))
 
 def build_tfidf_matrix(chat_fn, corpus_fn):
 	chat = CountDocIterator(DocIterator(chat_fn, corpus_fn))
-	tfidf_model = TfidfVectorizer(min_df=min_freq)
+	tfidf_model = TfidfVectorizer(min_df=min_freq,stop_words = count_matrix_builder.stwords)
 	matrix = tfidf_model.fit_transform(chat)
 
 	return chat.row_doc, tfidf_model.get_feature_names(), matrix

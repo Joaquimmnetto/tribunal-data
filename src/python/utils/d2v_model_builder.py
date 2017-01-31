@@ -2,11 +2,11 @@
 import pickle
 import datetime
 from gensim.models.doc2vec import TaggedDocument,Doc2Vec
-from count_matrix_builder import DocIterator
+from doc_iterator import DocIterator
 
 import args_proc as args
 
-min_freq = int(args.params.get('min_freq',150))
+min_freq = int(args.params.get('min_freq',5))
 
 class D2VDocIterator(object):
 	def __init__(self,docIter):
@@ -17,6 +17,9 @@ class D2VDocIterator(object):
 		stop = False
 		index = 0
 		for case, match, team, doc in self.docs.next_doc():
+			if doc.strip('\n').strip('\t').strip('\r').strip(' ') == '':
+				continue
+
 			tg_doc = TaggedDocument(words=doc.split(' '),tags = [index])
 			self.row_doc[index] = (case, match, team)
 			index += 1
@@ -25,15 +28,12 @@ class D2VDocIterator(object):
 
 def build_d2v_model(chat_fn,corpus_fn):
 	docs = D2VDocIterator(DocIterator(chat_fn,corpus_fn))
-	model = Doc2Vec( docs, size=100, workers=6, min_count=min_freq)
+	model = Doc2Vec(docs, size=100, workers=6, min_count=min_freq)
 	return docs.row_doc, model
 
 def save_outp(d2v_model,row_doc):
 	d2v_model.save(args.d2v_team)
-
-	with open(args.d2v_team_r2d,'wb') as output:
-		# object file
-		pickle.dump(row_doc, output, pickle.HIGHEST_PROTOCOL)
+	args.save_pkl(args.d2v_team_r2d,row_doc)
 
 def main():
 	before = datetime.datetime.now()

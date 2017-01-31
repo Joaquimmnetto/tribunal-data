@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo "Extracting ${1}/sample files.."
 grep ','"${1}"',' < full/samples/chat.csv > ${1}/samples/chat.csv
 cp full/samples/matches.csv ${1}/samples/matches.csv

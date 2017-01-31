@@ -1,6 +1,7 @@
 import gensim
+from pprint import pprint
 import args_proc as args
-import lda_builder
+import group_tools
 
 
 def hdp_topic_discovery(corpus, id2word):
@@ -10,8 +11,17 @@ def hdp_topic_discovery(corpus, id2word):
 
 def main():
 	print("Loading bow matrix:")
-	gsm_corpus, id2word = lda_builder.load_cnt_matrix(args.cnt_team, args.cnt_team_vocab)
-	print("Making lda model:")
+	gsm_corpus, id2word = group_tools.load_spy_matrix(args.cnt_team, args.cnt_team_vocab)
+	print("Making HDA model:")
 	hdp_model = hdp_topic_discovery(gsm_corpus, id2word)
+	print("Saving results")	
 	hdp_model.save(args.hdp_team)
-	lda_builder.save_csv(args.hdp_team_csv, hdp_model, 20, 10)
+
+	topics = group_tools.groups_idf(hdp_model)
+	pprint(topics)
+	group_tools.save_csv(args.hdp_team_csv, topics)
+	pprint(len(topics))
+
+
+#if __name__ == '__main__':
+#	args.measure_time(main)

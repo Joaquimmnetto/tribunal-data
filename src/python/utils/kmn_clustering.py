@@ -1,64 +1,132 @@
-#http://fraka6.blogspot.com.br/2013/04/kmeans-with-configurable-distance.html
-#from sklearn.cluster import KMeans
-import sklearn.metrics
 
-from sklearn.cluster import KMeans
-import datetime
-import pickle
+import math
+from pprint import pprint
+
+import scipy.io
 import numpy as np
+from matplotlib import pylab
 from gensim.models.doc2vec import Doc2Vec
+from pyclust import BisectKMeans
+from pyclust import KMeans
+import sklearn
+from sklearn.cluster import AgglomerativeClustering
 
+from sil_metric import silhouette_score_block
 import args_proc as args
 
-docs = pickle.load(open(args.d2v_team_r2d,'rb'))
+n_clusters = int(args.params.get('n_clusters',4))
+sil_testing = bool(args.params.get('sil_testing',False))
+
+def load_tfidf(data_fn):
+	tfidf_mat = scipy.io.mmread(data_fn)
+	return tfidf_mat
+
 
 def load_d2v(data_fn):
 	d2v_model = Doc2Vec.load(data_fn)
 	d2v_model.init_sims(replace=True)
+        
 	d2v_mat = np.array(d2v_model.docvecs)
+
 	del d2v_model
+
 	return d2v_mat
 
 
-def kmn_clustering(data, num_clusters):
-	#Todo: KMN usando cosseno ;=;
-	kmn_model = KMeans(n_clusters=num_clusters, n_jobs=1)
+def plot_2dmatrix(matrix,filename):
+	pylab.cla()
+	pylab.clf()
+	pylab.bone()
+	for i,pos in enumerate(matrix):
+		pylab.plot(pos[0],pos[1],'o',markerfacecolor='blue',markersize=3,markeredgewidth=2)
+	pylab.savefig(filename)
 
-	# gambiarra pra usar coseno no sklearn
-	import sklearn.metrics.pairwise
-	from sklearn.metrics.pairwise import cosine_distances
-	def new_euclidean_distances(X, Y=None, Y_norm_squared=None, squared=False):
-		return cosine_distances(X, Y)
-	real_euclid_dist = sklearn.metrics.pairwise.euclidean_distances
+def buckshot_smpl(data,num_cl):
+	n_smpl = int(math.ceil(math.sqrt(num_cl * data.shape[0])))
+	smpl_data = data[np.random.randint(data.shape[0], size=n_smpl), :]
 
-	sklearn.metrics.pairwise.euclidean_distances = new_euclidean_distances
+	return smpl_data
 
+#Mining text data cap.4 sec.3.3
+def buckshot(smpl_data, num_cl):
+	labels = AgglomerativeClustering(n_clusters=num_cl, linkage='complete', affinity='cosine').fit_predict(smpl_data)
 
-	kmn_model.fit(data)
-	labels = kmn_model.predict(data)
-	distances = kmn_model.transform(data)
+	centers = [np.zeros(smpl_data.shape[1])] * num_cl
+	l, counts = np.unique(labels,return_counts=True)
+	del l
+	for label,data in zip(labels,smpl_data):
+		centers[label] += data/ counts[label]
 
-	sklearn.metrics.pairwise.euclidean_distances = real_euclid_dist
+	return centers
 
-	return labels,distances
+def bs_kmeans(data,centers,n_clusters):
+	bskmn_model = BisectKMeans(n_clusters=n_clusters, init_centers=centers)
+	labels = bskmn_model.fit_predict(data)
 
-
-d2v_mat = load_d2v(args.d2v_team)
-before = datetime.datetime.now()
-data = d2v_mat[0:100]
-for n_cl in range(2,11):
-	labels, distances = kmn_clustering(data, n_cl)
-	silhouette = sklearn.metrics.silhouette_score(data, labels, metric='cosine') #varia de -1 a 1
-	print("For",n_cl,"clusters")
-	print("Silhouette: ",silhouette)
-
-
-
-docs = [docs[i] for i in range(0,len(docs.keys()))]
-res = list(zip(docs,labels))
-
-#pprint(res)
+	return labels
 
 
-print("Time elapsed:", datetime.datetime.now()-before)
+def kmeans(data,centers,n_clusters):
+	kmn_model = KMeans(n_clusters=n_clusters, init_clusters=centers)
+	labels = kmn_model.fit_predict(data)
+	return labels
+
+def clustering(data,n_clusters):
+	print("Applying aggl on subdata to imporove starting centers...")
+	smpl = buckshot_smpl(data,n_clusters)
+	centers = buckshot(smpl, n_clusters)
+	#centers = None
+	print("Applying kmeans on the data")
+	labels = kmeans(data, centers, n_clusters)
+
+	return labels
+
+def silhouette_analysis(data, smpl_size):
+	if smpl_size > 0:
+		sample = data[np.array(range(0, data.shape[0], int(data.shape[0] / smpl_size)))]
+	else:
+		sample = data
+	print(sample.shape)
+	silhouettes = []
+	calinskis = []
+	print("Testing silhouettes...")
+	for n_cl in range(2, 51, 1):
+		labels = clustering(sample, n_cl)
+		print("Processing silhouette")
+		sil = silhouette_score_block(sample, labels, metric='cosine', n_jobs=2)
+		cal = sklearn.metrics.calinski_harabaz_score(sample, labels)
+		print("Silhouette (", n_cl, ") = ", sil)
+		print("Calinski (", n_cl, ") = ", cal)
+
+		silhouettes.append((n_cl, sil))
+		calinskis.append((n_cl, cal))
+	return silhouettes,calinskis
+
+def main():
+	print("Loading matrix...")
+	data = load_d2v(args.d2v_team)
+	print(data.shape)
+	if sil_testing:
+		smpl_size=1000
+		silhouettes,calinskis = silhouette_analysis(data, smpl_size)
+		print("silhouettes:")
+		pprint(silhouettes)
+
+		print()
+		print("calinskis:")
+		pprint(calinskis)
+
+		plot_2dmatrix(silhouettes, "smpl_silhouettes_"+ args.model_dir.replace('/','#') +".jpg")
+		plot_2dmatrix(calinskis, "smpl_calinskis_" + args.model_dir.replace('/','#') + ".jpg")
+
+	else:
+		labels = clustering(data,n_clusters)
+		print("Saving labels...")
+		args.save_pkl(args.team_labels.format(n_clusters), labels.tolist())
+
+
+if __name__ == '__main__':
+	args.measure_time(main)
+
+
 

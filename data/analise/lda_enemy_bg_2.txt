@@ -1,0 +1,11 @@
+model_dir:enemy/bigrams
+{'model_dir': 'enemy/bigrams'}
+num_topics:2
+{'num_topics': '2', 'model_dir': 'enemy/bigrams'}
+lda_team:analise/lda_enemy_bg_2.gsm
+{'num_topics': '2', 'model_dir': 'enemy/bigrams', 'lda_team': 'analise/lda_enemy_bg_2.gsm'}
+lda_team_csv:lda_enemy_bg_2.csv
+{'lda_team_csv': 'lda_enemy_bg_2.csv', 'num_topics': '2', 'model_dir': 'enemy/bigrams', 'lda_team': 'analise/lda_enemy_bg_2.gsm'}
+Loading bow matrix:
+Making lda model:
+Time elapsed: 0:15:00.105559
