@@ -122,7 +122,7 @@ def main():
 	else:
 		labels = clustering(data,n_clusters)
 		print("Saving labels...")
-		args.save_pkl(args.team_labels.format(n_clusters), labels.tolist())
+		args.save_pkl(args.kmn_team_labels.format(n_clusters), labels.tolist())
 
 
 if __name__ == '__main__':

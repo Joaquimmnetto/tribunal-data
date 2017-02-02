@@ -1,0 +1,22 @@
+{'lda': 'True', 'n_groups': '5', 'model_dir': 'offender', 'nwords': '100', 'topic_probs': 'False'}
+offender offender
+Loading inputs
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Cluster/Topic distribution:
+{0: 0.1295307543124666,
+ 1: 0.4173259505013807,
+ 2: 0.2771080594641043,
+ 3: 0.17603523572204843}
+Avg. probability that a doc. belongs to a topic:
+{0: array([ 200642.52514109,   17076.77185035,   19962.3417605 ,
+         31801.20258994]),
+ 1: array([  28842.51718002,  627093.06563863,  129597.72936002,
+         82921.65498696]),
+ 2: array([  27781.52773637,   91398.7534619 ,  389434.96482748,
+         68300.96606256]),
+ 3: array([  31624.86594872,   45923.39432634,   47784.84565332,
+        241086.8597894 ])}
+Time elapsed: 0:00:01.359837

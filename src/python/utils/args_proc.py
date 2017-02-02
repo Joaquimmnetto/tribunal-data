@@ -11,7 +11,7 @@ def load_model(arg, folder, sample):
 	value = params.get(arg, default_val)
 
 	setattr(module, arg, value)
-	current_model = folder.replace('/','#') + "samples" if sample else ""
+	current_model = value.replace('/','') + ("_samples" if 'sample' in value else "")
 	return getattr(module, arg, value), current_model
 
 
@@ -46,6 +46,7 @@ data_dir = "../../../data"
 sys.path.append(data_dir)
 
 model_dir, current_model = load_model('model_dir', "full", sample=True)
+print(model_dir,current_model)
 out_dir = params.get('out_dir', model_dir)
 
 champs = 'champs.txt'
@@ -91,8 +92,9 @@ lsi_team_matrix = load_arg('lsi_team_matrix','lsi_teams.mtx')
 hdp_team = load_arg('hdp_team',"hdp_teams.gsm")
 hdp_team_csv = load_arg('hdp_team_csv',"hdp_teams.csv")
 
-team_labels = load_arg('team_labels','kmn_labels_{0}.pkl')
+kmn_team_labels = load_arg('kmn_team_labels', 'kmn_labels_{0}.pkl')
 aggr_kmn = load_arg('aggr_kmn_{0}',"aggr_kmn_{0}.pkl")
+lda_team_labels = load_arg('lda_team_labels', 'lda_labels_{0}.pkl')
 aggr_lda = load_arg('aggr_lda_{0}',"aggr_lda_{0}.pkl")
 
 # outputs do corretorexit

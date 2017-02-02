@@ -1,9 +1,12 @@
+import datetime
+from multiprocessing import Pool
+from functools import partial
 from gensim.models import LdaMulticore
 from gensim.matutils import sparse2full
 from gensim.corpora import MmCorpus
 import numpy as np
 import args_proc as args
-import datetime
+
 
 def summarize_topic_labels(bow_mat_fn, vocab_fn):
 	bow_mat = MmCorpus(bow_mat_fn)
@@ -16,14 +19,24 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn):
 	labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
 	topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
 	topics_count = dict([(label, 0) for label in labels])
+
+	partial_step = partial(summarize_topic_step,lda_model=lda_model,vocab=vocab)
+
+	pool_step = 1000
+	p = Pool(processes=4)
+	pool_args = []
 	for i, bow in enumerate(bow_mat):
-		topics = lda_model[bow]
-		first_topic = sorted(topics, key=lambda x:x[1], reverse=True)[0][0]
-		r2l[i] = first_topic
-		labels_sum[first_topic] += sparse2full(bow, len(vocab))
-		topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-		topics_count[first_topic] += 1
+		if i % pool_step != 0:
+			pool_args.append((bow, i))
+		else:
+			print(datetime.datetime.now())
+			clear_pool(partial_step, p, pool_args, labels_sum, r2l, topics_count, topics_sum)
 	del bow_mat
+
+	if len(pool_args) > 0:
+
+		clear_pool(partial_step, p, pool_args, labels_sum, r2l, topics_count, topics_sum)
+
 
 	mat_len = sum(topics_count.values())
 
@@ -34,6 +47,27 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn):
 		topics_count[label] /= float(mat_len)
 
 	return labels_sum, topics_sum, topics_count, r2l
+
+
+def clear_pool(f, pool, pool_args, labels_sum, r2l, topics_count, topics_sum):
+	result = pool.starmap(f, pool_args)
+	for full_bow, topics_dist, topic, r2l_part in result:
+		labels_sum[topic] += full_bow
+		topics_sum[topic] += topics_dist
+		topics_count[topic] += 1
+		r2l[r2l_part[0]] = r2l_part[1]
+
+
+def summarize_topic_step(bow, i, lda_model, vocab):
+	topics = lda_model[bow]
+	first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
+	r2l = (i,first_topic)
+
+	labels_sum = sparse2full(bow, len(vocab))
+	topics_sum = sparse2full(topics, lda_model.num_topics)
+
+
+	return (labels_sum,topics_sum,first_topic,r2l)
 
 
 def summarize_cluster_labels(bow_mat_fn, n_clusters, vocab_fn):

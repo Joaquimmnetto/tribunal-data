@@ -60,10 +60,18 @@ def main():
 	print("WordClouds saved")
 	print("-------------Results----------------")
 	if not topic_probs:
+		print("Top 10 words for each cluster:")
+		for gr_lst in lst_fwords:
+			print("Cluster",gr_lst[0])
+			print([(word,"%.2f"%w) for word,w in gr_lst[1][:10]])
 		print("Cluster/Topic distribution:")
 		pprint(groups_cont)
 		if lda:
 			print("Avg. probability that a doc. belongs to a topic:")
+			for topic in topics_sum.keys():
+				total = np.sum(topics_sum[topic])
+				topics_sum[topic] *= (100.0/total)
+
 			pprint(topics_sum)
 
 

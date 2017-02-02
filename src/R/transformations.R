@@ -30,6 +30,13 @@ kmn.smoother <- function(dt,group_size,x,y){
   return(points)
 }
 
+pkl2R <- function(pkl_fn){
+  library(rPython)
+  python.exec("import pickle")
+  python.exec(paste("obj = pickle.load(open(",pkl_fn,",'rb'))"))
+  return(python.get('obj'))
+}
+
 system.time({
 source("src/R/preprocessing.R")
 })
@@ -38,4 +45,8 @@ source("src/R/performance.R")
 })
 system.time({
 source("src/R/contamination.R")
+})
+
+system.time({
+source("src/R/groups.R")
 })
