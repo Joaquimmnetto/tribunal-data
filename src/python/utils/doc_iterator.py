@@ -16,11 +16,20 @@ class DocIterator(object):
 
 			for row, crp_line in zip(csv_rd, crp):
 				i+=1
-				next_case = int(row[0])
-				next_match = int(row[1])
+				if len(row) == 0:
+					print(i)
+					continue
+				
+				try:
+					next_case = int(row[0])
+					next_match = int(row[1])
+				except ValueError:
+					continue
+				
 				team = row[2]
 				if team.strip() == '':
 					continue
+				
 
 				if next_case != case or next_match != match:
 					if case != 0:

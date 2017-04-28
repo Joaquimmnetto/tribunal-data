@@ -1,0 +1,927 @@
+---
+title: "Research Stuff"
+output:
+  pdf_document: default
+  html_document: default
+---
+$0.103,0.087$
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/PyCharm-Workspace/tribunaldb/")
+require(data.table)
+require(ggplot2)
+require(pcaPP)
+load('something.RData')
+source("src/R/utils.R")
+```
+#TODO: REVER A MÉTRICA DE CONTAMINAÇAO
+#Perguntas!
+Quais as perguntas que já foram respondidas?
+
+* Como medir a performance de um jogador (e de um grupo de jogadores) na partida
+
+* Como medir a contaminação tóxica de um time de jogadores em uma partida?
+	+ Através do número de reports, assumindo que os reports indicam que um determinado jogador sentiu-se incomodado o suficiente pelo jogador tóxico ao ponto de realizar uma denúncia
+	+ O fato do denunciante ter incluído um texto especificando a motivação de sua denúncia pode significar mais um fator para incuirmos no futuro no calculo da contaminação tóxica.
+	
+* Quais os diferentes topicos de conversa utilizados por times de League of legends?
+	+ Tactics, tactics/pos, small talk, arguments, complaints, insults and taunts
+	+ Esses padrões podem ser agrupados em dois grupos: um para tópicos positivos (tactics, tactics/pos, small talk) e outro para tópicos negativos (arguments, complaints, insults e taunts)
+	
+* Esses topicos relacionam-se de algum modo com a contaminação tóxica e a performance? Se sim, qual a relação? 
+	+ Sim, os tópicos positivos no geral correlacinam-se inversamente com a contaminação, e positivamente com a performance, enquanto tópicos negativos 	corelacionam-se de maneira positiva com a contaminação, e de maneira negativa com a performance.
+	
+* Os tópicos utilizados pelo jogador tóxico influenciam a contaminação de algum modo? Se sim, como?
+	+ Sim, os tópicos negativos utilizados pelo jogador tóxico influenciam a contaminação, afetando os times de maneiras distintas. Enquanto o time aliado é mais disposto a sofrer efeitos negativos de complaints e insultos feitos pelo jogador tóxico, o time inimigo é mais propenso a sofrer efeitos negativos de taunts.
+
+## Comparação de jogadores não contaminados com os outros jogadores
+As we want to show the characteristics of contamined players, we need to define what is a non-contamined player, so that we can compare them. All matches on our dataset have toxic players, so we can't determine for sure that there is a fully non-contaminated player. However, we can assume that there are groups with virtual no contamination. We chose to use as sample of non-contaminated groups, enemy groups with zero contamination, as enemy groups have a much more limited contact with the offender, and the zero contamination shows that no player in that group was severely affected by the offender's actions. We found that, from the total of groups, 22.3\% of are non-contaminated. 
+
+###Distribuição:
+
+Percentage of non-contaminated players from the total of enemy groups.
+```{r}
+nrow(groups[relation.offender=='enemy' & contamination == 0])*100/nrow(groups[relation.offender=='enemy'])
+```
+
+Percentage of non-contaminated players from the total of groups.
+```{r}
+nrow(groups[relation.offender=='enemy' & contamination == 0])*100/nrow(groups) 
+```
+
+##Comparação de médias:
+
+####Não contaminados vs. contaminados:
+Non-contaminated groups also presents higher average performance $(mean=0.120, sd=0.02)$ than contaminated groups $(mean=0.086,sd=0.03)$.
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0]$performance,
+					 groups[relation.offender!='enemy' | contamination > 0]$performance)
+```
+
+####Não Contaminados vs. inimigos contaminados:
+Non-contaminated groups also present higher average performance $(mean=0.120, sd=0.02)$ than contaminated $(mean=0.107, sd=0.03)$ enemy groups. 
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0]$performance,
+					 groups[relation.offender=='enemy' & contamination > 0]$performance)
+```
+
+####Não Contaminados vs. Aliados contaminados:
+And higher average performance $(mean=0.120, sd=0.02)$ than ally groups $(mean=0.084, sd=0.03)$ as well.
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0]$performance,
+					 groups[relation.offender=='ally']$performance)
+```
+
+####Inimigos Contaminados vs. Aliados (performance):
+We can also compare contaminated enemy groups and ally groups, and confirm that contaminated enemy groups $(mean=0.107, sd=0.03)$ have higher average peformance than allies$(mean=0.08, sd=0.03)$.
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination > 0]$performance,
+					 groups[relation.offender=='ally']$performance)
+
+med.t.test(groups[relation.offender=='ally' & topic=='complaints']$performance,
+groups[relation.offender=='ally' & topic!='complaints']$performance)
+
+```
+med.t.test(groups[relation offender=='ally' & topic=='complaints']$performance,
+groups[relation.offender=='ally' & topic!='complaints']$performance)
+
+####Inimigos Contaminados vs. Aliados (contaminação):
+Finnaly, comparing the contamination index of contaminated enemy groups and ally groups, we see that the contaminated enemy groups $(mean=0.28, sd=0.15)$ still are less contaminated than the allies $(mean=0.30, sd=0.21)$ but with a small difference.
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination > 0]$contamination,
+					 groups[relation.offender=='ally']$contamination)
+```
+
+T-test's $p$ is $2.2*10^{16}$, for all these comparisons. 
+
+##Topic presence per topic category(Positive and Negative):
+```{r}
+prop.table(summary(groups[topic.2=='neg']$topic))
+prop.table(summary(groups[relation.offender=='enemy' & contamination==0]$topic))
+prop.table(summary(groups[relation.offender=='enemy' & contamination > 0]$topic))
+prop.table(summary(groups[relation.offender=='ally']$topic))
+prop.table(summary(groups[relation.offender=='offender']$topic))
+
+```
+
+###Full Dataset:
+```{r, echo=FALSE}
+prop.table(summary(groups$topic)) * 100
+```
+
+###Positive Topics:
+```{r, echo=FALSE}
+prop.table(summary(groups[topic.2=='pos']$topic)) * 100
+```
+
+###Negative Topics:
+```{r, echo=FALSE}
+prop.table(summary(groups[topic.2=='neg']$topic)) * 100
+```
+
+###Topic presence per groups:
+Non-Contaminated:
+```{r, echo=FALSE}
+prop.table(summary(groups[relation.offender=='enemy' & contamination == 0]$topic.2)) * 100
+```
+Contaminated Enemies:
+```{r, echo=FALSE}
+prop.table(summary(groups[relation.offender=='enemy' & contamination > 0]$topic.2)) * 100
+```
+
+Enemies:
+```{r, echo=FALSE}
+prop.table(summary(groups[relation.offender=='enemy']$topic.2)) * 100
+```
+
+Allies:
+```{r, echo=FALSE}
+prop.table(summary(groups[relation.offender=='ally']$topic.2)) * 100
+```
+
+Offenders:
+```{r, echo=FALSE}
+prop.table(summary(groups[relation.offender=='offender']$topic.2)) * 100
+```
+
+
+##Relationship between topics and groups(Performance):
+###Funções:
+```{r, echo=FALSE}
+	names.perf = list(ally='Allies', ec='Contaminated Enemies', nc='Non-contaminated', enemy='Enemies',offender='Offenders')
+	cl.perf = create.color.scale('Relations', names.perf)
+	
+	names.cont = list(ally='Allies', ec='Contaminated Enemies', enemy='Enemies')
+	cl.cont = create.color.scale('Relations', names.cont)
+
+	plot.topic.perf <- function(col.name){
+		return(add.theme(
+			ggplot() + 
+			geom_smooth(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally)) +
+			geom_point(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally), alpha=0.5) + 
+			geom_smooth(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec)) +
+				geom_point(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec), alpha=0.5) +
+			geom_smooth(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc)) +
+				geom_point(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc), alpha=0.5) + 
+			geom_smooth(data=enemy.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$enemy)) +
+				geom_point(data=enemy.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$enemy), alpha=0.5) +
+			geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender)) +
+				geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender), alpha=0.5),
+			col.scale = cl.perf))
+	}	
+	
+	plot.topic.cont <- function(col.name){
+		return(add.theme(
+			ggplot() + 
+			geom_smooth(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),span=1) +
+			 geom_point(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),alpha=0.5) + 
+			geom_smooth(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),span=1) +
+			 geom_point(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),alpha=0.5) +
+			geom_smooth(data=ec.topics.cont, aes(x=values, y=get(col.name) * 100, color=names.cont$ec),span=1) +
+			 geom_point(data=ec.topics.cont, aes(x=values, y=get(col.name) * 100, color=names.cont$ec),alpha=0.5),
+			col.scale = cl.perf))
+	}
+	correlations.perf <- function(col.name){
+		print("Todos:")
+		print(with(topics.perf, cor.fk(performance, get(col.name))))
+		print("Não Contaminados:")
+		print(with(nc.topics.perf, cor.fk(values, get(col.name))))
+		print("Inimigos Contaminados:")
+		print(with(ec.topics.perf, cor.fk(values, get(col.name))))
+		print("Aliados:")
+		print(with(ally.topics.perf, cor.fk(performance, get(col.name))))
+		print("Ofensor:")
+		print(with(offender.topics.perf, cor.fk(performance, get(col.name))))
+		#print("Inimigos Totais:")
+		#print(with(enemy.topics.perf, cor.fk(performance, get(col.name))))
+		
+	}
+	
+correlations.cont <- function(col.name){	
+	print("Inimigos:")
+	print(with(enemy.topics.cont, cor.fk(contamination, get(col.name))))
+	print("Aliados:")
+	print(with(ally.topics.cont, cor.fk(contamination, get(col.name))))
+	# print("Inimigos Contaminados:")
+	# print(with(ec.topics.cont, cor.fk(values, get(col.name))))
+	
+}
+
+```
+
+
+
+###Positive topics:
+```{r, echo=FALSE}
+	plot.topic.perf('pos') + labs(x='Group Performance', y='Groups w/ Positive Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('pos')
+```
+####Comparisons
+```{r, echo=FALSE}
+"Full"
+med.t.test(groups[topic.2=='pos']$performance,groups[topic.2!='pos']$performance)
+"Non-Contaminated"
+med.t.test(groups[relation.offender=='enemy' & contamination==0 & topic.2=='pos']$performance,groups[relation.offender=='enemy' & contamination==0 & topic.2!='pos']$performance)
+"Contaminated Enemies"
+med.t.test(groups[relation.offender=='enemy' & contamination>0 & topic.2=='pos']$performance,groups[relation.offender=='enemy' & contamination>0 & topic.2!='pos']$performance)
+"Allies"
+med.t.test(groups[relation.offender=='ally' & topic.2=='pos']$performance,groups[relation.offender=='ally' & topic.2!='pos']$performance)
+"Offenders"
+med.t.test(groups[relation.offender=='offender' & topic.2=='pos']$performance,groups[relation.offender=='offender' & topic.2!='pos']$performance)
+```
+###Tactics-related(tactics + tactics.pos):
+```{r, echo=FALSE}
+plot.topic.perf('tactics.full') + labs(x='Group Performance',y='Groups w/ Tactics-related Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('tactics.full')
+```
+
+###Mood-related(tactics.pos + small talk):
+```{r, echo=FALSE}
+plot.topic.perf('mood') + labs(x='Group Performance',y='Groups w/ Mood-related Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('mood')
+```
+
+####Comparações:
+#####Performance:
+Non-contaminated:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination == 0 & (topic=='tactics.pos' | topic=='chit.chat')]$performance, 
+	groups[relation.offender=='enemy' & contamination == 0 & (topic!='tactics.pos' & topic!='chit.chat')]$performance)
+```
+Contaminated enemy:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination > 0 & (topic=='tactics.pos' | topic=='chit.chat')]$performance, 
+	groups[relation.offender=='enemy' & contamination > 0 & (topic!='tactics.pos' & topic!='chit.chat')]$performance)
+```
+Ally:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='ally' & (topic=='tactics.pos' | topic=='chit.chat')]$performance, 
+	groups[relation.offender=='ally' & (topic!='tactics.pos' & topic!='chit.chat')]$performance)
+```
+Offender:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='offender' & (topic=='tactics.pos' | topic=='chit.chat')]$performance, 
+	groups[relation.offender=='offender' & (topic!='tactics.pos' & topic!='chit.chat')]$performance)
+```
+
+
+###Negative Topics:
+```{r, echo=FALSE}
+plot.topic.perf('neg') + labs(x='Group Performance',y='Groups w/ Negative Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('neg')
+print("For performance < 0.06:")
+with(offender.topics.perf[performance < 0.06], cor.fk(performance, neg))
+print("For performance >= 0.06:")
+with(offender.topics.perf[performance >= 0.06], cor.fk(performance, neg))
+```
+
+####Comparisons:
+####Comparisons
+```{r, echo=FALSE}
+"Full"
+med.t.test(groups[topic.2=='neg']$performance,groups[topic.2!='neg']$performance)
+"Non-Contaminated"
+med.t.test(groups[relation.offender=='enemy' & contamination==0 & topic.2=='neg']$performance,groups[relation.offender=='enemy' & contamination==0 & topic.2!='neg']$performance)
+"Contaminated Enemies"
+med.t.test(groups[relation.offender=='enemy' & contamination>0 & topic.2=='neg']$performance,groups[relation.offender=='enemy' & contamination>0 & topic.2!='neg']$performance)
+"Allies"
+med.t.test(groups[relation.offender=='ally' & topic.2=='neg']$performance,groups[relation.offender=='ally' & topic.2!='neg']$performance)
+"Offenders"
+med.t.test(groups[relation.offender=='offender' & topic.2=='neg']$performance,groups[relation.offender=='offender' & topic.2!='neg']$performance)
+```
+
+###Arguments:
+```{r, echo=FALSE}
+plot.topic.perf('arguments') + labs(x='Group Performance',y='Groups w/ Argument Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('arguments')
+```
+####Comparisons:
+#####Performance:
+Non-contaminated:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination == 0 & topic=='arguments']$performance, 
+	groups[relation.offender=='enemy' & contamination == 0 & topic!='arguments']$performance)
+```
+Contaminated enemy:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination > 0 & topic=='arguments']$performance, 
+	groups[relation.offender=='enemy' & contamination > 0 & topic!='arguments']$performance)
+```
+Ally:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='ally' & topic=='arguments']$performance, 
+	groups[relation.offender=='ally' & topic!='arguments']$performance)
+```
+Offender:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='offender' & topic=='arguments']$performance, 
+	groups[relation.offender=='offender' & topic!='arguments']$performance)
+
+prop.table(summary(groups[topic.2=='neg']$topic))
+```
+
+####Minimum for non-contaminated and contaminated enemies.
+```{r, echo=FALSE}
+print("For non-contaminated")
+min_args = min(nc.topics.perf$arguments)
+inflex_perf = nc.topics.perf[arguments==min_args]$values
+print(inflex_perf)
+cor.fk(nc.topics.perf[values >= inflex_perf]$values, nc.topics.perf[values >= inflex_perf]$arguments)
+
+print("For contaminated enemies")
+min_args = min(ec.topics.perf$arguments)
+inflex_perf = ec.topics.perf[arguments==min_args]$values
+print(inflex_perf)
+cor.fk(ec.topics.perf[values >= inflex_perf]$values, ec.topics.perf[values >= inflex_perf]$arguments)
+
+print("For non-contaminated")
+min_args = min(nc.topics.perf$arguments)
+inflex_perf = nc.topics.perf[arguments==min_args]$values
+print(inflex_perf)
+cor.fk(nc.topics.perf[values < inflex_perf]$values, nc.topics.perf[values < inflex_perf]$arguments)
+
+print("For contaminated enemies")
+min_args = min(ec.topics.perf$arguments)
+inflex_perf = ec.topics.perf[arguments==min_args]$values
+print(inflex_perf)
+cor.fk(ec.topics.perf[values < inflex_perf]$values, ec.topics.perf[values < inflex_perf]$arguments)
+
+med.t.test(
+	groups[relation.offender=='enemy' & contamination>0 & performance > inflex_perf]$contamination,
+	groups[relation.offender=='enemy' & contamination>0]$contamination
+	)
+
+med.t.test(
+	(matches[enemy.performance > inflex_perf]$ally.performance + matches[enemy.performance > inflex_perf]$offender.performance)/2,
+	matches[enemy.performance > inflex_perf]$enemy.performance
+)
+
+
+
+```
+###Complaints:
+```{r, echo=FALSE}
+plot.topic.perf('complaints') + labs(x='Group Performance',y='Groups w/ Complaint Topics (%)')
+```
+####Offender's peak:
+```{r, echo=FALSE}
+max.compl = max(offender.topics.perf$complaints)
+max.perf = offender.topics.perf[complaints==max.compl]$performance
+print(max.perf)
+
+cor.fk(offender.topics.perf[performance <= max.perf]$performance, offender.topics.perf[performance <= max.perf]$complaints)
+
+cor.fk(offender.topics.perf[performance > max.perf]$performance, offender.topics.perf[performance > max.perf]$complaints)
+```
+
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('complaints')
+```
+
+####Comparisons:
+Non-contaminated:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0 & topic=='complaints']$performance,
+					 groups[relation.offender=='enemy' & contamination == 0 & topic!='complaints']$performance)
+```
+Contaminated enemies:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='enemy' & contamination > 0 & topic=='complaints']$performance,
+					 groups[relation.offender=='enemy' & contamination > 0 & topic!='complaints']$performance)
+```
+Allies:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='ally' & topic=='complaints']$performance, 
+					 groups[relation.offender=='ally' & topic!='complaints']$performance)
+```
+Offenders:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='offender' & topic=='complaints']$performance,
+					 groups[relation.offender=='offender' & topic!='complaints']$performance)
+```
+
+####Comparisons in negative topics:
+
+###Insults:
+$(performance \approx 0.09)$
+```{r, echo=FALSE}
+plot.topic.perf('insults') + labs(x='Group Performance',y='Groups w/ Insult Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('insults')
+```
+
+####Offender's peak
+```{r, echo=FALSE}
+max_insults = max(offender.topics.perf$insults)
+inflex_perf = max(offender.topics.perf[insults==max_insults]$performance)
+inflex_perf
+cor.fk(offender.topics.perf[performance < inflex_perf]$performance, offender.topics.perf[performance < inflex_perf]$insults)
+cor.fk(offender.topics.perf[performance >= inflex_perf]$performance, offender.topics.perf[performance >= inflex_perf]$insults)
+```
+
+####Comparisons:
+Non-contaminated:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0 & topic=='insults']$performance,
+					 groups[relation.offender=='enemy' & contamination == 0 & topic!='insults']$performance)
+```
+Contaminated enemies:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='enemy' & contamination > 0 & topic=='insults']$performance,
+					 groups[relation.offender=='enemy' & contamination > 0 & topic!='insults']$performance)
+```
+Allies:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='ally' & topic=='insults']$performance, 
+					 groups[relation.offender=='ally' & topic!='insults']$performance)
+```
+
+Offenders:
+```{r, echo=FALSE}
+med.t.test(groups[relation.offender=='offender' & topic=='complaints']$performance,
+					 groups[relation.offender=='offender' & topic!='complaints']$performance)
+```
+
+###Taunts:
+```{r, echo=FALSE}
+plot.topic.perf('provoking') + labs(x='Group Performance',y='Groups w/ Taunts Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.perf('provoking')
+```
+offender.topics.perf[performance > 0.06204036]$performance
+
+####Comparisons:
+Non-contaminated:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination == 0 & topic=='provoking']$performance, 
+	groups[relation.offender=='enemy' & contamination == 0 & topic!='provoking']$performance)
+```
+Contaminated enemy:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='enemy' & contamination > 0 & topic=='provoking']$performance, 
+	groups[relation.offender=='enemy' & contamination > 0 & topic!='provoking']$performance)
+```
+Ally:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='ally' & topic=='provoking']$performance, 
+	groups[relation.offender=='ally' & topic!='provoking']$performance)
+```
+Offender:
+```{r, echo=FALSE}
+med.t.test(
+	groups[relation.offender=='offender' & topic=='provoking']$performance, 
+	groups[relation.offender=='offender' & topic!='provoking']$performance)
+
+prop.table(summary(groups[topic.2=='neg']$topic))
+```
+
+
+###Conclusions:
+Complaints & Insults : Offenders with low performance tends to complain more, and complain about his own team.
+Complaints:
+```{r}
+#summary(groups$performance)
+#summary(offender.topics.perf[performance > 0.094]$complaints)
+#summary(offender.topics.perf[performance <= 0.094]$complaints)
+summary(matches$offender.team)
+summary(matches[offender.performance > 0.094 | offender.groups!='complaints']$offender.team)
+summary(matches[offender.performance <= 0.094 & offender.groups=='complaints']$offender.team)
+```
+Enemy teams taunts more on high contamination and low performance as a response to the opposing team taunts.
+```{r}
+# dt=data.table(enemy.topics = matches[enemy.contamination > 0.5 & enemy.performance < 0.062, enemy.groups=='provoking'], ally.topics =  matches[enemy.contamination > 0.5 & enemy.performance < 0.062, (
+# 	(ally.groups=='provoking' | offender.groups=='provoking') |
+# 	(ally.groups=='insults' | offender.groups=='insults') |
+# 		(ally.groups=='complaints' | offender.groups=='complaints') |
+# 		(ally.groups=='arguments' | offender.groups=='arguments')
+# 	 )])
+
+rurrus <- apriori(dt,parameter=list(support=0.01,confidence=0.01))
+inspect(rurrus)
+```
+Comparison betweeen the mean contamination of each topic:
+General:
+Positive Topics:
+```{r}
+	'Positive:'
+	mean(groups[topic.2=='pos']$contamination,na.rm=TRUE)
+	'Tactics:'
+	mean(groups[topic.2=='pos' & (topic=='tactics')]$contamination,na.rm=TRUE)
+	'Tactics.pos:'
+	mean(groups[topic.2=='pos' & (topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Small Talk:'
+	mean(groups[topic.2=='pos' & (topic=='chit.chat')]$contamination,na.rm=TRUE)
+	'Tactics.all:'
+	mean(groups[topic.2=='pos' & (topic=='tactics' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Mood:'
+	mean(groups[topic.2=='pos' & (topic=='chit.chat' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+```
+Positive Topics [Ally]:
+```{r}
+	'Positive:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos']$contamination,na.rm=TRUE)
+	'Tactics:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos' & (topic=='tactics')]$contamination,na.rm=TRUE)
+	'Tactics.pos:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos' & (topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Small Talk:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos' & (topic=='chit.chat')]$contamination,na.rm=TRUE)
+	'Tactics.all:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos' & (topic=='tactics' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Mood:'
+	mean(groups[relation.offender=='ally' & topic.2=='pos' & (topic=='chit.chat' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+```
+Positive Topics[Non Contaminated Enemies]:
+```{r}
+	'Positive:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos']$contamination,na.rm=TRUE)
+	'Tactics:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos' & (topic=='tactics')]$contamination,na.rm=TRUE)
+	'Tactics.pos:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos' & (topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Small Talk:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos' & (topic=='chit.chat')]$contamination,na.rm=TRUE)
+	'Tactics.all:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos' & (topic=='tactics' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+	'Mood:'
+	mean(groups[relation.offender=='enemy' & topic.2=='pos' & (topic=='chit.chat' | topic=='tactics.pos')]$contamination,na.rm=TRUE)
+```
+
+
+Negative Topics
+```{r}
+	'Negative:'
+	mean(groups[topic.2=='neg']$contamination,na.rm=TRUE)
+```
+
+
+
+##Relationship between topics and groups(Contamination):
+###Positive topics:
+```{r, echo=FALSE}
+	plot.topic.cont('pos') + labs(x="Group Contamination", y='Groups w/ Positive Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('pos')
+```
+
+###Tactics-related topics:
+```{r, echo=FALSE}
+	plot.topic.cont('tactics.full') + labs(x="Group Contamination", y='Groups w/ Tactics-related Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('tactics.full')
+```
+
+###Mood-related topics:
+```{r, echo=FALSE}
+plot.topic.cont('mood') + labs(x="Group Contamination", y='Groups w/ Mood-related Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('mood')
+```
+
+
+####Comparisons with other positive topics:
+For enemies:
+(Comentado por enquanto, porque como mood tactics.full não são complementares, não faz sentido comparar ambos desta maneira)
+(Opções: comparar contra a média do grupo)
+```{r}
+# med.t.test(groups[relation.offender=='enemy' & (topic=='tactics.pos' | topic=='chit.chat') & topic.2=='pos']$contamination,
+# 					 groups[relation.offender=='enemy' & topic.2=='pos']$contamination)
+```
+
+For allies:
+```{r}
+# med.t.test(groups[relation.offender=='ally' & (topic=='tactics.pos' | topic=='chit.chat') & topic.2=='pos']$contamination,
+# 					 groups[relation.offender=='ally' & topic.2=='pos']$contamination)
+```
+
+
+
+###Negative topics:
+```{r, echo=FALSE}
+plot.topic.cont('neg') + labs(x="Group Contamination", y='Groups w/ Negative Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('neg')
+```
+
+
+###Arguments topics:
+```{r, echo=FALSE}
+	plot.topic.cont('arguments') + labs(x="Group Contamination", y='Groups w/ Argument Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('arguments')
+```
+
+####Comparisons with other negative topics:
+For enemies:
+```{r}
+med.t.test(groups[relation.offender=='enemy' & topic=='arguments']$contamination,
+					 groups[relation.offender=='enemy' & topic!='arguments' & topic.2=='neg']$contamination)
+```
+
+For allies:
+```{r}
+med.t.test(groups[relation.offender=='ally' & topic=='arguments' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='ally' & topic!='arguments' & topic.2=='neg']$contamination)
+```
+
+
+###Complaints topics:
+```{r, echo=FALSE}
+	plot.topic.cont('complaints') + labs(x="Group Contamination", y='Groups w/ Complaint Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('complaints')
+```
+
+####Comparisons with other negative topics:
+For enemies:
+```{r}
+med.t.test(groups[relation.offender=='enemy' & topic=='complaints' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='enemy' & topic!='complaints' & topic.2=='neg']$contamination)
+```
+
+For allies:
+```{r}
+med.t.test(groups[relation.offender=='ally' & topic=='complaints' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='ally' & topic!='complaints' & topic.2=='neg']$contamination)
+```
+
+###Insults topics:
+```{r, echo=FALSE}
+	plot.topic.cont('insults') + labs(x="Group Contamination", y='Groups w/ Insult Topics (%)')
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('insults')
+```
+
+####Comparisons with other negative topics:
+For enemies:
+```{r}
+med.t.test(groups[relation.offender=='enemy' & topic=='insults' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='enemy' & topic!='insults' & topic.2=='neg']$contamination)
+```
+
+For allies:
+```{r}
+med.t.test(groups[relation.offender=='ally' & topic=='insults' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='ally' & topic!='insults' & topic.2=='neg']$contamination)
+```
+
+
+
+###Taunts topics:
+```{r, echo=FALSE}
+	plot.topic.cont('provoking') + labs(x="Group Contamination", y='Groups w/ Taunt Topics (%)')
+	
+```
+
+####Correlações:
+```{r, echo=FALSE}
+correlations.cont('provoking')
+```
+
+####Comparisons with other negative topics:
+For enemies:
+```{r}
+med.t.test(groups[relation.offender=='enemy' & topic=='provoking' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='enemy' & topic!='provoking' & topic.2=='neg']$contamination)
+```
+
+For allies:
+```{r}
+med.t.test(groups[relation.offender=='ally' & topic=='provoking' & topic.2=='neg']$contamination,
+					 groups[relation.offender=='ally' & topic!='provoking' & topic.2=='neg']$contamination)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##Jogadores Contaminados vs. Não Contaminados
+
+###Tópicos Positivos:
+```{r, echo=FALSE}
+ggplot() + 
+	geom_point(data=nc.topics.perf, aes(x=values,y=pos,color='nc')) + 
+	geom_point(data=cont.topics.perf, aes(x=values,y=pos,color='cont'))
+```
+
+####Correlações:
+```{r, echo=FALSE}
+print("Não Contaminados:")
+with(nc.topics.perf, cor.fk(values, pos)) 
+print("Contaminados:")
+with(cont.topics.perf, cor.fk(values, pos)) 
+```
+
+###Tópicos Negativos:
+```{r, echo=FALSE}
+ggplot() + 
+	geom_point(data=nc.topics.perf, aes(x=values,y=neg,color='nc')) + 
+	geom_point(data=cont.topics.perf, aes(x=values,y=neg,color='cont'))
+```
+
+####Correlações:
+```{r, echo=FALSE}
+print("Não Contaminados:")
+with(nc.topics.perf, cor.fk(values, neg)) 
+print("Contaminados:")
+with(cont.topics.perf, cor.fk(values, neg)) 
+```
+
+As we compare contaminated enemy groups and ally groups, the diference between their topic pattern 
+```{r, echo=FALSE}
+ggplot() + geom_point(data=topics.cont[relation.offender=='enemy' & contamination > 0], aes(x=contamination,y=pos,color='nc')) + geom_point(data=topics.cont[relation.offender=='ally'], aes(x=contamination,y=pos,color='cont'))
+
+ggplot() + geom_point(data=nc.topics.perf, aes(x=values,y=neg,color='nc')) + geom_point(data=cont.topics.perf, aes(x=values,y=neg,color='cont'))
+```
+
+#Jogadores não contaminados x topicos do ofensor
+Analyzing the topics used by the offender on contaminated and non-contaminated players, there is no significant difference between them. Offender targeting analysis may provide us with better anwsers about the motivations on the non-contamination of these groups.
+<!--This suggests that there is no difference in the treatment given by the toxic player in contaminated and non-contaminated players, and the motives-->
+
+Topics distribution for non-contaminated group aggregations
+```{r}
+prop.table(summary(matches[enemy.contamination == 0]$offender.groups))
+```
+Topics distribution for all group aggregations.
+```{r}
+prop.table(summary(matches$offender.groups))
+```
+
+##TODO: Contaminação x performance global(aliados e inimigos)
+Differences between non-contaminated contamination mean(should be zero) and contaminated players contamination mean.
+```{r}
+med.t.test(groups[relation.offender=='enemy' & contamination == 0]$contamination, groups[relation.offender!='enemy' | contamination > 0]$contamination)
+```
+
+Differences between ally and enemy contamination means.
+```{r}
+med.t.test(matches$ally.contamination, matches$enemy.contamination)
+```
+There is no significative correlation between performance and contamination. This let us dismiss the hypothesis bad group performance leads to higher contamination, as the bad performance would upset the group members.
+
+Correlation between contamination and performance for all groups. 
+```{r}
+cor.test(groups$contamination, groups$performance, method='spearman')
+```
+
+
+
+#Relacionar contaminação com a presença do ofensor no 'all chat'
+```{r}
+med.t.test(matches[offender.all == 0]$enemy.contamination, matches[offender.all > 0]$enemy.contamination)
+med.t.test(matches[offender.all == 0]$ally.contamination, matches[offender.all > 0]$ally.contamination)
+```
+<!--
+	#TODO: Relacionar tópico dos ofensores com as palavras utilizadas nas denúncias destes.
+	#Interessante: Níveis anormalmente altos de performance só se situam em grupos contaminadas.
+	
+	#TODO: Jogadores não contaminados x topicos do ofensor
+	#TODO: Levar em consideração empatia(casos em que o time aliado pede para o time inimigo reportar)
+	#TODO: usar um classificador para verificar quais chats batem com quais clusters. 
+-->
+
+
+
+#Alvos do ofensor em certos tópicos negativos
+Foi mostrado que o topico de insultos afetam primariamente os jogadores aliados, e o tópico de provocações, os jogadores inimigos. Hipotetizamos que isso ocoreu porque o time aliado é o principal alvo do ofensor no caso de insultos, e o time inimigo no caso de provocações. 
+Podemos verificar quem o jogador ofensor está alvejando a partir do uso dos canais de chat pelo mesmo. Como o canal 'all' é a única maneira do ofensor entrar em contato com o time inimigo, atividade neste implica que o ofensor está comunicando-se com o time inimigo. Para evitar distorções devido a partidas mais longas tenderem a possuir mais uso dos chats, medimos a atividade nos canais usando postagens por minuto.
+
+##Insults
+Podemos ver que a média da atividade do ofensor no canal 'all' quando este predominantemente insulta $(mean=0.20)$ é menor do que a média de atividade na predominância de outros tópicos $(mean=0.32)$. Isso mostra que o ofensor dá menos atenção ao grupo inimigo em casos de insulto. Não temos confirmação de que o ofensor foca seus ataques no grupo aliado através da atividade no chat. Contudo, analisando as palavras utilizadas pelo ofensor e a relação entre a quantidade de insultos realizadas pelo ofensor e a contaminação, fica claro que o time aliado é consideravelmente afetado por estes insultos.
+```{r}
+x <- matches[offender.groups=='insults']$offender.all
+not.x <- matches[offender.groups!='insults']$offender.all
+t.test(x,not.x)
+```
+```{r}
+x <- matches[offender.groups=='insults']$offender.team
+not.x <- matches[offender.groups!='insults']$offender.team
+t.test(x,not.x)
+```
+##Taunts
+A média da atividade do ofensor no canal 'all' quando este predominantemente provoca $(mean=0.45)$, é significativamente superior $(p < 2.2*10^{16})$ a média da atividade do ofensor no 'all' quando outros tópicos são predominantes $(mean=0.29)$. isso mostra que em casos de provocação, o ofensor foca no time inimigo em detrimento do time aliado, que mostra atividade significativamente mais baixa $(p < 2.2*10^{16})$ por parte do ofensor em casos onde provocação é predominante $(mean=0.68)$ do que em outros casos $(mean=1.01)$.
+```{r}
+x <- matches[offender.groups=='provoking']$offender.all
+not.x <- matches[offender.groups!='provoking']$offender.all
+t.test(x,not.x)
+```
+```{r}
+x <- matches[offender.groups=='provoking']$offender.team
+not.x <- matches[offender.groups!='provoking']$offender.team
+t.test(x,not.x)
+```
+
+Podemos replicar esse experimento para os tópicos negativos restantes:
+
+##Complaints
+Diferença estatisticamente significativa em ambos, logo, consideramos que houve um 'empate técnico'. Contudo, a diferença real no 'team' é bem significativa $mean=1.11$ para grupos com complaints, $mean=0.95$ para grupos sem complaints. Isso significa que ofensores que reclamam alvejam o time aliado mais do que o normal.
+```{r}
+x <- matches[offender.groups=='complaints']$offender.all
+not.x <- matches[offender.groups!='complaints']$offender.all
+t.test(x,not.x)
+```
+```{r}
+x <- matches[offender.groups=='complaints']$offender.team
+not.x <- matches[offender.groups!='complaints']$offender.team
+t.test(x,not.x)
+```
+
+<!-- ## R Markdown -->
+
+<!-- This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. -->
+
+<!-- When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this: -->
+
+<!-- ```{r cars} -->
+<!-- summary(cars) -->
+<!-- ``` -->
+
+<!-- ## Including Plots -->
+
+<!-- You can also embed plots, for example: -->
+
+<!-- ```{r pressure, echo=FALSE} -->
+<!-- plot(pressure) -->
+<!-- ``` -->
+
+<!-- Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot. -->

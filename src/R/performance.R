@@ -10,6 +10,7 @@ players <- players[,kda := (kills + assists)/(deaths + 1)]
 matches <- matches[ players[, .(match.gold = sum(gold)), by = .(case, match)] ]
 matches <- matches[ players[, .(match.kda = sum(kda)), by = .(case, match)] ]
 
+players <- players[,id := seq.int(nrow(players))]
 #Aux table for performance processing
 perf <- players[, .(id, case, match, gold, kda)][matches[,.(case, match, match.gold, match.kda)],on=.(case,match) ]
 perf <- perf[, perc.gold := (gold/match.gold)]

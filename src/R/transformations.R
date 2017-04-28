@@ -1,44 +1,30 @@
+setwd('~/PyCharm-Workspace/tribunaldb/')
 require(dplyr)
 library(dtplyr)
 require(data.table)
-#library(multidplyr)
-
-remove.outliers <- function(dt,col__){
-  col_name <- deparse(substitute(col__))
-  summ <- summary(as.matrix(dt[,col_name])[,1])
-  iqr = summ[5] - summ[2]
-  upper_thresh = summ[5] + 1.5*iqr
-  lower_thresh = summ[2] - 1.5*iqr
-  ret <- dt[get(col_name) <= upper_thresh & get(col_name) >= lower_thresh]
-  return(ret)
-} 
+source('src/R/utils.R')
 
 
-kmn.smoother <- function(dt,group_size,x,y){ 
-  x_name <- deparse(substitute(x))
-  y_name <- deparse(substitute(y))
-  num_groups <- as.integer(nrow(dt)/group_size) + 1
-  
-  points <- dt[,.(get(x_name),get(y_name))] 
-  setnames(points, names(points),c(x_name,y_name))
-  kmn <-  points %>% kmeans(centers=num_groups)
-  
-  points$cl <- kmn$cluster
-  
-  points <- points[ ,c(x_name,y_name) := .(median(get(x_name)),median(get(y_name))),by=cl ]
-  points <- unique(points)
-  return(points)
-}
-
-pkl2R <- function(pkl_fn){
-  library(rPython)
-  python.exec("import pickle")
-  python.exec(paste("obj = pickle.load(open(",pkl_fn,",'rb'))"))
-  return(python.get('obj'))
-}
-
+players_fl = "data/full/players.csv"
+matches_fl = "data/full/matches.csv"
 system.time({
-source("src/R/preprocessing.R")
+  players <- setDT(fread(players_fl, header = FALSE, sep=',', showProgress=TRUE,
+                         col.names = c("case", "match", "relation.offender", "champion", 
+                                       "kills", "deaths","assists", "gold", "outcome"),
+                         colClasses = c("factor", "factor", "factor", "factor",
+                                        "integer", "integer", "integer","integer", "factor")))
+  
+  matches <- setDT(fread(matches_fl, header = FALSE, sep=',', showProgress=TRUE, 
+                         col.names = c("case", "match", "match.type", "most.common.offense",
+                                       'report.text.allies', 'report.text.enemies',
+                                       "reports.allies", "reports.enemies", "time.played"), 
+                         colClasses = c("factor", "factor", "factor", "factor",
+                                        "character","character",
+                                        "integer", "integer", "integer")))
+   setkey(matches,case,match)
+  setkey(players,case,match,relation.offender)
+  
+    
 })
 system.time({
 source("src/R/performance.R")
@@ -46,7 +32,6 @@ source("src/R/performance.R")
 system.time({
 source("src/R/contamination.R")
 })
-
 system.time({
-source("src/R/groups.R")
+#source("src/R/groups.R")
 })

@@ -1,7 +1,6 @@
 # encoding=utf8
+from multiprocessing import Process
 from threading import Thread
-from threading import Semaphore
-#import codecs
 import random
 import string
 import os
@@ -30,10 +29,10 @@ class TarReader():
 		return self.tmp_dir
 
 
-class ProducersManager(Thread):
+class ProducersManager(Process):
 
 	def __init__(self, tar_path, processors, prod_semaphore = None):
-		Thread.__init__(self)
+		Process.__init__(self)
 		self.tar_path = tar_path
 		self.processors = processors
 		self.prod_semaphore = prod_semaphore
@@ -47,19 +46,16 @@ class ProducersManager(Thread):
 				if json_str.strip().strip('\n').strip('"') == '':
 					continue
 				match = json.loads(json_str)
-
 				match['case_id'] = case_id
 				case.append(match)
-
 			except:
 				pass
-				#return []
 
 		return case
 
 	def run(self):
-		num_permits = 4
-		# processor_sem = Semaphore(num_permits)
+		if self.prod_semaphore is not None:
+			self.prod_semaphore.acquire()
 
 		print("Extracting " + str(self.tar_path))
 		jsons_dir = TarReader().extract(self.tar_path)

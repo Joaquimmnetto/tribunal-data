@@ -192,3 +192,7 @@ ttox.ofense.density <- ggplot(matches) +
 
 save_graph(ttox.ofense.density)
 rm(ttox.ofense.density)
+
+
+ggplot(data=players)+geom_boxplot(aes(x=outcome,y=performance))
+

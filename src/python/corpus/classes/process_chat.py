@@ -77,7 +77,6 @@ class ChatProcessor(Processor):
 			for attr in self.atrs:
 				if attr == 'message':
 					if not any(entry[attr]):
-						print("empty")
 						csv_array.append("") if csv else None
 					else:
 						corpus_lst.append(entry[attr] ) if corpus else None

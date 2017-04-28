@@ -60,15 +60,15 @@ def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
 
 
 def main():
-	before = datetime.datetime.now()
+	#before = datetime.datetime.now()
 	print("Building counting matrix")
 	docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat, args.corpus)
 	print("Saving models...")
 	save_outp(docs, args.cnt_team_r2d,
 	          cnt_vocab, args.cnt_team_vocab,
 	          cnt_matrix, args.cnt_team)
-	print("Total time elapsed:", datetime.datetime.now() - before)
+	#print("Total time elapsed:", datetime.datetime.now() - before)
 
 
 if __name__ == '__main__':
-	main()
+	args.measure_time(main)

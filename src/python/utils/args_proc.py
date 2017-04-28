@@ -45,7 +45,7 @@ if len(sys.argv) > 1:
 data_dir = "../../../data"
 sys.path.append(data_dir)
 
-model_dir, current_model = load_model('model_dir', "full", sample=True)
+model_dir, current_model = load_model('model_dir', "full", sample=False)
 print(model_dir,current_model)
 out_dir = params.get('out_dir', model_dir)
 
@@ -79,13 +79,13 @@ tfidf_team_r2d = load_arg('tfidf_team_r2d', "tfidf_team_r2d.pkl")
 tfidf_team_vocab = load_arg('tfidf_team_vocab', 'tfidf_team_vocab.pkl')
 
 #topic models
-lda_team = load_arg('lda_team',"lda_teams.gsm")
-lda_team_csv = load_arg('lda_team_csv',"lda_teams.csv")
+lda_team = load_arg('lda_team',"lda_teams_{0}.gsm")
+lda_team_csv = load_arg('lda_team_csv',"lda_teams_{0}.csv")
 
 #LSI pode ser usado como um redutor de dimensionalidade sobre o tfidf, por isso a matriz.
-lsi_team_model = load_arg('lsi_team_model','lsi_teams.gsm')
-lsi_team_csv = load_arg('lsi_team_csv','lsi_teams.csv')
-lsi_team_matrix = load_arg('lsi_team_matrix','lsi_teams.mtx')
+lsi_team_model = load_arg('lsi_team_model','lsi_teams_{0].gsm')
+lsi_team_csv = load_arg('lsi_team_csv','lsi_teams_{0}.csv')
+lsi_team_matrix = load_arg('lsi_team_matrix','lsi_teams_{0}.mtx')
 
 #modelo de tópico que não precisa de parâmetros. Parece ser bem recente.
 #hierarquical dirchlet process
@@ -96,6 +96,9 @@ kmn_team_labels = load_arg('kmn_team_labels', 'kmn_labels_{0}.pkl')
 aggr_kmn = load_arg('aggr_kmn_{0}',"aggr_kmn_{0}.pkl")
 lda_team_labels = load_arg('lda_team_labels', 'lda_labels_{0}.pkl')
 aggr_lda = load_arg('aggr_lda_{0}',"aggr_lda_{0}.pkl")
+
+group_labels_lda = load_arg('group_labels_lda','group_labels_lda.csv')
+aggr_lda_teams = load_arg('aggr_lda_teams','aggr_lda_teams.pkl')
 
 # outputs do corretorexit
 corr = load_arg('corr', "corrector_dict.pkl")

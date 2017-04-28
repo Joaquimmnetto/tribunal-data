@@ -54,7 +54,13 @@ def main():
 
 	print("Applying idf on top",nwords,"words")
 	#[(label,[(word,weight),...])]
-	lst_fwords = group_tools.groups_idf(labels_weight, num_words=nwords)
+	if nwords > 0:
+		lst_fwords = group_tools.groups_idf(labels_weight, num_words=nwords)
+	else:
+		#
+		lst_fwords = [(n,[(w, wht) for w, wht in sorted(ws, key=lambda v: v[1], reverse=True)]) for n,ws in labels_weight.items()]
+
+
 
 	save_wordclouds(lst_fwords,'topic_prob' if topic_probs else 'bow_sum')
 	print("WordClouds saved")

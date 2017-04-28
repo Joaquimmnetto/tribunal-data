@@ -1,0 +1,287 @@
+Creating the count matrix
+{'min_freq': '800', 'model_dir': 'ally'}
+ally ally
+Building counting matrix
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+Saving models...
+Saving row_doc
+Saving vocab
+Saving matrix
+Time elapsed: 0:22:54.187115
+Generating the d2v model
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'model_dir': 'ally', 'min_freq': '800'}
+ally ally
+Building d2v model
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+32127754
+32127756
+32127758
+32127760
+34597721
+34597723
+34597725
+40591361
+40591363
+40591365
+40591367
+40591369
+40591371
+Subtotal time elapsed: 1:22:02.330125
+Saving models...
+Total time elapsed: 1:22:04.221620
+Generating idfs
+{'model_dir': 'ally'}
+ally ally
+Calculating idfs...
+Saving idfs...
+Time elapsed: 0:04:03.398897
+Creating the count matrix
+{'model_dir': 'enemy', 'min_freq': '800'}
+enemy enemy
+Building counting matrix
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+Saving models...
+Saving row_doc
+Saving vocab
+Saving matrix
+Time elapsed: 0:25:04.537648
+Generating the d2v model
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'min_freq': '800', 'model_dir': 'enemy'}
+enemy enemy
+Building d2v model
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+50300975
+50300977
+50300979
+50300981
+52824878
+52824880
+52824882
+52824884
+54940900
+54940902
+54940904
+54940906
+Subtotal time elapsed: 1:11:42.821934
+Saving models...
+Total time elapsed: 1:11:44.747997
+Generating idfs
+{'model_dir': 'enemy'}
+enemy enemy
+Calculating idfs...
+Saving idfs...
+Time elapsed: 0:04:32.213388
+LDA for ally:
+LDA for ally and  topics
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'lda_team': 'analise/lda_ally_.gsm', 'num_topics': '', 'model_dir': 'ally', 'lda_team_csv': 'analise/lda_ally_.csv'}
+ally ally
+Traceback (most recent call last):
+  File "../src/python/utils/lda_builder.py", line 8, in <module>
+    num_topics = int(args.params.get("num_topics", 4))
+ValueError: invalid literal for int() with base 10: ''
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'lda_team': 'analise/lda_ally_.gsm', 'n_groups': '', 'model_dir': 'ally', 'lda': 'True'}
+ally ally
+Traceback (most recent call last):
+  File "../src/python/utils/aggregate_clusters.py", line 75, in <module>
+    args.measure_time(main)
+  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
+    main()
+  File "../src/python/utils/aggregate_clusters.py", line 60, in main
+    n_groups = int(args.params.get('n_groups', 4))
+ValueError: invalid literal for int() with base 10: ''
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+Traceback (most recent call last):
+  File "../src/python/utils/cluster_analysis.py", line 80, in <module>
+    args.measure_time(main)
+  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
+    main()
+  File "../src/python/utils/cluster_analysis.py", line 37, in main
+    n_groups = int(args.params.get('n_groups', 4))
+ValueError: invalid literal for int() with base 10: ''
+LDA for enemy:
+LDA for enemy and  topics
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'num_topics': '', 'lda_team': 'analise/lda_enemy_.gsm', 'model_dir': 'enemy', 'lda_team_csv': 'analise/lda_enemy_.csv'}
+enemy enemy
+Traceback (most recent call last):
+  File "../src/python/utils/lda_builder.py", line 8, in <module>
+    num_topics = int(args.params.get("num_topics", 4))
+ValueError: invalid literal for int() with base 10: ''
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+{'lda_team': 'analise/lda_enemy_.gsm', 'n_groups': '', 'model_dir': 'enemy', 'lda': 'True'}
+enemy enemy
+Traceback (most recent call last):
+  File "../src/python/utils/aggregate_clusters.py", line 75, in <module>
+    args.measure_time(main)
+  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
+    main()
+  File "../src/python/utils/aggregate_clusters.py", line 60, in main
+    n_groups = int(args.params.get('n_groups', 4))
+ValueError: invalid literal for int() with base 10: ''
+/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
+  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
+Traceback (most recent call last):
+  File "../src/python/utils/cluster_analysis.py", line 80, in <module>
+    args.measure_time(main)
+  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
+    main()
+  File "../src/python/utils/cluster_analysis.py", line 37, in main
+    n_groups = int(args.params.get('n_groups', 4))
+ValueError: invalid literal for int() with base 10: ''

@@ -1,0 +1,3 @@
+{'model_dir': 'ally', 'topic_probs': 'False', 'n_groups': '', 'lda': 'True', 'nwords': '100'}
+ally ally
+Loading inputs

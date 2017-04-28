@@ -1,0 +1,36 @@
+
+
+[3]  {enemy.groups=provoking}      => {offender.groups=provoking}   0.004447727 0.2129013  3.0212082
+
+[4]  {offender.groups=arguments}   => {enemy.groups=arguments}      0.018839048 0.1280848  1.8707699
+[5]  {enemy.groups=arguments}      => {offender.groups=arguments}   0.018839048 0.2751577  1.8707699
+[6]  {offender.groups=tactics}     => {enemy.groups=tactics}        0.064219305 0.4190264  1.7889439
+[7]  {enemy.groups=tactics}        => {offender.groups=tactics}     0.064219305 0.2741706  1.7889439
+[8]  {enemy.groups=insults}        => {offender.groups=insults}     0.005211169 0.2079717  1.7272476
+[9]  {enemy.groups=arguments}      => {offender.groups=provoking}   0.008279199 0.1209236  1.7159843
+[10] {offender.groups=provoking}   => {enemy.groups=arguments}      0.008279199 0.1174872  1.7159843
+
+
+[3]  {ally.groups=provoking}       => {offender.groups=provoking}   0.008703447 0.2757714   3.9133747
+[4]  {offender.groups=provoking}   => {ally.groups=provoking}       0.008703447 0.1235076   3.9133747
+
+[5]  {ally.groups=chit.chat}       => {offender.groups=chit.chat}   0.022575281 0.2131601   2.2618962
+[6]  {offender.groups=chit.chat}   => {ally.groups=chit.chat}       0.022575281 0.2395521   2.2618962
+
+[7]  {ally.groups=insults}         => {offender.groups=insults}     0.014341410 0.2684622   2.2296335
+[8]  {offender.groups=insults}     => {ally.groups=insults}         0.014341410 0.1191083   2.2296335
+
+[9]  {offender.groups=arguments}   => {ally.groups=arguments}       0.047466864 0.3227225   2.0460037
+[10] {ally.groups=arguments}       => {offender.groups=arguments}   0.047466864 0.3009315   2.0460037
+
+[11] {offender.groups=tactics}     => {ally.groups=tactics}         0.063806262 0.4163313   2.0056040
+[12] {ally.groups=tactics}         => {offender.groups=tactics}     0.063806262 0.3073756   2.0056040
+
+[13] {offender.groups=tactics.pos} => {ally.groups=tactics.pos}     0.031827754 0.3869296   1.8248358
+[14] {ally.groups=tactics.pos}     => {offender.groups=tactics.pos} 0.031827754 0.1501059   1.8248358
+
+[15] {ally.groups=complaints}      => {offender.groups=complaints}  0.076555597 0.3931017   1.3949347
+[16] {offender.groups=complaints}  => {ally.groups=complaints}      0.076555597 0.2716602   1.3949347
+[17] {offender.groups=provoking}   => {ally.groups=chit.chat}       0.009897249 0.1404484   1.3261403
+[18] {offender.groups=insults}     => {ally.groups=tactics.pos}     0.033562943 0.2787471   1.3146260
+[19] {ally.groups=tactics.pos}     => {offender.groups=insults}     0.033562943 0.1582894   1.3146260

@@ -35,10 +35,8 @@ class MatchProcessor(Processor):
 				value = times[0]
 			elif atr == 'reports.comments_ally':
 				value = '.'.join(reports['ally']).replace('\n','').replace('\r','') if len(reports['ally']) > 0 else ""
-				#value = '\"' + value + '\"' if len(value) > 0 else ''
 			elif atr == 'reports.comments_enemy':
 				value = '.'.join(reports['enemy']) if len(reports['enemy']) > 0 else ""
-				#value = '\"' + value + '\"' if len(value) > 0 else ''
 			else:
 				value = match[atr]
 

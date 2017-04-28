@@ -3,7 +3,7 @@ from gensim.matutils import sparse2full
 from gensim.corpora import MmCorpus
 import numpy as np
 import args_proc as args
-import datetime
+import csv
 
 def summarize_topic_labels(bow_mat_fn, vocab_fn):
 	bow_mat = MmCorpus(bow_mat_fn)
@@ -35,6 +35,17 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn):
 
 	return labels_sum, topics_sum, topics_count, r2l
 
+def load_topics(fname):
+	res = dict()
+	csv_rd = csv.reader(open(fname))
+	for row in csv_rd:
+		case = row[0]
+		match = row[1]
+		res[(case, match, 'ally')] = row[3]
+		res[(case, match, 'enemy')] = row[4]
+		res[(case, match, 'offender')] = row[5]
+
+	return res
 
 def summarize_cluster_labels(bow_mat_fn, n_clusters, vocab_fn):
 	bow_mat = MmCorpus(bow_mat_fn)

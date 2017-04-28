@@ -1,0 +1,3 @@
+{'nwords': '100', 'model_dir': 'enemy', 'lda': 'True', 'topic_probs': 'False', 'n_groups': ''}
+enemy enemy
+Loading inputs

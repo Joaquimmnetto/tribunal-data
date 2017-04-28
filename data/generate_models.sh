@@ -10,6 +10,11 @@ echo "args: col:${1}, dir:${2}, min_freq:${3}, bigram:${4}"
 echo "Is the model a bigram model? ${bigram}"
 echo "Creating model for ${dir}"
 
+wc -l ${dir}/chat.csv
+echo "Assuring the cohesion of dataset"
+Rscript ../src/R/preprocessing.R ${dir}
+wc -l ${dir}/chat.csv
+
 csv=${dir}/chat.csv
 swords=en_stopwords.txt
 corpus=${dir}/chat.crp
@@ -30,10 +35,11 @@ if [[ "$bigram" == 'false' ]]; then
 
 	rm ${corpus_sw}
 	rm ${corpus_nosw}
+	rm ${corpus}
 fi
 
-echo "Building vocabulary from corpus"
-./qpy.sh build_vocab.sh ${tkn_corpus} > ${tkn_vocab}
+echo "Building vocabulary from corpus"cd ..
+./qsh.sh build_vocab.sh ${tkn_corpus} > ${tkn_vocab}
 
 echo "Creating the .pkl files corresponding to the vocabulary"
 model_dir=model_dir:${dir}

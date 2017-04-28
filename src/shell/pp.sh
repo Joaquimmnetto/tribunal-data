@@ -4,14 +4,16 @@
 i=0
 
 dest="../.."
-num_prod=8
-#chat_csv=chat_full.${1}.csv
+num_prod=3
+chat_csv=chat_full.${1}.csv
 #chat_corpus=corpus_full.${1}.csv
 #players=players_full.${1}.csv
-chat_csv=None
+#chat_csv=None
+#matches=matches_full.${1}.csv
 chat_corpus=None
 players=None
-matches=matches_full.${1}.csv
+matches=None
+
 
 executable='python'
 unamestr=`uname`

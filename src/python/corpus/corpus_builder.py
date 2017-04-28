@@ -2,11 +2,10 @@
 
 import os
 import sys
-#import codecs
 import csv
-
+#import utils.args_proc as args
 import traceback
-from threading import Semaphore
+from multiprocessing import Semaphore
 
 from classes.consumer import Consumer
 from classes.matches_producer import ProducersManager
@@ -17,16 +16,16 @@ from classes.process_match import MatchProcessor
 
 print(("Arguments:" + str(sys.argv)))
 
-tars_dir = "../../../sampley_de_guitarra" if len(sys.argv) < 2 else sys.argv[1]
+tars_dir = "../../../dataset/dataset_sample/sample" if len(sys.argv) < 2 else sys.argv[1]
 dest_dir = "../../.." if len(sys.argv) < 3 else sys.argv[2]
-num_producers = 10 if len(sys.argv) < 4 else int(sys.argv[3])
+num_producers = 4 if len(sys.argv) < 4 else int(sys.argv[3])
 
-chat_csv_name = 'None' if len(sys.argv) < 5 else str(sys.argv[4])
+chat_csv_name = 'chat2.csv' if len(sys.argv) < 5 else str(sys.argv[4])
 chat_corpus_name = 'None' if len(sys.argv) < 6 else str(sys.argv[5])
-players_name = 'None' if len(sys.argv) < 7 else str(sys.argv[6])
-matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
+players_name = 'players2.csv' if len(sys.argv) < 7 else str(sys.argv[6])
+matches_name = 'matches2.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
-chat_atrs = ["association_to_offender", "champion_name", "time", "message"]
+chat_atrs = ["association_to_offender", "sent_to"]
 player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']
 match_atrs = ['game_type', 'most_common_report_reason','reports.comments_ally','reports.comments_enemy',
               'allied_report_count', 'enemy_report_count', 'time_played']
@@ -69,7 +68,7 @@ def set_players_processing(consumers, processors):
 	player_consumer = Consumer(players_wr, csv_consuming)
 
 	consumers.append(player_consumer)
-	processors.append( PlayerProcessor(player_atrs, player_consumer, []) )
+	processors.append( PlayerProcessor(player_atrs, player_consumer, filters=[]))
 
 
 def set_matches_processing(consumers, processors):
@@ -78,51 +77,58 @@ def set_matches_processing(consumers, processors):
 	match_consumer = Consumer(matches_wr, csv_consuming)
 
 	consumers.append(match_consumer)
-	processors.append(MatchProcessor(match_atrs, match_consumer))
+	processors.append(MatchProcessor(match_atrs, match_consumer, filters=[]))
 
 
 # ---------------------Main-----------------
+def main():
+	consumers = []
+	processors = []
+	prod_sem = Semaphore(num_producers)
 
-consumers = []
-processors = []
-prod_sem = Semaphore(num_producers)
+	if chat_csv_name != "None" or chat_corpus_name != "None":
+		set_chat_processing(consumers, processors, chat_csv_name != "None", chat_corpus_name != "None")
 
-if chat_csv_name != "None" or chat_corpus_name != "None":
-	set_chat_processing( consumers, processors, chat_csv_name != "None", chat_corpus_name != "None" )
+	if players_name != "None":
+		set_players_processing(consumers, processors)
 
-if players_name != "None":
-	set_players_processing(consumers, processors)
+	if matches_name != "None":
+		set_matches_processing(consumers, processors)
 
-if matches_name != "None":
-	set_matches_processing(consumers, processors)
+	print("Iniciando Consumidores, ")
+	for consumer in consumers:
+		consumer.start()
 
-for consumer in consumers:
-	consumer.start()
+	producers = []
 
-producers = []
-for tar_name in os.listdir(tars_dir):
-	if not (tar_name.endswith('.tar.gz') and 'jsons' in tar_name):
-		continue
-	try:
-		prod_sem.acquire()
-		t = ProducersManager(tars_dir + "/" + tar_name, processors, prod_sem)
-		producers.append(t)
-		t.start()
-	except:
-		traceback.print_exc()
+	for tar_name in os.listdir(tars_dir):
+		if not (tar_name.endswith('.tar.gz') and 'jsons' in tar_name):
+			continue
+		try:
+			t = ProducersManager(tars_dir + "/" + tar_name, processors, prod_sem)
+			producers.append(t)
+			t.start()
+		except:
+			traceback.print_exc()
 
 
-print('Esperando produtores...')
-for producer in producers:
-	if producer.is_alive():
-		producer.join()
+	print('Esperando produtores...')
+	for producer in producers:
+		if producer.is_alive():
+			producer.join()
 
-print('Parando consumidores...')
-for consumer in consumers:
-	consumer.stop()
+		print('Parando consumidores...')
+	for consumer in consumers:
+		consumer.stop()
 
-print("Esperando pelos consumidores...")
-for consumer in consumers:
-	consumer.join(timeout=10)
+	print("Esperando pelos consumidores...")
+	for consumer in consumers:
+		consumer.join(timeout=10)
 
-print('Finalizado!')
+	print('Finalizado!')
+
+import datetime
+if __name__ == '__main__':
+	before = datetime.datetime.now()
+	main()
+	print("Time elapsed:", datetime.datetime.now() - before)

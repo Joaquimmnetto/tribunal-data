@@ -1,0 +1,4 @@
+{'topic': 'insults', 'model_dir': 'full'}
+full full
+Loading inputs
+Aggregating labels count

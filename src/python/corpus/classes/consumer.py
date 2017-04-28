@@ -1,14 +1,14 @@
 # encoding=utf8
 from multiprocessing import Queue
-from threading import Thread
-import time
+from multiprocessing import Process
+
 import traceback
 
 
-class Consumer(Thread):
+class Consumer(Process):
 
 	def __init__(self,writer,consume):
-		Thread.__init__(self)
+		Process.__init__(self)
 
 		self.writer = writer
 		self.consume = consume
