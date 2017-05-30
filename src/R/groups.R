@@ -11,8 +11,8 @@ topics <- cbind(data.table(t(matrix(unlist(r2d), nrow=length(unlist(r2d[1]))))),
 rm(r2d)
 names(topics) <- c("case", "match", "relation.offender", "topics")
 setkey(topics, case, match)
-
-{ #Insert topics columns in matches
+#Insert topics columns in matches
+{ 
 
 	matches <- merge(matches,
 								 topics[relation.offender == 'ally'
@@ -72,8 +72,8 @@ setkey(topics, case, match)
 					 													NA)))))))))
 	]
 }
-
-{ # Create groups table
+# Create groups table
+{ 
 	ally.groups <- matches[,.(case,match,ally.performance,ally.contamination,ally.groups,report.text.allies)][,relation.offender := 'ally']
 	setnames(ally.groups, old = c('ally.performance','ally.contamination', 'ally.groups', 'report.text.allies'), new = c('performance','contamination', 'topic', 'report.text'))
 	enemy.groups <- matches[,.(case,match,enemy.performance,enemy.contamination,enemy.groups,report.text.enemies)][,relation.offender := 'enemy']
@@ -147,69 +147,24 @@ topics.perf <- rbind(ally.topics.perf, enemy.topics.perf, offender.topics.perf)
 
 offender.ally.topics.perf <- build.topics.aggr('ally.performance','offender.topics')
 offender.enemy.topics.perf <- build.topics.aggr('enemy.performance','offender.topics')
+offender.nc.topics.perf <- build.topics.aggr(matches[enemy.contamination==0],'enemy.performance','offender.groups')
+offender.ec.topics.perf <- build.topics.aggr(matches[enemy.contamination > 0],'enemy.performance','offender.groups')
 cont.topics.perf <- build.topics.aggr(groups[relation.offender!='enemy' | contamination > 0],'performance','topic')
+
+
 nc.topics.perf <- build.topics.aggr(matches[enemy.contamination==0],'enemy.performance','enemy.topics')
 nc.offender.topics.perf <- build.topics.aggr(matches[enemy.contamination==0],'enemy.performance','offender.topics')
 ec.topics.perf <- build.topics.aggr(matches[enemy.contamination > 0],'enemy.performance','enemy.topics')
 
+outcomes <- players[,.(case,match,relation.offender,outcome),.(case,match,relation.offender,outcome)][,.(case,match,relation.offender,outcome)]
+outcomes <- outcomes[outcome=='Win']
+outcomes <- rbind(outcomes,
+									rbind(outcomes[relation.offender=='enemy'][,relation.offender:='ally'][,outcome:='Loss'],
+												outcomes[relation.offender=='ally'][,relation.offender:='enemy'][,outcome:='Loss'])
+)
+outcomes <- rbind(outcomes,outcomes[relation.offender=='ally'][,relation.offender:='offender'])
 
+setkey(outcomes,case,match,relation.offender)
 
-
-#---------------Plotey stuff-----------------
-# 
-# require(RColorBrewer)
-# myColors <- brewer.pal(3,"Greys")
-# names(myColors) <- levels(players$relation.offender)
-# col.scale <- scale_colour_manual(name = 'Relations',values = myColors)
-
-med.t.test(
-matches[enemy.contamination==0 & (enemy.groups=='tactics' | enemy.groups=='tactics.pos')]$enemy.performance,
-matches[enemy.contamination==0 & (enemy.groups!='tactics' & enemy.groups!='tactics.pos')]$enemy.performance)
-
-plot.topic <- function(dt.cont = topics.cont, dt.perf = topics.perf, colname, yname, file = FALSE){
-	cont.plot <- add.theme(plot.something(dt.cont,'contamination',colname) +
-								labs(x='Group Contamination',y=yname, shape="Aggregations", color='Groups'))
-	ggsave(plot=cont.plot, filename=paste(colname,'cont.png',sep='-'), device='png',width = 4,height = 4)
-	
-	perf.plot <- add.theme(plot.something(dt.perf,'performance',colname) + 
-								labs(x='Group Performance',y = element_blank(), shape="Aggregations", color="Groups"))
-	ggsave(plot=perf.plot, filename=paste(colname,'perf.png',sep='-'), device='png',width = 4,height = 4)	
-	
-	fname=paste(colname,'.png',sep='')
-	mend.plots(cont.plot, perf.plot, img.fname = fname, file=FALSE)	
-}
-
-
-plot.contaminations <- function(dt=topics.cont, colname1, yname1, colname2, yname2) {
-	cont.plot <- add.theme(plot.something(dt, 'contamination', colname1) +
-													labs(x='Ally & Enemy Groups Contamination',y=yname1, shape="Aggregations", color='Groups'))
-	
-	cont.plot2 <- add.theme(plot.something(dt, 'contamination', colname2) +
-													labs(x='Ally & Enemy Groups Contamination',y=yname2, shape="Aggregations", color='Groups'))
-	
-	fname = paste(colname1,'-',colname2,'.png',sep='')
-	mend.plots(cont.plot, cont.plot2, img.fname = fname, file = FALSE)
-}
-
-plot.topic(colname='pos', yname='Groups w/ Positive Topics (%)')
-plot.contaminations(dt = topics.cont, 'complaints', 'Groups w/ Complaints Topic (%)',
-										'arguments', 'Groups w/ Arguments Topic (%)')
-plot.contaminations(dt = topics.cont, 'insults', 'Groups w/ Insults Topic (%)',
-										'taunts', 'Groups w/ Taunts Topic (%)')
-
-
-
-
-labels_offender_groups = factor(offender.topics.cont$relation.offender, labels = 
-													c('Offender per Ally', 'Offender per Enemy'))
-ggplot(data=offender.topics.cont, 
-				 aes(x=contamination, y=complaints * 100, shape=relation.offender)) + 
-	geom_point() + geom_smooth(aes(x=jitter(contamination), color=labels_offender_groups)) +
-	theme_bw() + col.scale + 
-	labs(x='Group Contamination',y="Offender Complaints Topic Groups",
-			 shape="Aggregations", color="Relations")
-ggsave('offender-complaints-cont.png', device='png', width = 4, height = 4)
-
-x <- get.theme(labs(x='Group Contamination',y="Offender Complaints Topic Groups",
-							 shape="Aggregations", color="Relations"))
-class(x)
+groups <- groups[outcomes]
+groups$outcome <- factor(groups$outcome)

@@ -2,7 +2,8 @@
 create.color.scale <- function(sub.name = 'Relations', plot.names = levels(players$relation.offender)){
 	require(RColorBrewer)
 	#myColors <- brewer.pal(length(plot.names),"Greys")
-	myColors <- brewer.pal(length(plot.names),"Spectral")
+	#myColors <- brewer.pal(length(plot.names),"Spectral")
+	myColors <- brewer.pal(length(plot.names),"Set2")
 	names(myColors) <- plot.names
 	col.scale <- scale_colour_manual(name = sub.name, values = myColors)
 }
@@ -66,7 +67,7 @@ remove.outliers <- function(dt,col_name){
 	return(ret)
 } 
 
-#Aplica um map-reduce(kmeans + uso dos centroids como pontos) simples nos pontos 2d listados.
+#Aplica kmeans + uso dos centroids como pontos nos pontos 2d listados.
 #dt - data.table contendo as duas dimensões x e y
 #group_size - tamaho das aglomerações que serão feitas.
 #x - coluna representando os valores x do ponto 2d.
@@ -149,6 +150,9 @@ add.theme <- function(plt, col.scale=col.rel.offender){
 			 )
 }
 
+save.plot <- function(fname, plt,w=5,h=5){
+	ggsave(fname, plot=plt, device='png', width = w, height = h)
+}
 
 mend.plots <- function(plot.a, plot.b, img.fname = 'plot.png', file = FALSE ){
 	require(grid)
