@@ -1,0 +1,13 @@
+---
+title: "Drift Analysis"
+author: "Joaquim Neto"
+date: "04/07/2017"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+	setwd("~/PyCharm-Workspace/tribunaldb/")
+	read_chunk("src/R/utils.R")
+	pkl2R("")
+
+```

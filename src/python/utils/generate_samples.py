@@ -13,68 +13,69 @@ chat_smpl_fn = smpl_dir + "/chat.csv"
 
 
 class NextMatchWr(threading.Thread):
-	def __init__(self, csv_rd, csv_wr):
-		threading.Thread.__init__(self)
-		self.i = 0
-		self.matches = Queue()
-		self.mstop = False
-		self.csv_rd = csv_rd
-		self.csv_wr = csv_wr
-		self.daemon = True
+  def __init__(self, csv_rd, csv_wr):
+    threading.Thread.__init__(self)
+    self.i = 0
+    self.matches = Queue()
+    self.mstop = False
+    self.csv_rd = csv_rd
+    self.csv_wr = csv_wr
+    self.daemon = True
 
-	def run(self):
-		while not (self.mstop and self.matches.empty()):
-			try:
-				if self.mstop:
-					item = self.matches.get_nowait()
-				else:
-					item = self.matches.get()
+  def run(self):
+    while not (self.mstop and self.matches.empty()):
+      try:
+        if self.mstop:
+          item = self.matches.get_nowait()
+        else:
+          item = self.matches.get()
 
-				#print(self.matches.qsize())
-				self.write_next_match(self.csv_rd, self.csv_wr, item[0], item[1])
-			except:
-				traceback.print_exc()
+        # print(self.matches.qsize())
+        self.write_next_match(self.csv_rd, self.csv_wr, item[0], item[1])
+      except:
+        traceback.print_exc()
 
-		print('consumer stopped', self.matches.qsize())
+    print('consumer stopped', self.matches.qsize())
 
-	def add_next_match(self, case, match):
-		self.matches.put(tuple([case, match]))
+  def add_next_match(self, case, match):
+    self.matches.put(tuple([case, match]))
 
-	def write_next_match(self, csv_rd, csv_wr, mcase, mmatch):
-		res = []
-		row = []
-		try:
-			while True:
-				row = next(csv_rd)
-				try:
-					case = int(row[0])
-					match = int(row[1])
-				except ValueError:
-					continue
-				
-				if (case, match) == (mcase, mmatch) or (case == mcase and match > mmatch) or (case > mcase):
-					break
+  def write_next_match(self, csv_rd, csv_wr, mcase, mmatch):
+    res = []
+    row = []
+    try:
+      while True:
+        row = next(csv_rd)
+        try:
+          case = int(row[0])
+          match = int(row[1])
+        except ValueError:
+          continue
 
-			# 00:14:12
-			while True:
-				try:
-					case = int(row[0])
-					match = int(row[1])
-				except ValueError:
-					continue
-				
-				if (case, match) == (mcase, mmatch):
-					res.append(row)
-				else:
-					break
-				row = next(csv_rd)
+        if (case, match) == (mcase, mmatch) or (case == mcase and match > mmatch) or (case > mcase):
+          break
 
-			csv_wr.writerows(res)
+      # 00:14:12
+      while True:
+        try:
+          case = int(row[0])
+          match = int(row[1])
+        except ValueError:
+          continue
 
-		except StopIteration:
-			pass
-		except:
-			traceback.print_exc()
+        if (case, match) == (mcase, mmatch):
+          res.append(row)
+        else:
+          break
+        row = next(csv_rd)
+
+      csv_wr.writerows(res)
+
+    except StopIteration:
+      pass
+    except:
+      traceback.print_exc()
+
 
 players = csv.reader(open(args.players))
 chat = csv.reader(open(args.chat))
@@ -86,38 +87,38 @@ chat_cons = NextMatchWr(chat, chat_smpl)
 
 
 def create_samples(matches_smpl_fn):
-	with open(matches_smpl_fn) as inp:
-		matches = csv.reader(inp)
-		for row in matches:
-			if len(row) == 0:
-				continue
-			try:
-				case = int(row[0])
-				match = int(row[1])
-				players_cons.add_next_match(case, match)
-				chat_cons.add_next_match(case, match)
-			except ValueError:
-				pass
+  with open(matches_smpl_fn) as inp:
+    matches = csv.reader(inp)
+    for row in matches:
+      if len(row) == 0:
+        continue
+      try:
+        case = int(row[0])
+        match = int(row[1])
+        players_cons.add_next_match(case, match)
+        chat_cons.add_next_match(case, match)
+      except ValueError:
+        pass
 
 
 def main():
-	before = datetime.datetime.now()
-	print("This program requires that the inputs be sorted by case and match")
-	print("Starting consumers thread...")
-	players_cons.start()
-	chat_cons.start()
-	print("Starting the sample creation...")
-	create_samples(matches_smpl_fn)
-	print("Subtotal time elapsed:", datetime.datetime.now() - before)
+  before = datetime.datetime.now()
+  print("This program requires that the inputs be sorted by case and match")
+  print("Starting consumers thread...")
+  players_cons.start()
+  chat_cons.start()
+  print("Starting the sample creation...")
+  create_samples(matches_smpl_fn)
+  print("Subtotal time elapsed:", datetime.datetime.now() - before)
 
-	print("Waiting for consumers to finish...")
-	players_cons.mstop = True
-	chat_cons.mstop = True
+  print("Waiting for consumers to finish...")
+  players_cons.mstop = True
+  chat_cons.mstop = True
 
-	players_cons.join()
-	chat_cons.join()
-	print("Total time elapsed:", datetime.datetime.now() - before)
+  players_cons.join()
+  chat_cons.join()
+  print("Total time elapsed:", datetime.datetime.now() - before)
 
 
 if __name__ == '__main__':
-	main()
+  main()

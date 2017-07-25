@@ -14,39 +14,43 @@ require(pcaPP)
 load('something.RData')
 source("src/R/utils.R")
 
-	names.perf = list(ally='Ally',enemy='Enemy', fuck='thisgaycolor', ec='Cont. Enemy', nc='Non-Cont.', offender='Offender')
-	cl.perf = create.color.scale('Groups', names.perf)
+	names = list(ally='Ally', ec='Cont. Enemy', nc='Non-Cont.', offender='Offender', enemy='Enemy')
+	colors = create.color.scale('Groups', names)
 	
-	#names.cont = list(ally='Ally', enemy='Enemy')
-	#cl.cont = create.color.scale('Groups', names.cont)
+	#names = list(ally='Ally', enemy='Enemy')
+	#colors = create.color.scale('Groups', names)
 
+# Line types should be specified with either an integer, a name, or with a string of
+# an even number (up to eight) of hexadecimal digits which give the lengths in
+# consecutive positions in the string.
+# 0 = blank, 1 = solid, 2 = dashed, 3 = dotted, 4 = dotdash, 5 = longdash, 6 = twodash
 	plot.topic.perf <- function(col.name){
 			plt <- add.theme(
 			ggplot() + 
-			geom_smooth(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally)) +
-			geom_point(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally), alpha=0.5) + 
-			geom_smooth(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec)) +
-				geom_point(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec), alpha=0.5) +
-			geom_smooth(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc)) +
-				geom_point(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc), alpha=0.5) + 
-			geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender)) +
-				geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender), alpha=0.5)
-			,col.scale = cl.perf)
+			geom_smooth(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally)) +
+			geom_point(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally), alpha=0.5) + 
+			geom_smooth(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec)) +
+				geom_point(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec), alpha=0.5) +
+			geom_smooth(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc)) +
+				geom_point(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc), alpha=0.5) + 
+			geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender)) +
+				geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender), alpha=0.5)
+			,col.scale = colors)
 			
 			return(plt)
 	}	
 	plot.topic.offender.perf <- function(col.name){
 			plt <- add.theme(
 			ggplot() + 
-			geom_smooth(data=offender.ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally)) +
-				geom_point(data=offender.ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$ally), alpha=0.5) + 
-			geom_smooth(data=offender.ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec)) +
-				geom_point(data=offender.ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$ec), alpha=0.5) +
-			geom_smooth(data=offender.nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc)) +
-				geom_point(data=offender.nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names.perf$nc), alpha=0.5)  
-			#+ geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender)) 
-			#+ geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names.perf$offender), alpha=0.5)
-			,col.scale = cl.perf)
+			geom_smooth(data=offender.ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally)) +
+				geom_point(data=offender.ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally), alpha=0.5) + 
+			geom_smooth(data=offender.ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec)) +
+				geom_point(data=offender.ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec), alpha=0.5) +
+			geom_smooth(data=offender.nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc)) +
+				geom_point(data=offender.nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc), alpha=0.5)  
+			#+ geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender)) 
+			#+ geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender), alpha=0.5)
+			,col.scale = colors)
 			
 			return(plt)
 	}	
@@ -54,21 +58,21 @@ source("src/R/utils.R")
 	plot.topic.cont <- function(col.name){
 		plt <- add.theme(
 			ggplot() + 
-			geom_smooth(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),span=1) +
-			 geom_point(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),alpha=0.5) + 
-			geom_smooth(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),span=1) +
-			 geom_point(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),alpha=0.5)
-			,col.scale = cl.perf)
+			geom_smooth(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$ally),span=1) +
+			 geom_point(data=ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$ally),alpha=0.5) + 
+			geom_smooth(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$enemy),span=1) +
+			 geom_point(data=enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$enemy),alpha=0.5)
+			,col.scale = colors)
 		return(plt)
 	}
 	plot.topic.offender.cont <- function(col.name){
 		plt <- add.theme(
 			ggplot() + 
-			geom_smooth(data=offender.ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),span=1) +
-			 geom_point(data=offender.ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$ally),alpha=0.5) + 
-			geom_smooth(data=offender.enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),span=1) +
-			 geom_point(data=offender.enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names.cont$enemy),alpha=0.5)
-			,col.scale = cl.perf)
+			geom_smooth(data=offender.ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$ally),span=1) +
+			 geom_point(data=offender.ally.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$ally),alpha=0.5) + 
+			geom_smooth(data=offender.enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$enemy),span=1) +
+			 geom_point(data=offender.enemy.topics.cont, aes(x=contamination, y=get(col.name) * 100, color=names$enemy),alpha=0.5)
+			,col.scale = colors)
 		return(plt)
 	}
 
@@ -879,7 +883,9 @@ t.test(x,not.x)
 summary(matches[ally.groups=='provoking' & ally.chat.all > 0 & ally.chat.team == 0]$enemy.contamination)
 summary(matches[ally.groups=='insults' & ally.chat.all > 0 & ally.chat.team == 0]$enemy.contamination)
 summary(matches[enemy.groups=='insults' & enemy.chat.all > 0 & enemy.chat.team == 0]$ally.contamination)
-summary(matches[enemy.groups=='insults' & !(enemy.chat.all > 0 & enemy.chat.team == 0)]$enemy.contamination)
+summary(matches[enemy.groups=='provoking' & enemy.chat.all > 0 & enemy.chat.team == 0]$ally.contamination)
+
+#summary(matches[enemy.groups=='insults' & !(enemy.chat.all > 0 & enemy.chat.team == 0)]$enemy.contamination)
 
 ```
 
@@ -1104,7 +1110,7 @@ summary(groups[relation.offender != 'offender' & outcome=='Loss']$performance)
 
 
 #Plots
-<!-- Codigo de salvamento dos plots 
+ Codigo de salvamento dos plots 
 ```{r, echo=FALSE}
 
 topic = 'pos'
@@ -1230,4 +1236,3 @@ plt <- plot.topic.offender.cont(column) + labs(y="Offenders w/ Taunts Topics (%)
 save.plot('offender_taunts_cont.png',plt)
 plt
 ```
--->

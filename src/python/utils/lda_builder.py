@@ -1,38 +1,38 @@
 
-import datetime
 from pprint import pprint
 from gensim.models import LdaMulticore
+from gensim.corpora import MmCorpus
+from gensim.matutils import Scipy2Corpus
 import group_tools
 import args_proc as args
 
-num_topics = int(args.params.get("num_topics", 4))
-analysis = bool(args.params.get("analysis", False))
+
 
 
 def lda_topic_discovery(corpus, id2word, num_topics):
-	lda_model = LdaMulticore(corpus=corpus, num_topics=num_topics, id2word=id2word, workers=5)
-	return lda_model
+    lda_model = LdaMulticore(corpus=corpus, num_topics=num_topics, id2word=id2word, workers=5)
+    return lda_model
 
 
-
-#Multiplicar as probabilidade das palavras pelo idf delas, após ter o modelo pronto, para auxiliar na interpretação(livro cap.6).
 def main():
-	if not analysis:
-		print("Loading bow matrix:")
-		gsm_corpus, id2word = group_tools.load_spy_matrix(args.cnt_team, args.cnt_team_vocab)
-		print("Making lda model:")
-		lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics)
-		lda_model.save(args.lda_team)
-	else:
-		lda_model = LdaMulticore.load(args.lda_team)
+    num_topics = int(args.params.get("num_topics", 15))
+    analysis = bool(args.params.get("analysis", False))
 
-	topics_sum = group_tools.topic_words(lda_model, topn_words=100)
-	topics = group_tools.groups_idf(topics_sum)
-	if analysis:
-		pprint(topics)
-	group_tools.save_csv(args.lda_team_csv, topics)
+    print("Loading bow matrix:")
+    spy_mat, id2word = group_tools.load_spy_matrix(args.cnt_team.format(0), args.cnt_team_vocab)
+    gsm_corpus = Scipy2Corpus(spy_mat.tocsc())
 
+    print("Making lda model with first matrix:")
+    lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics)
+    del spy_mat,gsm_corpus,id2word
 
+    for i in range(1,args.n_matrixes):
+        print("Updating model with matrix {0}:".format(i))
+        spy_mat = args.load_obj(args.cnt_team.format(i))
+        gsm_corpus = Scipy2Corpus(spy_mat.tocsc())
+        lda_model.update(gsm_corpus)
+        del spy_mat,gsm_corpus
+    lda_model.save(args.lda_team)
 
 if __name__ == '__main__':
-	args.measure_time(main)
+    args.measure_time(main)

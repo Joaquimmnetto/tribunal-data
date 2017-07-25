@@ -50,18 +50,9 @@ min_freq=min_freq:${3}
 #	echo "Creating the w2v model"
 #	w2v_tkn_model=${dir}/w2v_model.bin
 #	${pyexec} ${py_dir}/utils/w2v_builder.py ${model_dir} ${min_freq}
-#
-#	echo "Creating the errors and corrections dict"
-#	max_dist=max_edit_dist:0.5
-#	min_sim=min_sim:0.55
-#	${pyexec} ${py_dir}/utils/err_dict_builder.py ${model_dir} ${max_dist} ${min_sim}
-#fi
 
 echo "Creating the count matrix"
 ./qpy.sh count_matrix_builder.py ${model_dir} ${min_freq}
-
-#echo "Creating the tfidf matrix"
-#${pyexec} ${py_dir}/utils/tfidf_matrix_builder.py ${model_dir} ${min_freq}
 
 echo "Generating the d2v model"
 ./qpy.sh d2v_model_builder.py ${model_dir} ${min_freq}
@@ -69,14 +60,9 @@ echo "Generating the d2v model"
 echo "Generating idfs"
 ./qpy.sh idfs_builder.py ${model_dir}
 
-#echo "Generating the lda model by team over bow"
-#./qpy.sh lda_builder.py ${model_dir}
+echo "Generating the lda model by team over bow"
+./qpy.sh lda_builder.py ${model_dir}
 
-#echo "Generating the lsi model by team over tfidf"
-#${pyexec} ${py_dir}/utils/lsi_builder.py ${model_dir}
-
-#echo "Generating the hdp model by team over bow"
-#${pyexec} ${py_dir}/utils/hdp_builder.py ${model_dir}
 
 
 

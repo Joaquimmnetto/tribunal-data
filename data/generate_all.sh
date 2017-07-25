@@ -23,9 +23,9 @@ echo "Generating samples..."
 
 echo "Generating full models"
 ./generate_models.sh ${csv_col} full 800 false
-./generate_models.sh ${csv_col} ally 800 false
-./generate_models.sh ${csv_col} enemy 800 false
-./generate_models.sh ${csv_col} offender 800 false
+#./generate_models.sh ${csv_col} ally 800 false
+#./generate_models.sh ${csv_col} enemy 800 false
+#./generate_models.sh ${csv_col} offender 800 false
 
 #./generate_bigrams.sh ${csv_col} full ${min_freq}
 #./generate_bigrams.sh ${csv_col} ally ${min_freq}

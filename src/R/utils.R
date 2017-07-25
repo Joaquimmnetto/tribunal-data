@@ -3,7 +3,8 @@ create.color.scale <- function(sub.name = 'Relations', plot.names = levels(playe
 	require(RColorBrewer)
 	#myColors <- brewer.pal(length(plot.names),"Greys")
 	#myColors <- brewer.pal(length(plot.names),"Spectral")
-	myColors <- brewer.pal(length(plot.names),"Set2")
+	#myColors <- brewer.pal(length(plot.names),"Set2")
+	myColors <- c("#000000","#444444","#888888","#BBBBBB","#999999")
 	names(myColors) <- plot.names
 	col.scale <- scale_colour_manual(name = sub.name, values = myColors)
 }
@@ -62,7 +63,6 @@ remove.outliers <- function(dt,col_name){
 	iqr = summ[5] - summ[2]
 	upper_thresh = summ[5] + 1.5*iqr
 	lower_thresh = summ[2] - 1.5*iqr
-	print('argh')
 	ret <- dt[get(col_name) <= upper_thresh & get(col_name) >= lower_thresh]
 	return(ret)
 } 
@@ -144,11 +144,13 @@ plot.something <- function(dt, xcol='value', ycol) {
 
 add.theme <- function(plt, col.scale=col.rel.offender){
 	return(plt + 
-			 	#guides(shape=FALSE, color=FALSE) +
-			 	theme_light(base_size=18) + 
+			 	theme_bw(base_size=18) + 
+				 	theme(plot.margin=unit(c(3,0,0,0),"mm"), legend.key = element_rect(colour = "gray", fill = NA)) +
+				 	guides(color=guide_legend(override.aes=list(fill=NA))) +
 			 	col.scale
 			 )
 }
+# theme(plot.margin=unit(c(0,0,0,0),"mm")) 
 
 save.plot <- function(fname, plt,w=5,h=5){
 	ggsave(fname, plot=plt, device='png', width = w, height = h)
