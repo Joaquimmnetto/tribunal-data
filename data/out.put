@@ -1,7 +1,0 @@
-{'min_freq': '800', 'model_dir': 'full', 'timeslice_size': '600'}
-full
-Loading bow matrix with timeslices
-Saving row_doc
-Saving vocab
-Saving matrix  0
-Saving matrix  1

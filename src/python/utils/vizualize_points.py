@@ -3,12 +3,13 @@ import numpy as np
 from ggplot import *
 import pandas as pd
 
+from sklearn.decomposition import PCA
 from gensim.models import Doc2Vec
 from bhtsne import tsne
 
 
 def load_bow_samples(sample_size):
-  
+  pass
 
 
 def load_d2v_samples(sample_size):
@@ -26,13 +27,14 @@ def tsne_reduction(points):
 
 
 def lda_reduction(points):
-  pass
+  pca = PCA(n_components=2)
+  return pca.fit_transform(points)
 
 def main():
-  sample_size = args.params.get("sample_size", 30000)
+  sample_size = args.params.get("sample_size", 100000)
 
   points = load_d2v_samples(sample_size)
-  d2_points = tsne_reduction(points)
+  d2_points = lda_reduction(points)
 
   print("Plotting results...")
   df_points = pd.DataFrame(d2_points,columns=["x","y"])

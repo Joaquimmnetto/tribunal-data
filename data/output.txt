@@ -1,711 +1,0 @@
-Creating base files...
-Generating samples...
-Generating full models
-args: col:6, dir:full, min_freq:800, bigram:false
-Is the model a bigram model? false
-Creating model for full
-307237951 full/chat.csv
-Assuring the cohesion of dataset
-Carregando pacotes exigidos: dplyr
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-Carregando pacotes exigidos: dtplyr
-Carregando pacotes exigidos: data.table
-
-Attaching package: ‘data.table’
-
-The following objects are masked from ‘package:dplyr’:
-
-    between, first, last
-
-[1] "full"
-[1] "/home/joaquim/PyCharm-Workspace/tribunaldb/data/full"
-Read 0.0% of 307237951 rowsRead 1.3% of 307237951 rowsRead 2.6% of 307237951 rowsRead 4.0% of 307237951 rowsRead 5.1% of 307237951 rowsRead 6.3% of 307237951 rowsRead 7.6% of 307237951 rowsRead 8.8% of 307237951 rowsRead 10.0% of 307237951 rowsRead 11.2% of 307237951 rowsRead 12.4% of 307237951 rowsRead 13.7% of 307237951 rowsRead 14.9% of 307237951 rowsRead 16.1% of 307237951 rowsRead 17.4% of 307237951 rowsRead 18.5% of 307237951 rowsRead 19.7% of 307237951 rowsRead 21.0% of 307237951 rowsRead 22.3% of 307237951 rowsRead 23.7% of 307237951 rowsRead 25.0% of 307237951 rowsRead 26.1% of 307237951 rowsRead 27.3% of 307237951 rowsRead 28.7% of 307237951 rowsRead 30.0% of 307237951 rowsRead 31.1% of 307237951 rowsRead 32.4% of 307237951 rowsRead 33.5% of 307237951 rowsRead 34.7% of 307237951 rowsRead 36.0% of 307237951 rowsRead 37.2% of 307237951 rowsRead 38.4% of 307237951 rowsRead 39.7% of 307237951 rowsRead 40.9% of 307237951 rowsRead 42.1% of 307237951 rowsRead 43.2% of 307237951 rowsRead 44.4% of 307237951 rowsRead 45.7% of 307237951 rowsRead 47.0% of 307237951 rowsRead 48.3% of 307237951 rowsRead 49.5% of 307237951 rowsRead 50.8% of 307237951 rowsRead 52.0% of 307237951 rowsRead 53.3% of 307237951 rowsRead 54.7% of 307237951 rowsRead 56.1% of 307237951 rowsRead 57.4% of 307237951 rowsRead 58.6% of 307237951 rowsRead 59.3% of 307237951 rowsRead 60.6% of 307237951 rowsRead 61.9% of 307237951 rowsRead 63.2% of 307237951 rowsRead 64.5% of 307237951 rowsRead 65.8% of 307237951 rowsRead 67.2% of 307237951 rowsRead 68.5% of 307237951 rowsRead 69.8% of 307237951 rowsRead 71.2% of 307237951 rowsRead 72.6% of 307237951 rowsRead 73.8% of 307237951 rowsRead 75.1% of 307237951 rowsRead 76.5% of 307237951 rowsRead 77.9% of 307237951 rowsRead 79.1% of 307237951 rowsRead 80.5% of 307237951 rowsRead 81.6% of 307237951 rowsRead 82.9% of 307237951 rowsRead 84.2% of 307237951 rowsRead 85.6% of 307237951 rowsRead 86.9% of 307237951 rowsRead 88.3% of 307237951 rowsRead 89.7% of 307237951 rowsRead 90.8% of 307237951 rowsRead 92.1% of 307237951 rowsRead 93.7% of 307237951 rowsRead 95.9% of 307237951 rowsRead 98.0% of 307237951 rowsRead 98.8% of 307237951 rowsRead 307237951 rows and 2 (of 6) columns from 14.639 GB file in 00:02:11
-Read 2.6% of 19634750 rowsRead 16.1% of 19634750 rowsRead 29.6% of 19634750 rowsRead 43.2% of 19634750 rowsRead 56.6% of 19634750 rowsRead 70.4% of 19634750 rowsRead 84.3% of 19634750 rowsRead 98.3% of 19634750 rowsRead 19634750 rows and 9 (of 9) columns from 0.727 GB file in 00:00:10
-[1] 10
-[1] 0
-Written 0.9% of 19634750 rows in 2 secs using 8 threads. anyBufferGrown=no; maxBuffUsed=38%. Finished in 227 secs.      Written 88.1% of 19634750 rows in 3 secs using 8 threads. anyBufferGrown=no; maxBuffUsed=40%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 2.6% of 49999999 rowsRead 3.1% of 49999999 rowsRead 7.0% of 49999999 rowsRead 10.7% of 49999999 rowsRead 10.9% of 49999999 rowsRead 14.4% of 49999999 rowsRead 15.2% of 49999999 rowsRead 18.4% of 49999999 rowsRead 20.5% of 49999999 rowsRead 20.5% of 49999999 rowsRead 24.4% of 49999999 rowsRead 26.9% of 49999999 rowsRead 30.6% of 49999999 rowsRead 34.1% of 49999999 rowsRead 34.4% of 49999999 rowsRead 37.8% of 49999999 rowsRead 41.1% of 49999999 rowsRead 43.3% of 49999999 rowsRead 46.4% of 49999999 rowsRead 49.4% of 49999999 rowsRead 49.9% of 49999999 rowsRead 53.6% of 49999999 rowsRead 54.1% of 49999999 rowsRead 57.2% of 49999999 rowsRead 60.7% of 49999999 rowsRead 64.1% of 49999999 rowsRead 67.5% of 49999999 rowsRead 67.6% of 49999999 rowsRead 70.9% of 49999999 rowsRead 74.2% of 49999999 rowsRead 78.3% of 49999999 rowsRead 82.4% of 49999999 rowsRead 86.6% of 49999999 rowsRead 90.6% of 49999999 rowsRead 93.8% of 49999999 rowsRead 97.9% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.377 GB file in 00:01:39
-Written 26.9% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 5 secs.      Written 31.2% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 6 secs.      Written 47.8% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 4 secs.      Written 69.9% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 2 secs.      Written 82.7% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 1 secs.      Written 84.4% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 1 secs.      Written 96.2% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 4.0% of 49999999 rowsRead 7.9% of 49999999 rowsRead 11.0% of 49999999 rowsRead 14.0% of 49999999 rowsRead 17.0% of 49999999 rowsRead 19.9% of 49999999 rowsRead 22.8% of 49999999 rowsRead 25.7% of 49999999 rowsRead 28.6% of 49999999 rowsRead 30.6% of 49999999 rowsRead 34.2% of 49999999 rowsRead 37.8% of 49999999 rowsRead 41.4% of 49999999 rowsRead 45.0% of 49999999 rowsRead 48.6% of 49999999 rowsRead 52.1% of 49999999 rowsRead 55.7% of 49999999 rowsRead 59.2% of 49999999 rowsRead 62.7% of 49999999 rowsRead 66.1% of 49999999 rowsRead 69.6% of 49999999 rowsRead 73.0% of 49999999 rowsRead 76.3% of 49999999 rowsRead 79.7% of 49999999 rowsRead 82.9% of 49999999 rowsRead 86.3% of 49999999 rowsRead 89.6% of 49999999 rowsRead 92.8% of 49999999 rowsRead 96.1% of 49999999 rowsRead 99.3% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.389 GB file in 00:00:58
-Written 18.3% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 8 secs.      Written 19.2% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 12 secs.      Written 32.8% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 8 secs.      Written 48.9% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 5 secs.      Written 49.3% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 6 secs.      Written 68.4% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 3 secs.      Written 72.3% of 49999999 rows in 12 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 4 secs.      Written 85.4% of 49999999 rows in 13 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 2 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 3.5% of 49999999 rowsRead 7.1% of 49999999 rowsRead 9.2% of 49999999 rowsRead 12.8% of 49999999 rowsRead 16.1% of 49999999 rowsRead 19.6% of 49999999 rowsRead 23.1% of 49999999 rowsRead 26.6% of 49999999 rowsRead 30.0% of 49999999 rowsRead 33.5% of 49999999 rowsRead 36.9% of 49999999 rowsRead 40.2% of 49999999 rowsRead 43.6% of 49999999 rowsRead 46.9% of 49999999 rowsRead 50.2% of 49999999 rowsRead 53.4% of 49999999 rowsRead 56.7% of 49999999 rowsRead 59.9% of 49999999 rowsRead 63.1% of 49999999 rowsRead 66.3% of 49999999 rowsRead 69.4% of 49999999 rowsRead 72.5% of 49999999 rowsRead 75.7% of 49999999 rowsRead 78.8% of 49999999 rowsRead 81.8% of 49999999 rowsRead 84.9% of 49999999 rowsRead 87.9% of 49999999 rowsRead 91.0% of 49999999 rowsRead 94.0% of 49999999 rowsRead 96.9% of 49999999 rowsRead 99.9% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.372 GB file in 00:00:53
-Written 26.2% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 5 secs.      Written 30.9% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 6 secs.      Written 52.4% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 3 secs.      Written 61.9% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 3 secs.      Written 64.7% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 3 secs.      Written 75.2% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 2 secs.      Written 82.3% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 87.1% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 87.6% of 49999999 rows in 10 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 88.0% of 49999999 rows in 11 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 93.8% of 49999999 rows in 12 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 3.3% of 49999999 rowsRead 6.7% of 49999999 rowsRead 10.1% of 49999999 rowsRead 13.5% of 49999999 rowsRead 16.8% of 49999999 rowsRead 20.1% of 49999999 rowsRead 22.1% of 49999999 rowsRead 25.3% of 49999999 rowsRead 28.6% of 49999999 rowsRead 31.8% of 49999999 rowsRead 35.0% of 49999999 rowsRead 38.2% of 49999999 rowsRead 41.4% of 49999999 rowsRead 43.2% of 49999999 rowsRead 46.3% of 49999999 rowsRead 49.4% of 49999999 rowsRead 52.3% of 49999999 rowsRead 55.3% of 49999999 rowsRead 58.4% of 49999999 rowsRead 61.4% of 49999999 rowsRead 64.4% of 49999999 rowsRead 67.4% of 49999999 rowsRead 70.4% of 49999999 rowsRead 73.4% of 49999999 rowsRead 76.3% of 49999999 rowsRead 79.2% of 49999999 rowsRead 82.1% of 49999999 rowsRead 85.0% of 49999999 rowsRead 87.8% of 49999999 rowsRead 90.7% of 49999999 rowsRead 93.5% of 49999999 rowsRead 96.4% of 49999999 rowsRead 97.0% of 49999999 rowsRead 99.8% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.370 GB file in 00:01:13
-Written 15.5% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 10 secs.      Written 23.9% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 9 secs.      Written 36.3% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 7 secs.      Written 48.8% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 5 secs.      Written 57.7% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 4 secs.      Written 58.2% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 5 secs.      Written 59.2% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 5 secs.      Written 67.0% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 4 secs.      Written 75.4% of 49999999 rows in 10 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 3 secs.      Written 75.9% of 49999999 rows in 12 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 3 secs.      Written 78.5% of 49999999 rows in 13 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 3 secs.      Written 87.3% of 49999999 rows in 14 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 2 secs.      Written 94.6% of 49999999 rows in 15 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 0 secs.      Written 98.3% of 49999999 rows in 16 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=32%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 2.4% of 49999999 rowsRead 5.9% of 49999999 rowsRead 9.3% of 49999999 rowsRead 12.6% of 49999999 rowsRead 16.0% of 49999999 rowsRead 19.3% of 49999999 rowsRead 22.6% of 49999999 rowsRead 25.9% of 49999999 rowsRead 29.1% of 49999999 rowsRead 32.4% of 49999999 rowsRead 35.6% of 49999999 rowsRead 38.8% of 49999999 rowsRead 41.9% of 49999999 rowsRead 45.1% of 49999999 rowsRead 48.2% of 49999999 rowsRead 51.3% of 49999999 rowsRead 54.3% of 49999999 rowsRead 57.4% of 49999999 rowsRead 60.4% of 49999999 rowsRead 63.4% of 49999999 rowsRead 66.4% of 49999999 rowsRead 69.4% of 49999999 rowsRead 72.4% of 49999999 rowsRead 75.3% of 49999999 rowsRead 78.3% of 49999999 rowsRead 81.2% of 49999999 rowsRead 84.1% of 49999999 rowsRead 87.0% of 49999999 rowsRead 89.8% of 49999999 rowsRead 92.7% of 49999999 rowsRead 95.5% of 49999999 rowsRead 98.3% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.388 GB file in 00:00:55
-Written 35.2% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=17%. Finished in 3 secs.      Written 44.6% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=17%. Finished in 3 secs.      Written 50.9% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=18%. Finished in 3 secs.      Written 55.5% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 4 secs.      Written 59.1% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 4 secs.      Written 67.6% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 72.6% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 73.5% of 49999999 rows in 10 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 75.7% of 49999999 rows in 11 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 83.8% of 49999999 rows in 12 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 2 secs.      Written 89.7% of 49999999 rows in 13 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 1 secs.      Written 94.2% of 49999999 rows in 14 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 0 secs.      Written 97.3% of 49999999 rows in 15 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 1.8% of 49999999 rowsRead 3.7% of 49999999 rowsRead 5.4% of 49999999 rowsRead 7.2% of 49999999 rowsRead 9.0% of 49999999 rowsRead 10.7% of 49999999 rowsRead 12.5% of 49999999 rowsRead 14.2% of 49999999 rowsRead 16.0% of 49999999 rowsRead 17.7% of 49999999 rowsRead 19.4% of 49999999 rowsRead 21.1% of 49999999 rowsRead 22.8% of 49999999 rowsRead 24.4% of 49999999 rowsRead 26.1% of 49999999 rowsRead 27.9% of 49999999 rowsRead 29.6% of 49999999 rowsRead 31.3% of 49999999 rowsRead 33.0% of 49999999 rowsRead 34.8% of 49999999 rowsRead 36.5% of 49999999 rowsRead 38.2% of 49999999 rowsRead 39.9% of 49999999 rowsRead 41.6% of 49999999 rowsRead 43.2% of 49999999 rowsRead 45.0% of 49999999 rowsRead 46.7% of 49999999 rowsRead 48.4% of 49999999 rowsRead 50.1% of 49999999 rowsRead 51.7% of 49999999 rowsRead 53.4% of 49999999 rowsRead 55.2% of 49999999 rowsRead 56.8% of 49999999 rowsRead 58.4% of 49999999 rowsRead 60.1% of 49999999 rowsRead 61.8% of 49999999 rowsRead 63.4% of 49999999 rowsRead 65.0% of 49999999 rowsRead 66.7% of 49999999 rowsRead 68.3% of 49999999 rowsRead 69.9% of 49999999 rowsRead 71.4% of 49999999 rowsRead 73.0% of 49999999 rowsRead 74.5% of 49999999 rowsRead 76.1% of 49999999 rowsRead 77.6% of 49999999 rowsRead 79.3% of 49999999 rowsRead 81.7% of 49999999 rowsRead 84.5% of 49999999 rowsRead 87.2% of 49999999 rowsRead 90.0% of 49999999 rowsRead 92.8% of 49999999 rowsRead 95.6% of 49999999 rowsRead 98.3% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.396 GB file in 00:01:20
-Written 21.3% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 7 secs.      Written 31.3% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 6 secs.      Written 40.0% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 6 secs.      Written 47.6% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 6 secs.      Written 51.0% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 6 secs.      Written 55.8% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 6 secs.      Written 63.0% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 5 secs.      Written 68.7% of 49999999 rows in 11 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 5 secs.      Written 71.6% of 49999999 rows in 12 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 4 secs.      Written 78.3% of 49999999 rows in 13 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 3 secs.      Written 84.1% of 49999999 rows in 14 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 2 secs.      Written 87.9% of 49999999 rows in 15 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 2 secs.      Written 89.8% of 49999999 rows in 17 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 1 secs.      Written 90.3% of 49999999 rows in 19 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=20%. Finished in 2 secs.                                                                                                                                           Read 22.9% of 7237950 rowsRead 46.6% of 7237950 rowsRead 69.5% of 7237950 rowsRead 92.6% of 7237950 rowsRead 7237950 rows and 6 (of 6) columns from 0.347 GB file in 00:00:22
-307237944 full/chat.csv
-Creating corpus, tokenizing and extracting vocabulary...
-Extracting corpus from csv file
-Tokenizing corpus
-Removing stopwords
-Replacing champ names
-Building vocabulary from corpus
-Creating the .pkl files corresponding to the vocabulary
-{'min_freq': '800', 'model_dir': 'full'}
-full full
-Saving vocab_freq binary on  full/vocab_freq.pkl
-Saving words binary on  full/words.pkl
-Time elapsed: 0:00:00.091478
-Creating the count matrix
-{'model_dir': 'full', 'min_freq': '800'}
-full full
-Building counting matrix
-Traceback (most recent call last):
-  File "../src/python/utils/count_matrix_builder.py", line 74, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/count_matrix_builder.py", line 65, in main
-    docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat, args.corpus)
-  File "../src/python/utils/count_matrix_builder.py", line 41, in build_cnt_matrix
-    matrix = cnt_model.fit_transform(chat)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 839, in fit_transform
-    self.fixed_vocabulary_)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 760, in _count_vocab
-    for doc in raw_documents:
-  File "../src/python/utils/count_matrix_builder.py", line 29, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating the d2v model
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'min_freq': '800', 'model_dir': 'full'}
-full full
-Building d2v model
-Traceback (most recent call last):
-  File "../src/python/utils/d2v_model_builder.py", line 49, in <module>
-    main()
-  File "../src/python/utils/d2v_model_builder.py", line 41, in main
-    row_doc, d2v_model = build_d2v_model(args.chat,args.corpus)
-  File "../src/python/utils/d2v_model_builder.py", line 31, in build_d2v_model
-    model = Doc2Vec(docs, size=100, workers=6, min_count=min_freq)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 618, in __init__
-    self.build_vocab(documents, trim_rule=trim_rule)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/word2vec.py", line 536, in build_vocab
-    self.scan_vocab(sentences, progress_per=progress_per, trim_rule=trim_rule, update=update)  # initial survey
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 655, in scan_vocab
-    for document_no, document in enumerate(documents):
-  File "../src/python/utils/d2v_model_builder.py", line 19, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating idfs
-{'model_dir': 'full'}
-full full
-Calculating idfs...
-Saving idfs...
-Time elapsed: 0:14:35.872945
-args: col:6, dir:ally, min_freq:800, bigram:false
-Is the model a bigram model? false
-Creating model for ally
-121646764 ally/chat.csv
-Assuring the cohesion of dataset
-Carregando pacotes exigidos: dplyr
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-Carregando pacotes exigidos: dtplyr
-Carregando pacotes exigidos: data.table
-
-Attaching package: ‘data.table’
-
-The following objects are masked from ‘package:dplyr’:
-
-    between, first, last
-
-[1] "ally"
-[1] "/home/joaquim/PyCharm-Workspace/tribunaldb/data/ally"
-Read 0.0% of 121646764 rowsRead 5.8% of 121646764 rowsRead 11.3% of 121646764 rowsRead 16.9% of 121646764 rowsRead 22.2% of 121646764 rowsRead 27.4% of 121646764 rowsRead 32.7% of 121646764 rowsRead 37.9% of 121646764 rowsRead 43.2% of 121646764 rowsRead 48.8% of 121646764 rowsRead 54.4% of 121646764 rowsRead 59.6% of 121646764 rowsRead 65.2% of 121646764 rowsRead 70.7% of 121646764 rowsRead 76.2% of 121646764 rowsRead 81.7% of 121646764 rowsRead 87.3% of 121646764 rowsRead 92.8% of 121646764 rowsRead 98.3% of 121646764 rowsRead 99.2% of 121646764 rowsRead 121646764 rows and 2 (of 6) columns from 5.734 GB file in 00:00:28
-Read 50.5% of 7853900 rowsRead 85.8% of 7853900 rowsRead 7853900 rows and 9 (of 9) columns from 0.285 GB file in 00:00:04
-[1] 4
-[1] 4600
-Written 10.2% of 1958875 rows in 2 secs using 8 threads. anyBufferGrown=no; maxBuffUsed=43%. Finished in 17 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 4.1% of 49999999 rowsRead 7.0% of 49999999 rowsRead 7.5% of 49999999 rowsRead 10.9% of 49999999 rowsRead 14.7% of 49999999 rowsRead 14.9% of 49999999 rowsRead 18.4% of 49999999 rowsRead 19.6% of 49999999 rowsRead 20.2% of 49999999 rowsRead 24.2% of 49999999 rowsRead 25.6% of 49999999 rowsRead 29.5% of 49999999 rowsRead 34.1% of 49999999 rowsRead 36.0% of 49999999 rowsRead 40.7% of 49999999 rowsRead 44.8% of 49999999 rowsRead 48.3% of 49999999 rowsRead 48.7% of 49999999 rowsRead 52.1% of 49999999 rowsRead 55.5% of 49999999 rowsRead 55.7% of 49999999 rowsRead 59.6% of 49999999 rowsRead 60.2% of 49999999 rowsRead 64.1% of 49999999 rowsRead 67.8% of 49999999 rowsRead 71.5% of 49999999 rowsRead 74.3% of 49999999 rowsRead 77.9% of 49999999 rowsRead 81.4% of 49999999 rowsRead 84.8% of 49999999 rowsRead 88.2% of 49999999 rowsRead 90.8% of 49999999 rowsRead 94.1% of 49999999 rowsRead 97.3% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.357 GB file in 00:01:27
-Written 34.3% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 34.9% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 5 secs.      Written 54.3% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 72.6% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 1 secs.      Written 83.1% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 1 secs.      Written 94.3% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 3.2% of 49999999 rowsRead 6.4% of 49999999 rowsRead 9.5% of 49999999 rowsRead 12.5% of 49999999 rowsRead 15.6% of 49999999 rowsRead 18.4% of 49999999 rowsRead 21.3% of 49999999 rowsRead 21.3% of 49999999 rowsRead 25.0% of 49999999 rowsRead 28.8% of 49999999 rowsRead 32.5% of 49999999 rowsRead 36.1% of 49999999 rowsRead 39.7% of 49999999 rowsRead 43.3% of 49999999 rowsRead 46.9% of 49999999 rowsRead 50.2% of 49999999 rowsRead 53.6% of 49999999 rowsRead 56.9% of 49999999 rowsRead 60.3% of 49999999 rowsRead 63.6% of 49999999 rowsRead 66.9% of 49999999 rowsRead 70.3% of 49999999 rowsRead 73.6% of 49999999 rowsRead 76.7% of 49999999 rowsRead 80.0% of 49999999 rowsRead 83.2% of 49999999 rowsRead 86.4% of 49999999 rowsRead 89.4% of 49999999 rowsRead 92.6% of 49999999 rowsRead 95.7% of 49999999 rowsRead 97.7% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.349 GB file in 00:01:30
-Written 20.3% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 7 secs.      Written 20.7% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 11 secs.      Written 29.6% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 9 secs.      Written 31.7% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 10 secs.      Written 33.8% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 11 secs.      Written 35.9% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 12 secs.      Written 36.8% of 49999999 rows in 8 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 13 secs.      Written 49.4% of 49999999 rows in 9 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=16%. Finished in 9 secs.      Written 68.8% of 49999999 rows in 10 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=17%. Finished in 4 secs.      Written 89.1% of 49999999 rows in 13 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 89.5% of 49999999 rows in 17 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 96.3% of 49999999 rows in 18 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 21646763 rowsRead 7.9% of 21646763 rowsRead 15.9% of 21646763 rowsRead 23.9% of 21646763 rowsRead 31.8% of 21646763 rowsRead 39.7% of 21646763 rowsRead 47.4% of 21646763 rowsRead 55.2% of 21646763 rowsRead 62.8% of 21646763 rowsRead 70.4% of 21646763 rowsRead 77.9% of 21646763 rowsRead 85.4% of 21646763 rowsRead 92.8% of 21646763 rowsRead 21646763 rows and 6 (of 6) columns from 1.027 GB file in 00:00:29
-121646761 ally/chat.csv
-Creating corpus, tokenizing and extracting vocabulary...
-Extracting corpus from csv file
-Tokenizing corpus
-Removing stopwords
-Replacing champ names
-Building vocabulary from corpus
-Creating the .pkl files corresponding to the vocabulary
-{'model_dir': 'ally', 'min_freq': '800'}
-ally ally
-Saving vocab_freq binary on  ally/vocab_freq.pkl
-Saving words binary on  ally/words.pkl
-Time elapsed: 0:00:00.065431
-Creating the count matrix
-{'model_dir': 'ally', 'min_freq': '800'}
-ally ally
-Building counting matrix
-Traceback (most recent call last):
-  File "../src/python/utils/count_matrix_builder.py", line 74, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/count_matrix_builder.py", line 65, in main
-    docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat, args.corpus)
-  File "../src/python/utils/count_matrix_builder.py", line 41, in build_cnt_matrix
-    matrix = cnt_model.fit_transform(chat)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 839, in fit_transform
-    self.fixed_vocabulary_)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 760, in _count_vocab
-    for doc in raw_documents:
-  File "../src/python/utils/count_matrix_builder.py", line 29, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating the d2v model
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'model_dir': 'ally', 'min_freq': '800'}
-ally ally
-Building d2v model
-Traceback (most recent call last):
-  File "../src/python/utils/d2v_model_builder.py", line 49, in <module>
-    main()
-  File "../src/python/utils/d2v_model_builder.py", line 41, in main
-    row_doc, d2v_model = build_d2v_model(args.chat,args.corpus)
-  File "../src/python/utils/d2v_model_builder.py", line 31, in build_d2v_model
-    model = Doc2Vec(docs, size=100, workers=6, min_count=min_freq)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 618, in __init__
-    self.build_vocab(documents, trim_rule=trim_rule)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/word2vec.py", line 536, in build_vocab
-    self.scan_vocab(sentences, progress_per=progress_per, trim_rule=trim_rule, update=update)  # initial survey
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 655, in scan_vocab
-    for document_no, document in enumerate(documents):
-  File "../src/python/utils/d2v_model_builder.py", line 19, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating idfs
-{'model_dir': 'ally'}
-ally ally
-Calculating idfs...
-Traceback (most recent call last):
-  File "../src/python/utils/idfs_builder.py", line 21, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/idfs_builder.py", line 15, in main
-    idfs = calc_idfs(args.load_obj(args.cnt_team))
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 129, in load_obj
-    return scipy.io.mmread(fname)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 76, in mmread
-    return MMFile().read(source)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 411, in read
-    stream, close_it = self._open(source)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 312, in _open
-    stream = open(filespec, mode)
-FileNotFoundError: [Errno 2] No such file or directory: 'ally/count_team.mtx'
-args: col:6, dir:enemy, min_freq:800, bigram:false
-Is the model a bigram model? false
-Creating model for enemy
-127831351 enemy/chat.csv
-Assuring the cohesion of dataset
-Carregando pacotes exigidos: dplyr
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-Carregando pacotes exigidos: dtplyr
-Carregando pacotes exigidos: data.table
-
-Attaching package: ‘data.table’
-
-The following objects are masked from ‘package:dplyr’:
-
-    between, first, last
-
-[1] "enemy"
-[1] "/home/joaquim/PyCharm-Workspace/tribunaldb/data/enemy"
-Read 0.0% of 127831351 rowsRead 5.4% of 127831351 rowsRead 10.7% of 127831351 rowsRead 16.0% of 127831351 rowsRead 20.9% of 127831351 rowsRead 25.9% of 127831351 rowsRead 30.8% of 127831351 rowsRead 35.8% of 127831351 rowsRead 40.7% of 127831351 rowsRead 46.0% of 127831351 rowsRead 51.4% of 127831351 rowsRead 56.7% of 127831351 rowsRead 59.3% of 127831351 rowsRead 64.6% of 127831351 rowsRead 69.9% of 127831351 rowsRead 75.2% of 127831351 rowsRead 80.5% of 127831351 rowsRead 85.8% of 127831351 rowsRead 91.1% of 127831351 rowsRead 96.4% of 127831351 rowsRead 98.8% of 127831351 rowsRead 127831351 rows and 2 (of 6) columns from 5.837 GB file in 00:00:32
-Read 29.6% of 9817375 rowsRead 56.6% of 9817375 rowsRead 84.4% of 9817375 rowsRead 9817375 rows and 9 (of 9) columns from 0.363 GB file in 00:00:05
-[1] 5
-[1] 4928
-Read 0.0% of 49999999 rowsRead 4.0% of 49999999 rowsRead 7.6% of 49999999 rowsRead 9.8% of 49999999 rowsRead 12.4% of 49999999 rowsRead 15.9% of 49999999 rowsRead 16.9% of 49999999 rowsRead 20.1% of 49999999 rowsRead 22.4% of 49999999 rowsRead 22.5% of 49999999 rowsRead 26.3% of 49999999 rowsRead 29.2% of 49999999 rowsRead 33.6% of 49999999 rowsRead 38.0% of 49999999 rowsRead 42.5% of 49999999 rowsRead 44.6% of 49999999 rowsRead 48.0% of 49999999 rowsRead 51.3% of 49999999 rowsRead 54.6% of 49999999 rowsRead 55.3% of 49999999 rowsRead 58.5% of 49999999 rowsRead 61.6% of 49999999 rowsRead 63.6% of 49999999 rowsRead 67.3% of 49999999 rowsRead 68.8% of 49999999 rowsRead 72.5% of 49999999 rowsRead 76.1% of 49999999 rowsRead 79.7% of 49999999 rowsRead 83.2% of 49999999 rowsRead 84.9% of 49999999 rowsRead 88.1% of 49999999 rowsRead 91.5% of 49999999 rowsRead 94.7% of 49999999 rowsRead 97.9% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.278 GB file in 00:01:28
-Written 29.2% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 4 secs.      Written 36.3% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 5 secs.      Written 45.2% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 4 secs.      Written 63.6% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 3 secs.      Written 91.5% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=22%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 49999999 rowsRead 3.2% of 49999999 rowsRead 6.4% of 49999999 rowsRead 9.6% of 49999999 rowsRead 9.9% of 49999999 rowsRead 13.0% of 49999999 rowsRead 16.1% of 49999999 rowsRead 19.1% of 49999999 rowsRead 22.2% of 49999999 rowsRead 25.1% of 49999999 rowsRead 28.1% of 49999999 rowsRead 31.0% of 49999999 rowsRead 33.8% of 49999999 rowsRead 34.8% of 49999999 rowsRead 38.6% of 49999999 rowsRead 42.4% of 49999999 rowsRead 46.1% of 49999999 rowsRead 49.8% of 49999999 rowsRead 53.5% of 49999999 rowsRead 57.2% of 49999999 rowsRead 60.8% of 49999999 rowsRead 64.4% of 49999999 rowsRead 67.9% of 49999999 rowsRead 71.5% of 49999999 rowsRead 75.0% of 49999999 rowsRead 78.4% of 49999999 rowsRead 81.9% of 49999999 rowsRead 85.3% of 49999999 rowsRead 85.7% of 49999999 rowsRead 89.1% of 49999999 rowsRead 92.4% of 49999999 rowsRead 95.8% of 49999999 rowsRead 99.1% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.285 GB file in 00:01:21
-Written 33.6% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 3 secs.      Written 50.7% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 2 secs.      Written 74.4% of 49999999 rows in 5 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 77.5% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 1 secs.      Written 92.5% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=19%. Finished in 0 secs.                                                                                                                                           Read 0.0% of 27831350 rowsRead 6.7% of 27831350 rowsRead 13.4% of 27831350 rowsRead 20.0% of 27831350 rowsRead 26.6% of 27831350 rowsRead 33.1% of 27831350 rowsRead 39.6% of 27831350 rowsRead 46.0% of 27831350 rowsRead 52.5% of 27831350 rowsRead 58.8% of 27831350 rowsRead 65.1% of 27831350 rowsRead 71.4% of 27831350 rowsRead 77.6% of 27831350 rowsRead 83.8% of 27831350 rowsRead 89.9% of 27831350 rowsRead 96.0% of 27831350 rowsRead 27831350 rows and 6 (of 6) columns from 1.274 GB file in 00:00:22
-Written 46.0% of 27831350 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=18%. Finished in 2 secs.      Written 73.7% of 27831350 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=18%. Finished in 1 secs.                                                                                                                                           127831348 enemy/chat.csv
-Creating corpus, tokenizing and extracting vocabulary...
-Extracting corpus from csv file
-Tokenizing corpus
-Removing stopwords
-Replacing champ names
-Building vocabulary from corpus
-Creating the .pkl files corresponding to the vocabulary
-{'min_freq': '800', 'model_dir': 'enemy'}
-enemy enemy
-Saving vocab_freq binary on  enemy/vocab_freq.pkl
-Saving words binary on  enemy/words.pkl
-Time elapsed: 0:00:00.042476
-Creating the count matrix
-{'min_freq': '800', 'model_dir': 'enemy'}
-enemy enemy
-Building counting matrix
-Traceback (most recent call last):
-  File "../src/python/utils/count_matrix_builder.py", line 74, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/count_matrix_builder.py", line 65, in main
-    docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat, args.corpus)
-  File "../src/python/utils/count_matrix_builder.py", line 41, in build_cnt_matrix
-    matrix = cnt_model.fit_transform(chat)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 839, in fit_transform
-    self.fixed_vocabulary_)
-  File "/usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/text.py", line 760, in _count_vocab
-    for doc in raw_documents:
-  File "../src/python/utils/count_matrix_builder.py", line 29, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating the d2v model
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'model_dir': 'enemy', 'min_freq': '800'}
-enemy enemy
-Building d2v model
-Traceback (most recent call last):
-  File "../src/python/utils/d2v_model_builder.py", line 49, in <module>
-    main()
-  File "../src/python/utils/d2v_model_builder.py", line 41, in main
-    row_doc, d2v_model = build_d2v_model(args.chat,args.corpus)
-  File "../src/python/utils/d2v_model_builder.py", line 31, in build_d2v_model
-    model = Doc2Vec(docs, size=100, workers=6, min_count=min_freq)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 618, in __init__
-    self.build_vocab(documents, trim_rule=trim_rule)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/word2vec.py", line 536, in build_vocab
-    self.scan_vocab(sentences, progress_per=progress_per, trim_rule=trim_rule, update=update)  # initial survey
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py", line 655, in scan_vocab
-    for document_no, document in enumerate(documents):
-  File "../src/python/utils/d2v_model_builder.py", line 19, in __iter__
-    for case, match, team, doc in self.docs.next_doc():
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/doc_iterator.py", line 19, in next_doc
-    next_case = int(row[0])
-IndexError: list index out of range
-Generating idfs
-{'model_dir': 'enemy'}
-enemy enemy
-Calculating idfs...
-Traceback (most recent call last):
-  File "../src/python/utils/idfs_builder.py", line 21, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/idfs_builder.py", line 15, in main
-    idfs = calc_idfs(args.load_obj(args.cnt_team))
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 129, in load_obj
-    return scipy.io.mmread(fname)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 76, in mmread
-    return MMFile().read(source)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 411, in read
-    stream, close_it = self._open(source)
-  File "/usr/local/lib/python3.5/dist-packages/scipy/io/mmio.py", line 312, in _open
-    stream = open(filespec, mode)
-FileNotFoundError: [Errno 2] No such file or directory: 'enemy/count_team.mtx'
-args: col:6, dir:offender, min_freq:800, bigram:false
-Is the model a bigram model? false
-Creating model for offender
-57682014 offender/chat.csv
-Assuring the cohesion of dataset
-Carregando pacotes exigidos: dplyr
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-Carregando pacotes exigidos: dtplyr
-Carregando pacotes exigidos: data.table
-
-Attaching package: ‘data.table’
-
-The following objects are masked from ‘package:dplyr’:
-
-    between, first, last
-
-[1] "offender"
-[1] "/home/joaquim/PyCharm-Workspace/tribunaldb/data/offender"
-Read 0.0% of 57682014 rowsRead 11.4% of 57682014 rowsRead 22.4% of 57682014 rowsRead 32.9% of 57682014 rowsRead 43.5% of 57682014 rowsRead 54.7% of 57682014 rowsRead 59.6% of 57682014 rowsRead 70.9% of 57682014 rowsRead 82.1% of 57682014 rowsRead 93.4% of 57682014 rowsRead 57682014 rows and 2 (of 6) columns from 3.066 GB file in 00:00:14
-[1] 1
-[1] 43869
-Read 0.0% of 49999999 rowsRead 1.0% of 49999999 rowsRead 4.6% of 49999999 rowsRead 6.6% of 49999999 rowsRead 6.7% of 49999999 rowsRead 9.4% of 49999999 rowsRead 12.8% of 49999999 rowsRead 16.5% of 49999999 rowsRead 19.2% of 49999999 rowsRead 19.6% of 49999999 rowsRead 23.6% of 49999999 rowsRead 25.4% of 49999999 rowsRead 29.0% of 49999999 rowsRead 32.0% of 49999999 rowsRead 35.3% of 49999999 rowsRead 38.5% of 49999999 rowsRead 39.8% of 49999999 rowsRead 42.9% of 49999999 rowsRead 45.5% of 49999999 rowsRead 49.1% of 49999999 rowsRead 49.1% of 49999999 rowsRead 52.6% of 49999999 rowsRead 56.1% of 49999999 rowsRead 59.4% of 49999999 rowsRead 60.3% of 49999999 rowsRead 63.6% of 49999999 rowsRead 66.8% of 49999999 rowsRead 69.9% of 49999999 rowsRead 73.1% of 49999999 rowsRead 73.9% of 49999999 rowsRead 76.9% of 49999999 rowsRead 79.9% of 49999999 rowsRead 82.8% of 49999999 rowsRead 85.7% of 49999999 rowsRead 88.6% of 49999999 rowsRead 89.9% of 49999999 rowsRead 92.7% of 49999999 rowsRead 95.5% of 49999999 rowsRead 96.3% of 49999999 rowsRead 99.7% of 49999999 rowsRead 49999999 rows and 6 (of 6) columns from 2.655 GB file in 00:01:58
-Written 31.7% of 49999999 rows in 2 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=24%. Finished in 4 secs.      Written 44.3% of 49999999 rows in 3 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=24%. Finished in 3 secs.      Written 67.9% of 49999999 rows in 4 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=34%. Finished in 1 secs.      Written 86.2% of 49999999 rows in 6 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=34%. Finished in 0 secs.      Written 93.6% of 49999999 rows in 7 secs using 8 threads. anyBufferGrown=yes; maxBuffUsed=34%. Finished in 0 secs.                                                                                                                                           Read 27.7% of 7682013 rowsRead 48.9% of 7682013 rowsRead 69.9% of 7682013 rowsRead 90.9% of 7682013 rowsRead 7682013 rows and 6 (of 6) columns from 0.411 GB file in 00:00:06
-57682012 offender/chat.csv
-Creating corpus, tokenizing and extracting vocabulary...
-Extracting corpus from csv file
-Tokenizing corpus
-Removing stopwords
-Replacing champ names
-Building vocabulary from corpus
-Creating the .pkl files corresponding to the vocabulary
-{'model_dir': 'offender', 'min_freq': '800'}
-offender offender
-Saving vocab_freq binary on  offender/vocab_freq.pkl
-Saving words binary on  offender/words.pkl
-Time elapsed: 0:00:00.046387
-Creating the count matrix
-{'min_freq': '800', 'model_dir': 'offender'}
-offender offender
-Building counting matrix
-Saving models...
-Saving row_doc
-Saving vocab
-Saving matrix
-Time elapsed: 0:11:09.878972
-Generating the d2v model
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'model_dir': 'offender', 'min_freq': '800'}
-offender offender
-Building d2v model
-Subtotal time elapsed: 0:43:16.220775
-Saving models...
-Total time elapsed: 0:43:17.595506
-Generating idfs
-{'model_dir': 'offender'}
-offender offender
-Calculating idfs...
-Saving idfs...
-Time elapsed: 0:01:56.117446
-Generating clustering results
-LDA for full:
-LDA for full and 10 topics
-{'lda_team': 'analise/lda_full_10.gsm', 'model_dir': 'full', 'num_topics': '10', 'lda_team_csv': 'analise/lda_full_10.csv'}
-full full
-Loading bow matrix:
-Making lda model:
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-Time elapsed: 1:05:45.733142
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'n_groups': '10', 'model_dir': 'full', 'lda_team': 'analise/lda_full_10.gsm', 'lda': 'True'}
-full full
-Loading labels count
-Time elapsed: 4:07:45.372483
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-LDA for ally:
-LDA for ally and 10 topics
-{'lda_team': 'analise/lda_ally_10.gsm', 'model_dir': 'ally', 'lda_team_csv': 'analise/lda_ally_10.csv', 'num_topics': '10'}
-ally ally
-Loading bow matrix:
-Making lda model:
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-Traceback (most recent call last):
-  File "../src/python/utils/lda_builder.py", line 38, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/lda_builder.py", line 30, in main
-    topics = group_tools.groups_idf(topics_sum)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/group_tools.py", line 21, in groups_idf
-    idfs = args.load_obj(args.idf_team)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 127, in load_obj
-    return pickle.load(open(fname,'rb'))
-FileNotFoundError: [Errno 2] No such file or directory: 'ally/idf_team.pkl'
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'model_dir': 'ally', 'n_groups': '10', 'lda': 'True', 'lda_team': 'analise/lda_ally_10.gsm'}
-ally ally
-Loading labels count
-Traceback (most recent call last):
-  File "../src/python/utils/aggregate_clusters.py", line 75, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/aggregate_clusters.py", line 64, in main
-    labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(args.cnt_team, args.cnt_team_vocab)
-  File "../src/python/utils/aggregate_clusters.py", line 20, in summarize_topic_labels
-    topics = lda_model[bow]
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/ldamodel.py", line 980, in __getitem__
-    return self.get_document_topics(bow, eps)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/ldamodel.py", line 921, in get_document_topics
-    gamma, phis = self.inference([bow], collect_sstats=True)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/ldamodel.py", line 465, in inference
-    Elogthetad = dirichlet_expectation(gammad)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/ldamodel.py", line 65, in dirichlet_expectation
-    result = psi(alpha) - psi(numpy.sum(alpha))
-KeyboardInterrupt
-Traceback (most recent call last):
-  File "../src/python/utils/cluster_analysis.py", line 2, in <module>
-    import matplotlib.pyplot as plt
-  File "/usr/local/lib/python3.5/dist-packages/matplotlib/__init__.py", line 122, in <module>
-    from matplotlib.cbook import is_string_like, mplDeprecation, dedent, get_label
-  File "/usr/local/lib/python3.5/dist-packages/matplotlib/cbook.py", line 32, in <module>
-    import numpy as np
-  File "/usr/local/lib/python3.5/dist-packages/numpy/__init__.py", line 142, in <module>
-    from . import add_newdocs
-  File "/usr/local/lib/python3.5/dist-packages/numpy/add_newdocs.py", line 13, in <module>
-    from numpy.lib import add_newdoc
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/__init__.py", line 8, in <module>
-    from .type_check import *
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/type_check.py", line 11, in <module>
-    import numpy.core.numeric as _nx
-  File "/usr/local/lib/python3.5/dist-packages/numpy/core/__init__.py", line 58, in <module>
-    from numpy.testing.nosetester import _numpy_tester
-  File "/usr/local/lib/python3.5/dist-packages/numpy/testing/__init__.py", line 10, in <module>
-    from unittest import TestCase
-  File "/usr/lib/python3.5/unittest/__init__.py", line 59, in <module>
-  File "/usr/lib/python3.5/unittest/case.py", line 5, in <module>
-    import difflib
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 661, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 765, in get_code
-  File "<frozen importlib._bootstrap_external>", line 476, in _compile_bytecode
-KeyboardInterrupt
-LDA for enemy:
-LDA for enemy and 10 topics
-Traceback (most recent call last):
-  File "../src/python/utils/lda_builder.py", line 4, in <module>
-    from gensim.models import LdaMulticore
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 661, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 750, in get_code
-  File "<frozen importlib._bootstrap_external>", line 818, in get_data
-KeyboardInterrupt
-Traceback (most recent call last):
-  File "../src/python/utils/aggregate_clusters.py", line 1, in <module>
-    from gensim.models import LdaMulticore
-  File "/usr/local/lib/python3.5/dist-packages/gensim/__init__.py", line 6, in <module>
-    from gensim import parsing, matutils, interfaces, corpora, models, similarities, summarization
-  File "/usr/local/lib/python3.5/dist-packages/gensim/parsing/__init__.py", line 6, in <module>
-    from .porter import PorterStemmer
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 661, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 750, in get_code
-  File "<frozen importlib._bootstrap_external>", line 819, in get_data
-KeyboardInterrupt
-Fatal Python error: Py_Initialize: can't initialize sys standard streams
-Traceback (most recent call last):
-  File "/usr/lib/python3.5/io.py", line 52, in <module>
-    import abc
-  File "/usr/lib/python3.5/abc.py", line 6, in <module>
-    from _weakrefset import WeakSet
-  File "/usr/lib/python3.5/_weakrefset.py", line 5, in <module>
-KeyboardInterrupt
-./qpy.sh: linha 10:  5942 Abortado                (imagem do núcleo gravada) ${pyexec} ${pydir}/$@
-LDA for offender:
-LDA for offender and 10 topics
-Traceback (most recent call last):
-  File "../src/python/utils/lda_builder.py", line 4, in <module>
-    from gensim.models import LdaMulticore
-  File "/usr/local/lib/python3.5/dist-packages/gensim/__init__.py", line 6, in <module>
-    from gensim import parsing, matutils, interfaces, corpora, models, similarities, summarization
-  File "/usr/local/lib/python3.5/dist-packages/gensim/parsing/__init__.py", line 7, in <module>
-    from .preprocessing import *
-  File "/usr/local/lib/python3.5/dist-packages/gensim/parsing/preprocessing.py", line 10, in <module>
-    from gensim import utils
-  File "/usr/local/lib/python3.5/dist-packages/gensim/utils.py", line 39, in <module>
-    import numpy
-  File "/usr/local/lib/python3.5/dist-packages/numpy/__init__.py", line 163, in <module>
-    from . import random
-  File "/usr/local/lib/python3.5/dist-packages/numpy/random/__init__.py", line 98, in <module>
-    warnings.filterwarnings("ignore", message="numpy.ndarray size changed")
-  File "/usr/lib/python3.5/warnings.py", line 59, in filterwarnings
-    _add_filter(action, re.compile(message, re.I), category,
-  File "/usr/lib/python3.5/re.py", line 224, in compile
-    return _compile(pattern, flags)
-  File "/usr/lib/python3.5/re.py", line 293, in _compile
-    p = sre_compile.compile(pattern, flags)
-  File "/usr/lib/python3.5/sre_compile.py", line 540, in compile
-    code = _code(p, flags)
-  File "/usr/lib/python3.5/sre_compile.py", line 522, in _code
-    _compile_info(code, p, flags)
-  File "/usr/lib/python3.5/sre_compile.py", line 416, in _compile_info
-    lo, hi = pattern.getwidth()
-  File "/usr/lib/python3.5/sre_parse.py", line 196, in getwidth
-    hi = hi + 1
-KeyboardInterrupt
-Traceback (most recent call last):
-  File "../src/python/utils/aggregate_clusters.py", line 1, in <module>
-    from gensim.models import LdaMulticore
-  File "/usr/local/lib/python3.5/dist-packages/gensim/__init__.py", line 6, in <module>
-    from gensim import parsing, matutils, interfaces, corpora, models, similarities, summarization
-  File "/usr/local/lib/python3.5/dist-packages/gensim/parsing/__init__.py", line 7, in <module>
-    from .preprocessing import *
-  File "/usr/local/lib/python3.5/dist-packages/gensim/parsing/preprocessing.py", line 10, in <module>
-    from gensim import utils
-  File "/usr/local/lib/python3.5/dist-packages/gensim/utils.py", line 39, in <module>
-    import numpy
-  File "/usr/local/lib/python3.5/dist-packages/numpy/__init__.py", line 142, in <module>
-    from . import add_newdocs
-  File "/usr/local/lib/python3.5/dist-packages/numpy/add_newdocs.py", line 13, in <module>
-    from numpy.lib import add_newdoc
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/__init__.py", line 8, in <module>
-    from .type_check import *
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/type_check.py", line 11, in <module>
-    import numpy.core.numeric as _nx
-  File "/usr/local/lib/python3.5/dist-packages/numpy/core/__init__.py", line 22, in <module>
-    from . import _internal  # for freeze programs
-  File "/usr/local/lib/python3.5/dist-packages/numpy/core/_internal.py", line 15, in <module>
-    from .numerictypes import object_
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
-KeyboardInterrupt
-Traceback (most recent call last):
-  File "../src/python/utils/cluster_analysis.py", line 2, in <module>
-    import matplotlib.pyplot as plt
-  File "/usr/local/lib/python3.5/dist-packages/matplotlib/__init__.py", line 122, in <module>
-    from matplotlib.cbook import is_string_like, mplDeprecation, dedent, get_label
-  File "/usr/local/lib/python3.5/dist-packages/matplotlib/cbook.py", line 32, in <module>
-    import numpy as np
-  File "/usr/local/lib/python3.5/dist-packages/numpy/__init__.py", line 142, in <module>
-    from . import add_newdocs
-  File "/usr/local/lib/python3.5/dist-packages/numpy/add_newdocs.py", line 13, in <module>
-    from numpy.lib import add_newdoc
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/__init__.py", line 9, in <module>
-    from .index_tricks import *
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 954, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 896, in _find_spec
-  File "<frozen importlib._bootstrap_external>", line 1139, in find_spec
-  File "<frozen importlib._bootstrap_external>", line 1113, in _get_spec
-  File "<frozen importlib._bootstrap_external>", line 1248, in find_spec
-  File "<frozen importlib._bootstrap_external>", line 53, in _path_join
-  File "<frozen importlib._bootstrap_external>", line 53, in <listcomp>
-KeyboardInterrupt
-KMN for full
-Failed to import the site module
-Traceback (most recent call last):
-  File "/usr/lib/python3.5/site.py", line 580, in <module>
-    main()
-  File "/usr/lib/python3.5/site.py", line 567, in main
-    known_paths = addsitepackages(known_paths)
-  File "/usr/lib/python3.5/site.py", line 344, in addsitepackages
-    addsitedir(sitedir, known_paths)
-  File "/usr/lib/python3.5/site.py", line 212, in addsitedir
-    addpackage(sitedir, name, known_paths)
-  File "/usr/lib/python3.5/site.py", line 173, in addpackage
-    exec(line)
-  File "<string>", line 1, in <module>
-  File "/usr/lib/python3.5/types.py", line 166, in <module>
-    import functools as _functools
-  File "/usr/lib/python3.5/functools.py", line 21, in <module>
-    from collections import namedtuple
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 661, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 765, in get_code
-  File "<frozen importlib._bootstrap_external>", line 476, in _compile_bytecode
-KeyboardInterrupt
-KMN for ally
-Failed to import the site module
-Traceback (most recent call last):
-  File "/usr/lib/python3.5/site.py", line 580, in <module>
-    main()
-  File "/usr/lib/python3.5/site.py", line 567, in main
-    known_paths = addsitepackages(known_paths)
-  File "/usr/lib/python3.5/site.py", line 344, in addsitepackages
-    addsitedir(sitedir, known_paths)
-  File "/usr/lib/python3.5/site.py", line 212, in addsitedir
-    addpackage(sitedir, name, known_paths)
-  File "/usr/lib/python3.5/site.py", line 173, in addpackage
-    exec(line)
-  File "<string>", line 1, in <module>
-  File "/usr/lib/python3.5/types.py", line 166, in <module>
-    import functools as _functools
-  File "/usr/lib/python3.5/functools.py", line 21, in <module>
-    from collections import namedtuple
-  File "/usr/lib/python3.5/collections/__init__.py", line 26, in <module>
-    from operator import itemgetter as _itemgetter, eq as _eq
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 661, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 739, in get_code
-  File "<frozen importlib._bootstrap_external>", line 287, in cache_from_source
-  File "<frozen importlib._bootstrap_external>", line 53, in _path_join
-  File "<frozen importlib._bootstrap_external>", line 53, in <listcomp>
-KeyboardInterrupt
-KMN for enemy
-Traceback (most recent call last):
-  File "../src/python/utils/kmn_clustering.py", line 5, in <module>
-    import scipy.io
-  File "/usr/local/lib/python3.5/dist-packages/scipy/__init__.py", line 61, in <module>
-    from numpy import show_config as show_numpy_config
-  File "/usr/local/lib/python3.5/dist-packages/numpy/__init__.py", line 162, in <module>
-    from . import polynomial
-  File "/usr/local/lib/python3.5/dist-packages/numpy/polynomial/__init__.py", line 18, in <module>
-    from .polynomial import Polynomial
-  File "/usr/local/lib/python3.5/dist-packages/numpy/polynomial/polynomial.py", line 69, in <module>
-    from . import polyutils as pu
-  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 659, in exec_module
-KeyboardInterrupt
-KMN for offender
-/usr/local/lib/python3.5/dist-packages/gensim/utils.py:1015: UserWarning: Pattern library is not installed, lemmatization won't be available.
-  warnings.warn("Pattern library is not installed, lemmatization won't be available.")
-{'n_clusters': '10', 'model_dir': 'offender'}
-offender offender
-Loading matrix...
-Traceback (most recent call last):
-  File "../src/python/utils/kmn_clustering.py", line 129, in <module>
-    args.measure_time(main)
-  File "/home/joaquim/PyCharm-Workspace/tribunaldb/src/python/utils/args_proc.py", line 117, in measure_time
-    main()
-  File "../src/python/utils/kmn_clustering.py", line 107, in main
-    data = load_d2v(args.d2v_team)
-  File "../src/python/utils/kmn_clustering.py", line 26, in load_d2v
-    d2v_model = Doc2Vec.load(data_fn)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/models/word2vec.py", line 1762, in load
-    model = super(Word2Vec, cls).load(*args, **kwargs)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/utils.py", line 249, in load
-    obj._load_specials(fname, mmap, compress, subname)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/utils.py", line 268, in _load_specials
-    getattr(self, attrib)._load_specials(cfname, mmap, compress, subname)
-  File "/usr/local/lib/python3.5/dist-packages/gensim/utils.py", line 280, in _load_specials
-    val = numpy.load(subname(fname, attrib), mmap_mode=mmap)
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/npyio.py", line 406, in load
-    pickle_kwargs=pickle_kwargs)
-  File "/usr/local/lib/python3.5/dist-packages/numpy/lib/format.py", line 648, in read_array
-    array = numpy.fromfile(fp, dtype=dtype, count=count)
-KeyboardInterrupt
