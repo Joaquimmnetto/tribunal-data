@@ -6,13 +6,13 @@ import scipy.io
 params = dict()
 
 
-def load_model(arg, folder, sample):
+def load_model(arg, folder):
   module = sys.modules[__name__]
-  default_val = data_dir + '/' + folder + "/samples" if sample else data_dir + '/' + folder
+  default_val = data_dir + '/' + folder
   value = params.get(arg, default_val)
 
   setattr(module, arg, value)
-  current_model = value.replace('/', '') + ("_samples" if 'sample' in value else "")
+  current_model = value.replace('/', '')
   return getattr(module, arg, value), current_model
 
 
@@ -32,11 +32,21 @@ def read_args(argv):
     params[key_val[0]] = key_val[1]
   print(params)
 
+  def measure_time(main):
+    before = datetime.datetime.now()
+    main()
+    print("Time elapsed:", datetime.datetime.now() - before)
 
-def bigrams(fn):
-  folders = fn.split('/')
-  folders.insert(len(folders) - 1, 'bigrams')
-  return '/'.join(folders)
+  def save_pkl(fname, obj):
+    pickle.dump(obj, open(fname, 'wb'), protocol=2, fix_imports=True)
+
+  def load_obj(fname, gensim_class=None):
+    if fname.endswith('.pkl'):
+      return pickle.load(open(fname, 'rb'))
+    if fname.endswith('.mtx') or fname.endswith('.mm'):
+      return scipy.io.mmread(fname)
+    if fname.endswith('.gsm') or fname.endswith('.bin'):
+      return gensim_class.load(fname)
 
 
 # ---------------------------------------------------------
@@ -44,17 +54,16 @@ if len(sys.argv) > 1:
   read_args(sys.argv[1:])
 
 n_matrixes = 5
-#timeslice_size = 10 * 60  # 10 min
 data_dir = "../../../data"
-sys.path.append(data_dir)
-
-model_dir, current_model = load_model('model_dir', "full", sample=False)
-print(model_dir)
-out_dir = params.get('out_dir', model_dir)
 
 champs = 'champs.txt'
 stwords = 'en_stopwords.txt'
-# csvs base
+
+model_dir, current_model = load_model('model_dir', "full")
+sys.path.append(data_dir)
+
+print(model_dir)
+out_dir = params.get('out_dir', model_dir)  # csvs base
 chat = load_arg('chat', "chat.csv")
 players = load_arg('players', "players.csv")
 matches = load_arg('matches', "matches.csv")
@@ -119,28 +128,8 @@ err = load_arg('err', "error_dict.pkl")
 neigh = load_arg('neigh', "neigh.spy")
 fwords = load_arg('fwords', "first_words.pkl")
 
-
 # Ideias:
 # Bigramas
 # stemming?
 # Tirar nomes dos champions
 # Modificar o número de tópicos? Como definir um numero bom de tópicos?
-
-
-def measure_time(main):
-  before = datetime.datetime.now()
-  main()
-  print("Time elapsed:", datetime.datetime.now() - before)
-
-
-def save_pkl(fname, obj):
-  pickle.dump(obj, open(fname, 'wb'), protocol=2, fix_imports=True)
-
-
-def load_obj(fname, gensim_class=None):
-  if fname.endswith('.pkl'):
-    return pickle.load(open(fname, 'rb'))
-  if fname.endswith('.mtx') or fname.endswith('.mm'):
-    return scipy.io.mmread(fname)
-  if fname.endswith('.gsm') or fname.endswith('.bin'):
-    return gensim_class.load(fname)
