@@ -6,10 +6,10 @@ from doc_iterator import DocIterator
 from count_matrix_builder import CountDocIterator
 import count_matrix_builder
 
-from params import args_,base,vecs
+from params import args,base,vecs
 import utils
 
-min_freq = int(args_.get('min_freq', 150))
+min_freq = int(args.get('min_freq', 150))
 
 
 def build_tfidf_matrix(chat_fn, corpus_fn):

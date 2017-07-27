@@ -1,4 +1,4 @@
-from params import base,args_
+from params import base,args
 import utils
 
 import pandas
@@ -14,7 +14,7 @@ def parse_time(timestamp):
 
 
 def main():
-  chat_base = args_.get('chat_base', 'base/chat.csv')
+  chat_base = args.get('chat_base', 'base/chat.csv')
   chat_file = open(chat_base, 'r')
   outp_file = open(base.chat, 'w')
 

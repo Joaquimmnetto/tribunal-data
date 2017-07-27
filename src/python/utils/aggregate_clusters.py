@@ -19,6 +19,7 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn):
   row = 0
 
   for part in range(0, vecs.n_matrix):
+
     scipy_mat = utils.load_obj(bow_mat_fn.format(part))
     bow_mat = Scipy2Corpus(scipy_mat.tocsc())
     for bow in bow_mat:

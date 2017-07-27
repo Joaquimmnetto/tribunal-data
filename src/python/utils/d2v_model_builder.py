@@ -2,7 +2,7 @@ import datetime
 from gensim.models.doc2vec import TaggedDocument, Doc2Vec
 from doc_iterator import DocIterator
 
-from params import args_, vecs, base
+from params import args, vecs, base
 import utils
 
 
@@ -36,7 +36,7 @@ def save_outp(d2v_model, row_doc):
 
 
 def main():
-  min_freq = int(args_.get('min_freq', 5))
+  min_freq = int(args.get('min_freq', 5))
   before = datetime.datetime.now()
 
   print("Building d2v model")

@@ -2,50 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1506e283-d04f-4568-8f15-94b36b5b7167" name="Default" comment="Finalmente .gitignore!">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/utils/params.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/utils/utils.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/full/placeholder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/results_/.lda_ts_15_words.txt.swp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/results_/lda_ts_15_words.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/#graphs.R#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/--args" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/final_transformations.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/groups (cópia).R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/load_tdm.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/peformance_analysis.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/perguntas.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/process_chat.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/text_transformations.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/aggregate_clusters_teams.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/args_proc_new.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/bigram_builder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/cluster_analysis_team.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/group_tools.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/hdp_builder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/lsi_builder.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/TribunalDB.iml" afterPath="$PROJECT_DIR$/.idea/TribunalDB.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/utils/kmn_postprocess.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/R/transformations.R" afterPath="$PROJECT_DIR$/src/R/transformations.R" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" afterPath="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/chat_parser.py" afterPath="$PROJECT_DIR$/src/python/utils/chat_parser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" afterPath="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/d2v_model_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/d2v_model_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/doc_iterator.py" afterPath="$PROJECT_DIR$/src/python/utils/doc_iterator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/drift_analysis.py" afterPath="$PROJECT_DIR$/src/python/utils/drift_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/err_dict_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/err_dict_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/generate_samples.py" afterPath="$PROJECT_DIR$/src/python/utils/generate_samples.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/idfs_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/idfs_builder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" afterPath="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/lda_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/lda_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" afterPath="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/params.py" afterPath="$PROJECT_DIR$/src/python/utils/params.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/vizualize_points.py" afterPath="$PROJECT_DIR$/src/python/utils/vizualize_points.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/vocab_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/vocab_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/w2v_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/w2v_builder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
     </list>
     <ignored path="TribunalDB.iws" />
@@ -65,7 +35,99 @@
     <favorites_list name="TribunalDB" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="kmn_postprocess.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_postprocess.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kmn_clustering.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_clustering.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="444">
+              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cluster_analysis.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="aggregate_clusters.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="729">
+              <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="smpl_calinskis_..#..#..#data#full#samples#.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/smpl_calinskis_..#..#..#data#full#samples#.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="smpl_silhouettes_..#..#..#data#full#samples#.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/smpl_silhouettes_..#..#..#data#full#samples#.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="points.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/points.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vizualize_points.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/vizualize_points.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="25" column="87" selection-start-line="25" selection-start-column="71" selection-end-line="25" selection-end-column="87" />
+              <folding>
+                <element signature="e#27#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="params.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/python/utils/params.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -80,8 +142,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/python/vocab_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/words_builder.py" />
         <option value="$PROJECT_DIR$/src/python/sentence_generator/words_builder.py" />
         <option value="$PROJECT_DIR$/src/shell/csv_text_tokenizer.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -117,20 +177,22 @@
         <option value="$PROJECT_DIR$/src/python/utils/group_tools.py" />
         <option value="$PROJECT_DIR$/src/python/utils/utils.py" />
         <option value="$PROJECT_DIR$/src/python/utils/idfs_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
         <option value="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" />
         <option value="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" />
         <option value="$PROJECT_DIR$/src/python/utils/sil_metric.py" />
-        <option value="$PROJECT_DIR$/src/python/utils/vizualize_points.py" />
         <option value="$PROJECT_DIR$/src/python/utils/vocab_builder.py" />
         <option value="$PROJECT_DIR$/src/python/utils/w2v_builder.py" />
         <option value="$PROJECT_DIR$/src/python/utils/lda_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" />
-        <option value="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" />
         <option value="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" />
         <option value="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/utils/params.py" />
         <option value="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/params.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/vizualize_points.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/kmn_postprocess.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/analysis_kmn.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" />
       </list>
     </option>
   </component>
@@ -164,6 +226,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -214,10 +278,30 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tribunaldb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tribunaldb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -240,7 +324,7 @@
       <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\sentence_generator" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.whole_model_builder">
+  <component name="RunManager" selected="Python.kmn_clustering">
     <configuration default="false" name="context_corrector" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -275,23 +359,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="process_telegram_msgs" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python/corpus/classes" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/corpus/classes/process_telegram_msgs.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="w2v_builder" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -322,6 +389,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="TribunalDB" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="kmn_clustering" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -474,17 +558,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.context_corrector" />
       <item index="1" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
-      <item index="2" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
-      <item index="3" class="java.lang.String" itemvalue="Python.w2v_builder" />
-      <item index="4" class="java.lang.String" itemvalue="Python.whole_model_builder" />
+      <item index="2" class="java.lang.String" itemvalue="Python.w2v_builder" />
+      <item index="3" class="java.lang.String" itemvalue="Python.whole_model_builder" />
+      <item index="4" class="java.lang.String" itemvalue="Python.kmn_clustering" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.whole_model_builder" />
-        <item index="1" class="java.lang.String" itemvalue="Python.context_corrector" />
-        <item index="2" class="java.lang.String" itemvalue="Python.w2v_builder" />
-        <item index="3" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
-        <item index="4" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
+        <item index="0" class="java.lang.String" itemvalue="Python.kmn_clustering" />
+        <item index="1" class="java.lang.String" itemvalue="Python.whole_model_builder" />
+        <item index="2" class="java.lang.String" itemvalue="Python.context_corrector" />
+        <item index="3" class="java.lang.String" itemvalue="Python.w2v_builder" />
+        <item index="4" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
       </list>
     </recent_temporary>
   </component>
@@ -523,24 +607,24 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18407173" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18090717" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24369748" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33125648" sideWeight="0.50332594" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32705098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32878152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3059867" sideWeight="0.49667406" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.4978094" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39356178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27937916" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32705098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -583,20 +667,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="137" />
+      <option name="time" value="157" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/python/unicode_tokenizer.py" />
-    <entry file="file://$PROJECT_DIR$/src/shell/tmp/vocab.tmp" />
-    <entry file="file://$USER_HOME$/Python35/Lib/site-packages/nltk/metrics/distance.py" />
-    <entry file="file://$PROJECT_DIR$/data/corpus/sample_chat_corpus.txt" />
-    <entry file="file://$PROJECT_DIR$/src/shell/sample_chat_corpus_tkn.txt" />
-    <entry file="file://$PROJECT_DIR$/data/csv/sample_chat.csv" />
-    <entry file="file://$USER_HOME$/Python35/Lib/site-packages/sklearn/utils/fixes.py" />
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/vocab_builder.py" />
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/context_builder.py" />
     <entry file="file://$PROJECT_DIR$/src/shell/cont_corrector.sh" />
     <entry file="file://$PROJECT_DIR$/src/shell/telegram_sentgen.sh" />
     <entry file="file://$PROJECT_DIR$/src/shell/text_tokenizer.sh" />
@@ -607,85 +682,24 @@
     <entry file="file://$PROJECT_DIR$/src/shell/sentgen.sh" />
     <entry file="file://$PROJECT_DIR$/src/shell/csv_text_extractor.sh" />
     <entry file="file://$PROJECT_DIR$/src/shell/build_vocab.sh" />
-    <entry file="file://$PROJECT_DIR$/src/python/utils/args_proc_new.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-775">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters_teams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/bigram_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis_team.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/args_proc_new.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters_teams.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/bigram_builder.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis_team.py" />
     <entry file="file://$PROJECT_DIR$/src/shell/pp.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/group_tools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/hdp_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/lsi_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/sil_metric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
-          <folding>
-            <element signature="e#115#149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/group_tools.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/hdp_builder.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/lsi_builder.py" />
     <entry file="file://$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -693,9 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="869">
           <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="59" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -703,7 +714,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -711,17 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_clustering.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="112" column="11" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -729,7 +728,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="2" selection-end-line="21" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -737,9 +735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1650">
           <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -747,7 +742,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="28" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,9 +749,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -765,7 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -773,17 +763,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -791,7 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -799,9 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-591">
           <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
-          <folding>
-            <element signature="e#26#68#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -809,7 +784,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,9 +791,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="849">
           <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,19 +798,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/utils/vizualize_points.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="51" column="7" selection-start-line="51" selection-start-column="7" selection-end-line="51" selection-end-column="7" />
-          <folding>
-            <element signature="e#27#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -848,7 +806,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -857,9 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -867,26 +822,126 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/python/utils/params.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="56" column="35" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
+        <state relative-caret-position="45">
+          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/vizualize_points.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="25" column="87" selection-start-line="25" selection-start-column="71" selection-end-line="25" selection-end-column="87" />
+          <folding>
+            <element signature="e#27#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/ggplot/ggplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/matplotlib/pyplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="3416" column="4" selection-start-line="3416" selection-start-column="4" selection-end-line="3416" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/spherecluster/spherical_kmeans.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3150">
+          <caret line="230" column="20" selection-start-line="230" selection-start-column="4" selection-end-line="230" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/sil_metric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="172" column="4" selection-start-line="172" selection-start-column="4" selection-end-line="172" selection-end-column="4" />
+          <folding>
+            <element signature="e#115#149#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/smpl_calinskis_..#..#..#data#full#samples#.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/smpl_silhouettes_..#..#..#data#full#samples#.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/points.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/gensim/models/doc2vec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="614" column="20" selection-start-line="614" selection-start-column="13" selection-end-line="614" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_postprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_clustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/analysis_kmn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="94" column="83" selection-start-line="94" selection-start-column="76" selection-end-line="94" selection-end-column="83" />
+        <state relative-caret-position="729">
+          <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

@@ -6,16 +6,16 @@ import numpy as np
 from gensim.matutils import Scipy2Corpus
 from pprint import pprint
 
-from params import args_,vecs,clt,base
+from params import args,vecs,clt,base
 import utils
 
-ntop_words = args_.get('ntop_words', 100)
-num_topics = args_.get('num_topics', 10)
-build_models = args_.get('build_models', False)
-timeslice_size = int(args_.get('timeslice_size', 600))
-top_x = int(args_.get('top_x', 10))
-base_model = args_.get('base_model', 'team')
-matrix_from_file = args_.get('mtx_file', False)
+ntop_words = args.get('ntop_words', 100)
+num_topics = args.get('num_topics', 10)
+build_models = args.get('build_models', False)
+timeslice_size = int(args.get('timeslice_size', 600))
+top_x = int(args.get('top_x', 10))
+base_model = args.get('base_model', 'team')
+matrix_from_file = args.get('mtx_file', False)
 
 cnt_r2d = vecs.bow.r2d
 lda_model_fn = clt.lda.model

@@ -1,5 +1,5 @@
 import params
-from params import base,args_,clt,vecs
+from params import base,args,clt,vecs
 import utils
 import count_matrix_builder as bow_builder
 
@@ -14,8 +14,8 @@ def main():
   params.load_model_dir( "model_drift/")
   params.load_names()
 
-  timeslice_size = int(args_.get('timeslice_size', 600))
-  min_freq = int(args_.get('min_freq', 800))
+  timeslice_size = int(args.get('timeslice_size', 600))
+  min_freq = int(args.get('min_freq', 800))
 
   row2lab = list()
 

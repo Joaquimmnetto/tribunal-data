@@ -3,7 +3,7 @@ from gensim.matutils import Scipy2Corpus
 
 import utils
 #import args_proc as args
-from params import args_, vecs, clt
+from params import args, vecs, clt
 
 
 
@@ -14,8 +14,8 @@ def lda_topic_discovery(corpus, id2word, num_topics):
 
 
 def main():
-    num_topics = int(args_.get("num_topics", 15))
-    analysis = bool(args_.get("analysis", False))
+    num_topics = int(args.get("num_topics", 15))
+    analysis = bool(args.get("analysis", False))
 
     print("Loading bow matrix:")
     spy_mat, id2word = utils.load_spy_matrix(vecs.bow.mtx.format(0), vecs.bow.vocab)

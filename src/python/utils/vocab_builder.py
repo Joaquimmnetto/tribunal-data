@@ -2,10 +2,10 @@ import datetime
 import pickle
 import sys
 
-from params import args_
+from params import args
 #import args_proc as args
 
-min_freq = int(args_.get('min_freq', 150))
+min_freq = int(args.get('min_freq', 150))
 
 
 def save_out(vocab_freq, words, vocab_freq_fn, words_fn):

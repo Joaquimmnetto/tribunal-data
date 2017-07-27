@@ -3,16 +3,21 @@ from pprint import pprint
 
 import scipy.io
 import numpy as np
-from matplotlib import pylab
+from matplotlib import pylab,pyplot
+
 from gensim.models.doc2vec import Doc2Vec
 from spherecluster import SphericalKMeans
+from bhtsne import tsne
 
 import sklearn
+import pandas as pd
+
+from ggplot import *
 from sklearn.cluster import AgglomerativeClustering
 
 from sil_metric import silhouette_score_block
 #import args_proc as args
-from params import args_, clt, vecs, model_dir
+from params import args, clt, vecs, model_dir
 import utils
 
 
@@ -26,12 +31,16 @@ def load_tfidf(data_fn):
 def load_d2v(data_fn):
   d2v_model = Doc2Vec.load(data_fn)
   d2v_model.init_sims(replace=True)
-  d2v_mat = np.array(d2v_model.docvecs)
+  d2v_mat = np.array(d2v_model.docvecs, dtype=np.float64)
+
+  d2v_mat = sklearn.preprocessing.normalize(d2v_mat, norm='max', copy=False)
+
   del d2v_model
   return d2v_mat
 
 
 def plot_2dmatrix(matrix, filename):
+
   pylab.cla()
   pylab.clf()
   pylab.bone()
@@ -51,26 +60,28 @@ def buckshot_smpl(data, num_cl):
 def buckshot(smpl_data, num_cl):
   labels = AgglomerativeClustering(n_clusters=num_cl, linkage='complete', affinity='cosine').fit_predict(smpl_data)
 
-  centers = [np.zeros(smpl_data.shape[1])] * num_cl
+  centers = np.zeros((num_cl,smpl_data.shape[1]))
   l, counts = np.unique(labels, return_counts=True)
   del l
   for label, data in zip(labels, smpl_data):
     centers[label] += data / counts[label]
 
-  return centers
+  return np.array(centers)
 
 
 def kmeans(data, centers, n_clusters):
   kmn_model = SphericalKMeans(n_clusters=n_clusters, init=centers)
+  #kmn_model = SphericalKMeans(n_clusters=n_clusters)
   labels = kmn_model.fit_predict(data)
-  return labels
+  kmn_centers = kmn_model.cluster_centers_
+  return labels, kmn_centers
 
 
 def do_clusterization(data, n_clusters):
   print("Applying aggl on subdata to imporove starting centers...")
   smpl = buckshot_smpl(data, n_clusters)
   centers = buckshot(smpl, n_clusters)
-  # centers = None
+
   print("Applying kmeans on the data")
   labels = kmeans(data, centers, n_clusters)
 
@@ -79,15 +90,15 @@ def do_clusterization(data, n_clusters):
 
 def silhouette_analysis(data, smpl_size):
   if smpl_size > 0:
-    sample = data[np.array(range(0, data.shape[0], int(data.shape[0] / smpl_size)))]
+    sample = data[np.random.choice(data.shape[0], size=smpl_size, replace=False), :]
   else:
     sample = data
-  print(sample.shape)
+
   silhouettes = []
   calinskis = []
   print("Testing silhouettes...")
-  for n_cl in range(2, 51, 1):
-    labels = do_clusterization(sample, n_cl)
+  for n_cl in range(2, 20, 1):
+    labels, centers = do_clusterization(sample, n_cl)
     print("Processing silhouette")
     sil = silhouette_score_block(sample, labels, metric='cosine', n_jobs=2)
     cal = sklearn.metrics.calinski_harabaz_score(sample, labels)
@@ -98,16 +109,32 @@ def silhouette_analysis(data, smpl_size):
     calinskis.append((n_cl, cal))
   return silhouettes, calinskis
 
+def plot_results(points, labels):
+
+  d2_points = tsne(points, dimensions=3,rand_seed= 1)
+
+  import matplotlib.pyplot as plt
+  from mpl_toolkits.mplot3d import Axes3D
+  fig = plt.figure()
+  ax = fig.add_subplot(111, projection='3d')
+  ax.scatter(d2_points[:, 0], d2_points[:, 1], d2_points[:, 2], c=labels)
+
+  #pyplot.scatter(d2_points[:, 0], d2_points[:, 1], c=labels)
+  pyplot.show()
+  pyplot.savefig("points.png")
+
 
 def main():
-  n_clusters = int(args_.get('n_clusters', 10))
-  sil_testing = bool(args_.get('sil_testing', False))
-  
+  n_clusters = int(args.get('n_clusters', 8))
+  sil_testing = bool(args.get('sil_testing', False))
+  sampling = bool(args.get('sampling', True))
+  smpl_size = int(args.get('smpl_size', 10000))
+
   print("Loading matrix...")
   data = load_d2v(vecs.d2v.mtx)
-  print(data.shape)
+
   if sil_testing:
-    smpl_size = 1000
+
     silhouettes, calinskis = silhouette_analysis(data, smpl_size)
     print("silhouettes:")
     pprint(silhouettes)
@@ -120,9 +147,18 @@ def main():
     plot_2dmatrix(calinskis, "smpl_calinskis_" + model_dir.replace('/', '#') + ".jpg")
 
   else:
-    labels = do_clusterization(np.random.choice(data, size=30000), n_clusters)
+    print("clustering...")
+    if sampling:
+      data = data[np.random.choice(data.shape[0], size=smpl_size, replace=False), :]
+      labels, kmn_centers = do_clusterization(data, n_clusters)
+
+      plot_results(data,labels)
+    else:
+      labels,kmn_centers = do_clusterization(data, n_clusters)
+
     print("Saving labels...")
     utils.save_pkl(clt.kmn.labels, labels.tolist())
+    utils.save_pkl(clt.kmn.r2d, labels.tolist())
 
 
 if __name__ == '__main__':

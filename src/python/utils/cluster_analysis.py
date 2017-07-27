@@ -2,15 +2,13 @@ from pprint import pprint
 import matplotlib.pyplot as plt
 from gensim.models import LdaMulticore
 
-from params import args_, clt, vecs
+from params import args, clt, vecs
 import utils
 import numpy as np
 import wordcloud
 
 
-
 print("Loading inputs")
-
 
 def save_wordclouds(weights, sufixo=""):
   for l, v in weights:
@@ -28,12 +26,7 @@ def save_wc(wordcloud, sufixo):
   plt.savefig('wc_' + sufixo + '.png')
 
 
-def main():
-  topic_probs = args_.get('topic_probs', 'False') == 'True'
-  #lda = args_.get('lda', 'True') == 'True'
-  nwords = int(args_.get('nwords', 100))
-  #n_groups = int(args_.get('n_groups', 10))
-
+def analysis_lda(topic_probs, nwords):
   if not topic_probs:
     print("Aggregating labels count")
     aggr_res = utils.load_obj(clt.lda.postprocess)
@@ -43,13 +36,25 @@ def main():
   else:
     print("Getting topics higest-prob. words")
     lda_model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)
-    labels_weight = group_tools.topic_words(lda_model, topn_words=nwords)
+    labels_weight = utils.topic_words(lda_model, topn_words=nwords)
+    groups_cont = []
+    topics_sum = []
+
+    return labels_weight, groups_cont, topics_sum
+
+
+def main():
+  topic_probs = args.get('topic_probs', 'False') == 'True'
+  lda = args.get('lda', 'True') == 'True'
+  nwords = int(args.get('nwords', 100))
+
+  labels_weight, groups_cont, topics_sum = analysis_lda(topic_probs,nwords)
 
   print("Applying idf on top", nwords, "words")
   # [(label,[(word,weight),...])]
   if nwords > 0:
     df = utils.load_obj(vecs.df)
-    lst_fwords = group_tools.groups_tfidf(labels_weight, df, num_words=nwords)
+    lst_fwords = utils.groups_tfidf(labels_weight, df, num_words=nwords)
   else:
     #
     lst_fwords = [(n, [(w, wht) for w, wht in sorted(ws, key=lambda v: v[1], reverse=True)]) for n, ws in

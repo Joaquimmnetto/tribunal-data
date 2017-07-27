@@ -8,7 +8,7 @@ from sklearn.decomposition import PCA
 from gensim.models import Doc2Vec
 from bhtsne import tsne
 
-from params import args_,vecs
+from params import args,vecs
 import utils
 
 
@@ -36,10 +36,10 @@ def lda_reduction(points):
   return pca.fit_transform(points)
 
 def main():
-  sample_size = args_.get("sample_size", 100000)
+  sample_size = args.get("sample_size", 100000)
 
   points = load_d2v_samples(sample_size)
-  d2_points = lda_reduction(points)
+  d2_points = tsne_reduction(points)
 
   print("Plotting results...")
   df_points = pd.DataFrame(d2_points,columns=["x","y"])

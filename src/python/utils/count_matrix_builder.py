@@ -2,7 +2,7 @@ import scipy.sparse
 import scipy.io
 from six import iteritems
 
-from params import args_, vecs, base
+from params import args, vecs, base
 import utils
 
 from gensim.corpora import Dictionary
@@ -10,10 +10,10 @@ from doc_iterator import DocIterator
 from sklearn.feature_extraction.text import CountVectorizer
 
 
-min_freq = int(args_.get('min_freq', 800))
-timeslice = int(args_.get('timeslice', 600))
-champs = args_.get("champs",'base/champs.txt')
-stwords = args_.get("stwords",'base/en_stopwords.txt')
+min_freq = int(args.get('min_freq', 800))
+timeslice = int(args.get('timeslice', 600))
+champs = args.get("champs", 'base/champs.txt')
+stwords = args.get("stwords", 'base/en_stopwords.txt')
 
 
 #champs = [champ.strip('\n').strip(' ').lower() for champ in open(args.champs)]
