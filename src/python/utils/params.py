@@ -12,9 +12,9 @@ def read_args(argv):
     args_[key_val[0]] = key_val[1]
   print(args_)
 
-def load_arg(arg, fname, dir=model_dir):
+def load_arg(arg, fname, _dir=model_dir):
   if arg not in args_.keys():
-    default_val = dir+"/"+fname
+    default_val = _dir+"/"+fname
     args_[arg] = default_val
   return args_[arg]
 
@@ -84,6 +84,7 @@ sys.path.append("../../../data/")
 
 base_dir = args_.get("base_dir", "../../../data/base/samples/")
 model_dir = load_model_dir(args_.get("model_dir", "../../../data/full/samples/"))
+print("Model dir:{0}",model_dir)
 
 base, vecs, clt = load_names()
 
