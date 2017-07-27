@@ -1,22 +1,25 @@
 import scipy.sparse
 import scipy.io
-import pickle
-import datetime
-import nltk
 from six import iteritems
+
+from params import args_, vecs, base
+import utils
 
 from gensim.corpora import Dictionary
 from doc_iterator import DocIterator
 from sklearn.feature_extraction.text import CountVectorizer
-import args_proc as args
 
-min_freq = int(args.params.get('min_freq', 800))
-timeslice = int(args.params.get('timeslice', 600))
 
-champs = [champ.strip('\n').strip(' ').lower() for champ in open(args.champs)]
-stwords = [sw.strip('\n').strip(' ').lower() for sw in open(args.stwords)] + champs
-with open(args.words, 'rb') as inp:
-  vocab_words = pickle.load(inp)
+min_freq = int(args_.get('min_freq', 800))
+timeslice = int(args_.get('timeslice', 600))
+champs = args_.get("champs",'base/champs.txt')
+stwords = args_.get("stwords",'base/en_stopwords.txt')
+
+
+#champs = [champ.strip('\n').strip(' ').lower() for champ in open(args.champs)]
+#stwords = [sw.strip('\n').strip(' ').lower() for sw in open(args.stwords)] + champs
+# with open(args.words, 'rb') as inp:
+#   vocab_words = pickle.load(inp)
 
 
 # vocab_words = [word for word in vocab_words if word not in stwords]
@@ -63,15 +66,13 @@ def build_cnt_matrix(chat_fn, corpus_fn, _timeslice = timeslice, _min_freq=min_f
 
 def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
   if row_doc is not None:
-    with open(row_doc_fn, 'wb') as output:
-      print("Saving row_doc")
-      pickle.dump(row_doc, output, protocol=2, fix_imports=True)
+    utils.save_pkl(row_doc_fn,row_doc)
+
   if vocab is not None:
-    with open(vocab_fn, 'wb') as output:
-      print("Saving vocab")
-      pickle.dump(vocab, output, protocol=2, fix_imports=True)
+    utils.save_pkl(vocab_fn, vocab)
+
   if matrix is not None:
-    n = args.n_matrixes
+    n = vecs.n_matrix
     for i in range(0, n):
       with open(matrix_fn.format(i), 'wb') as output:
         print("Saving matrix ", i)
@@ -79,19 +80,18 @@ def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
 
 
 def main():
-  # before = datetime.datetime.now()
   print("Building counting matrix")
-  docs, cnt_vocab, cnt_matrix = build_cnt_matrix(args.chat_parsed, args.corpus, -1)
+  docs, cnt_vocab, cnt_matrix = build_cnt_matrix(base.chat, base.corpus, -1)
   print(cnt_matrix.shape[0])
 
   print("Saving models...")
-  save_outp(docs, args.cnt_team_r2d,
-            cnt_vocab, args.cnt_team_vocab,
-            cnt_matrix, args.cnt_team)
+  save_outp(docs, vecs.bow.r2d,
+            cnt_vocab, vecs.bow.vocab,
+            cnt_matrix, vecs.bow.mtx)
 
 
 # print("Total time elapsed:", datetime.datetime.now() - before)
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)

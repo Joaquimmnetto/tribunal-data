@@ -1,4 +1,5 @@
-import args_proc as args
+#import args_proc as args
+
 import numpy as np
 from ggplot import *
 import pandas as pd
@@ -7,6 +8,9 @@ from sklearn.decomposition import PCA
 from gensim.models import Doc2Vec
 from bhtsne import tsne
 
+from params import args_,vecs
+import utils
+
 
 def load_bow_samples(sample_size):
   pass
@@ -14,8 +18,9 @@ def load_bow_samples(sample_size):
 
 def load_d2v_samples(sample_size):
   print("Loading model...")
-  d2v_model = args.load_obj(args.d2v_team, gensim_class=Doc2Vec)
-  r2d = args.load_obj(args.d2v_team_r2d)
+  d2v_model = utils.load_obj(vecs.d2v.mtx, gensim_class=Doc2Vec)
+  r2d = utils.load_obj(vecs.d2v.r2d)
+
   samples = np.random.choice(list(r2d.keys()), size=sample_size)
 
   return np.array([d2v_model.docvecs[int(index)] for index in samples],dtype=np.float64)
@@ -31,7 +36,7 @@ def lda_reduction(points):
   return pca.fit_transform(points)
 
 def main():
-  sample_size = args.params.get("sample_size", 100000)
+  sample_size = args_.get("sample_size", 100000)
 
   points = load_d2v_samples(sample_size)
   d2_points = lda_reduction(points)
@@ -44,7 +49,7 @@ def main():
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)
 
 
 

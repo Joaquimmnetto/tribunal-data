@@ -33,5 +33,5 @@ system.time({
 source("src/R/contamination.R")
 })
 system.time({
-#source("src/R/groups.R")
+source("src/R/groups.R")
 })

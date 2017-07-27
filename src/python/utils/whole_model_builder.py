@@ -1,38 +1,35 @@
-import args_proc as args
+#import args_proc as args
 import count_matrix_builder as bow_builder
 import aggregate_clusters as summarize
 import lda_builder
-import group_tools
 import numpy as np
 from gensim.matutils import Scipy2Corpus
 from pprint import pprint
 
-ntop_words = args.params.get('ntop_words', 100)
-num_topics = args.params.get('num_topics', 10)
-build_models = args.params.get('build_models', True)
-timeslice_size = int(args.params.get('timeslice_size', 600))
-top_x = int(args.params.get('top_x', 10))
-base_model = args.params.get('base_model', 'team')
-matrix_from_file = args.params.get('mtx_file', False)
+from params import args_,vecs,clt,base
+import utils
 
-if base_model == 'team':
-  cnt_r2d = args.cnt_team_r2d
-  lda_model_fn = args.lda_team
-  lda_labels = args.lda_team_labels
-  aggr_lda = args.aggr_lda_teams
-else:
-  cnt_r2d = args.cnt_time_r2d
-  lda_model_fn = args.lda_time
-  lda_labels = args.lda_time_labels
-  aggr_lda = args.aggr_lda_time
+ntop_words = args_.get('ntop_words', 100)
+num_topics = args_.get('num_topics', 10)
+build_models = args_.get('build_models', False)
+timeslice_size = int(args_.get('timeslice_size', 600))
+top_x = int(args_.get('top_x', 10))
+base_model = args_.get('base_model', 'team')
+matrix_from_file = args_.get('mtx_file', False)
+
+cnt_r2d = vecs.bow.r2d
+lda_model_fn = clt.lda.model
+lda_labels = clt.lda.labels
+aggr_lda = clt.lda.postprocess
 
 
 def main():
+
   if build_models:
     print('Using model:',base_model)
     print("Building bow matrix")
-    row2doc, bow_vocab, bow_matrix = bow_builder.build_cnt_matrix(args.chat_parsed,
-                                                                  args.corpus,
+    row2doc, bow_vocab, bow_matrix = bow_builder.build_cnt_matrix(base.chat,
+                                                                  base.corpus,
                                                                   _min_freq=800,
                                                                   _timeslice=timeslice_size)
 
@@ -40,7 +37,6 @@ def main():
     bow_builder.save_outp(row2doc,model_drift+"row2doc_2.pkl",
                          bow_vocab,model_drift+"bow_vocab_2.pkl",
                          bow_matrix, model_drift+"bow_drift_2_{0}.mm")
-    return
 
     print("Calculating df")
     df = build_df(bow_matrix, bow_vocab)
@@ -55,21 +51,21 @@ def main():
 
     print("Salvando os resultados encontrados...")
     lda_model.save(lda_model_fn)
-    args.save_pkl(lda_labels, row2lab)
-    args.save_pkl(cnt_r2d, row2doc)
-    args.save_pkl(args.idf, df)
-    args.save_pkl(aggr_lda, dict({'topics_words': topics_words,
+    utils.save_pkl(lda_labels, row2lab)
+    utils.save_pkl(cnt_r2d, row2doc)
+    utils.save_pkl(vecs.df, df)
+    utils.save_pkl(aggr_lda, dict({'topics_words': topics_words,
                                   'topics_sum': topics_sum,
                                   'topics_count': topics_count})
                   )
   else:
     print("Loading Results:")
-    aggr_results = args.load_obj(aggr_lda)
+    aggr_results = utils.load_obj(aggr_lda)
     topics_words = aggr_results['topics_words']
     topics_sum = aggr_results['topics_sum']
     topics_count = aggr_results['topics_count']
     print("Loading document frequency")
-    df = args.load_obj(args.idf)
+    df = utils.load_obj(vecs.df)
 
   print("Printing the analysis results... ")
   analyze_clusters(topics_words, topics_sum, topics_count, df)
@@ -82,7 +78,7 @@ def build_df(bow_matrix, bow_vocab):
 
 
 def analyze_clusters(topics_words, topics_sum, topics_count, df):
-  lst_fwords = group_tools.groups_tfidf(topics_words, df, num_words=ntop_words)
+  lst_fwords = utils.groups_tfidf(topics_words, df, num_words=ntop_words)
 
   print("-----------------Results----------------------")
   print("")
@@ -102,4 +98,4 @@ def analyze_clusters(topics_words, topics_sum, topics_count, df):
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)

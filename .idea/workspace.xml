@@ -2,9 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1506e283-d04f-4568-8f15-94b36b5b7167" name="Default" comment="Finalmente .gitignore!">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/python/context_corrector/#context_corrector.#" afterPath="$PROJECT_DIR$/src/python/context_corrector/correct_errors.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/utils/params.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/python/utils/utils.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/full/placeholder" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/results_/.lda_ts_15_words.txt.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/results_/lda_ts_15_words.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/#graphs.R#" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/--args" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/final_transformations.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/groups (cópia).R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/load_tdm.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/peformance_analysis.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/perguntas.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/process_chat.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/R/text_transformations.R" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/aggregate_clusters_teams.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/args_proc_new.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/bigram_builder.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/cluster_analysis_team.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/group_tools.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/hdp_builder.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/python/utils/lsi_builder.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/TribunalDB.iml" afterPath="$PROJECT_DIR$/.idea/TribunalDB.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shell/sentgen.sh" afterPath="$PROJECT_DIR$/src/shell/sentgen.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/R/transformations.R" afterPath="$PROJECT_DIR$/src/R/transformations.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" afterPath="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/chat_parser.py" afterPath="$PROJECT_DIR$/src/python/utils/chat_parser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" afterPath="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/d2v_model_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/d2v_model_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/doc_iterator.py" afterPath="$PROJECT_DIR$/src/python/utils/doc_iterator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/drift_analysis.py" afterPath="$PROJECT_DIR$/src/python/utils/drift_analysis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/err_dict_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/err_dict_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/generate_samples.py" afterPath="$PROJECT_DIR$/src/python/utils/generate_samples.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/idfs_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/idfs_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" afterPath="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/lda_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/lda_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" afterPath="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/vizualize_points.py" afterPath="$PROJECT_DIR$/src/python/utils/vizualize_points.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/vocab_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/vocab_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/w2v_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/w2v_builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" afterPath="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
     </list>
     <ignored path="TribunalDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,114 +65,7 @@
     <favorites_list name="TribunalDB" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="correct_errors.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/python/context_corrector/correct_errors.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="context_corrector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/python/context_corrector/context_corrector.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pp.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/pp.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="telegram_sentgen.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/telegram_sentgen.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="w2v_builder.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/python/context_corrector/w2v_builder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="text_tokenizer.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/text_tokenizer.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sentgen.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/sentgen.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build_vocab.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/shell/build_vocab.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="csv_text_extractor.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/csv_text_extractor.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sort.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shell/sort.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -145,31 +80,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/python/preprocessing.py" />
-        <option value="$PROJECT_DIR$/src/python/build_w2v.py" />
-        <option value="$PROJECT_DIR$/src/python/process_corpus.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/producer.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/process_tar.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/read_tar.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/consumer.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/match_producer.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/corpus_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/process_chat.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/process_match.py" />
-        <option value="$PROJECT_DIR$/src/python/json_pp/process_players.py" />
-        <option value="$PROJECT_DIR$/src/python/pp.sh" />
-        <option value="$PROJECT_DIR$/players.csv" />
-        <option value="$PROJECT_DIR$/src/python/process_chat.py" />
-        <option value="$PROJECT_DIR$/src/python/matches_producer.py" />
-        <option value="$PROJECT_DIR$/src/python/processor.py" />
-        <option value="$PROJECT_DIR$/src/python/process_match.py" />
-        <option value="$PROJECT_DIR$/src/python/process_players.py" />
-        <option value="$PROJECT_DIR$/src/python/consumer.py" />
-        <option value="$PROJECT_DIR$/src/python/corpus_builder.py" />
-        <option value="$PROJECT_DIR$/src/python/neigh_sparser.py" />
-        <option value="$PROJECT_DIR$/src/python/context_trimmer.py" />
-        <option value="$PROJECT_DIR$/src/python/corpus_trimmer.py" />
-        <option value="$PROJECT_DIR$/src/python/context_builder.py" />
         <option value="$PROJECT_DIR$/src/python/vocab_builder.py" />
         <option value="$PROJECT_DIR$/src/python/words_builder.py" />
         <option value="$PROJECT_DIR$/src/python/sentence_generator/words_builder.py" />
@@ -178,7 +88,6 @@
         <option value="$PROJECT_DIR$/src/python/corpus/corpus_builder.py" />
         <option value="$PROJECT_DIR$/src/python/corpus/classes/matches_producer.py" />
         <option value="$PROJECT_DIR$/src/python/corpus/classes/consumer.py" />
-        <option value="$PROJECT_DIR$/src/shell/pp.sh" />
         <option value="$PROJECT_DIR$/src/shell/sentence_generator.sh" />
         <option value="$PROJECT_DIR$/src/shell/build_vocab.sh" />
         <option value="$PROJECT_DIR$/src/shell/uni_text_tokenizer.sh" />
@@ -190,20 +99,45 @@
         <option value="$PROJECT_DIR$/src/python/sentence_generator/vocab_builder.py" />
         <option value="$PROJECT_DIR$/src/python/sentence_generator/context_builder.py" />
         <option value="$PROJECT_DIR$/src/shell/csv_text_extractor.sh" />
-        <option value="$PROJECT_DIR$/../../Python35/Lib/site-packages/sklearn/utils/fixes.py" />
+        <option value="$USER_HOME$/Python35/Lib/site-packages/sklearn/utils/fixes.py" />
         <option value="$PROJECT_DIR$/src/python/context_corrector/w2v_builder.py" />
         <option value="$PROJECT_DIR$/src/shell/cont_corrector.sh" />
         <option value="$PROJECT_DIR$/src/python/context_corrector/context_corrector.py" />
         <option value="$PROJECT_DIR$/src/python/context_corrector/correct_errors.py" />
         <option value="$PROJECT_DIR$/src/shell/sentgen.sh" />
+        <option value="$PROJECT_DIR$/src/shell/pp.sh" />
+        <option value="$PROJECT_DIR$/src/python/utils/args_proc_new.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/bigram_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/chat_parser.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/d2v_model_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/doc_iterator.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/drift_analysis.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/err_dict_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/generate_samples.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/group_tools.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/utils.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/idfs_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/kmn_clustering.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/sil_metric.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/vizualize_points.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/vocab_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/w2v_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/lda_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/cluster_analysis.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/aggregate_clusters.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/count_matrix_builder.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/params.py" />
+        <option value="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="86" />
-    <option name="y" value="-8" />
-    <option name="width" value="1842" />
-    <option name="height" value="1096" />
+    <option name="y" value="27" />
+    <option name="width" value="1920" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -276,117 +210,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="shell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shell" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sentence_generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="context_corrector" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tribunaldb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="context_corrector" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -403,6 +227,11 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/python/utils" />
+      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python" />
+      <recent name="C:\Dev\Python-Workspace\TribunalDB\datasets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\corpus" />
       <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\corpus_builder" />
@@ -410,12 +239,8 @@
       <recent name="C:\Dev\Python-Workspace\tribunaldb" />
       <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python\sentence_generator" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Dev\Python-Workspace\tribunaldb\src\python" />
-      <recent name="C:\Dev\Python-Workspace\TribunalDB\datasets" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.context_corrector">
+  <component name="RunManager" selected="Python.whole_model_builder">
     <configuration default="false" name="context_corrector" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -450,23 +275,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="corpus_builder" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python/corpus" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TribunalDB" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/corpus/corpus_builder.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="process_telegram_msgs" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -497,6 +305,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="TribunalDB" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/context_corrector/w2v_builder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="whole_model_builder" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TribunalDB" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/utils/whole_model_builder.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -649,17 +474,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.context_corrector" />
       <item index="1" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
-      <item index="2" class="java.lang.String" itemvalue="Python.corpus_builder" />
-      <item index="3" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
-      <item index="4" class="java.lang.String" itemvalue="Python.w2v_builder" />
+      <item index="2" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
+      <item index="3" class="java.lang.String" itemvalue="Python.w2v_builder" />
+      <item index="4" class="java.lang.String" itemvalue="Python.whole_model_builder" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.context_corrector" />
-        <item index="1" class="java.lang.String" itemvalue="Python.w2v_builder" />
-        <item index="2" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
-        <item index="3" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
-        <item index="4" class="java.lang.String" itemvalue="Python.corpus_builder" />
+        <item index="0" class="java.lang.String" itemvalue="Python.whole_model_builder" />
+        <item index="1" class="java.lang.String" itemvalue="Python.context_corrector" />
+        <item index="2" class="java.lang.String" itemvalue="Python.w2v_builder" />
+        <item index="3" class="java.lang.String" itemvalue="Python.telegram_corpus_builder" />
+        <item index="4" class="java.lang.String" itemvalue="Python.process_telegram_msgs" />
       </list>
     </recent_temporary>
   </component>
@@ -697,26 +522,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="86" y="-8" width="1842" height="1096" extended-state="6" />
+    <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1845898" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18407173" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24369748" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33125648" sideWeight="0.50332594" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32705098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32878152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3059867" sideWeight="0.49667406" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31879544" sideWeight="0.4978094" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.4978094" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39356178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3067227" sideWeight="0.49667406" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281412" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39356178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -758,234 +583,79 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="136" />
+      <option name="time" value="137" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Python35/Lib/random.py" />
-    <entry file="file://$USER_HOME$/Python35/Lib/site-packages/numpy/matrixlib/defmatrix.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/corpus_trimmed.txt" />
-    <entry file="file://$PROJECT_DIR$/src/python/context_trimmer.py" />
-    <entry file="file://$PROJECT_DIR$/src/python/context_build2er.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydevd_bundle/pydevd_vars.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="249" column="0" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/context_sparser.py" />
-    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-342469249/builtins.py" />
-    <entry file="file://$USER_HOME$/Python35/Lib/codecs.py" />
-    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/bin/placeholder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/bin/placeholder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/placeholder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/process_match.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="24" selection-start-line="10" selection-start-column="8" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/matches_producer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5321">
-          <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/process_chat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/processor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/process_players.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/encodings/cp1252.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/consumer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/usr_corpora/777000.crp" />
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/usr_corpora/20415700.crp" />
-    <entry file="file://$PROJECT_DIR$/src/shell/uni_text_tokenizer.sh" />
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/corpus_trimmer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/corpus_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1118">
-          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/telegram_corpus_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/corpus/classes/process_telegram_msgs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/tmp/token.tmp" />
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/words_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/unicode_tokenizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/unicode_tokenizer.py" />
     <entry file="file://$PROJECT_DIR$/src/shell/tmp/vocab.tmp" />
-    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/site-packages/nltk/metrics/distance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="57" column="4" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Python35/Lib/site-packages/nltk/metrics/distance.py" />
     <entry file="file://$PROJECT_DIR$/data/corpus/sample_chat_corpus.txt" />
     <entry file="file://$PROJECT_DIR$/src/shell/sample_chat_corpus_tkn.txt" />
-    <entry file="file://$PROJECT_DIR$/data/csv/sample_chat.csv">
+    <entry file="file://$PROJECT_DIR$/data/csv/sample_chat.csv" />
+    <entry file="file://$USER_HOME$/Python35/Lib/site-packages/sklearn/utils/fixes.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/vocab_builder.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/context_builder.py" />
+    <entry file="file://$PROJECT_DIR$/src/shell/cont_corrector.sh" />
+    <entry file="file://$PROJECT_DIR$/src/shell/telegram_sentgen.sh" />
+    <entry file="file://$PROJECT_DIR$/src/shell/text_tokenizer.sh" />
+    <entry file="file://$PROJECT_DIR$/src/shell/sort.sh" />
+    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/w2v_builder.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/context_corrector.py" />
+    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/correct_errors.py" />
+    <entry file="file://$PROJECT_DIR$/src/shell/sentgen.sh" />
+    <entry file="file://$PROJECT_DIR$/src/shell/csv_text_extractor.sh" />
+    <entry file="file://$PROJECT_DIR$/src/shell/build_vocab.sh" />
+    <entry file="file://$PROJECT_DIR$/src/python/utils/args_proc_new.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-775">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters_teams.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="47" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Python35/Lib/site-packages/sklearn/utils/fixes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="405" column="17" selection-start-line="405" selection-start-column="17" selection-end-line="405" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/vocab_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="56" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/sentence_generator/context_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="56" column="16" selection-start-line="56" selection-start-column="16" selection-end-line="56" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/cont_corrector.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/telegram_sentgen.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/bigram_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+        <state relative-caret-position="15">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/text_tokenizer.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis_team.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state relative-caret-position="-315">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shell/pp.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="2" />
+        <state relative-caret-position="450">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/sort.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/group_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/hdp_builder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -993,57 +663,233 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/w2v_builder.py">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/lsi_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/sil_metric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#115#149#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/context_corrector.py">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/pyclust_kmeans.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        <state relative-caret-position="375">
+          <caret line="25" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/params_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="869">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="59" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/neigh_matrix_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/lda_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/kmn_clustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="112" column="11" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/idfs_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="2" selection-end-line="21" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/generate_samples.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1650">
+          <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/python/context_corrector/correct_errors.py">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/err_dict_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="240">
+          <caret line="28" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/drift_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/doc_iterator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/d2v_model_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/cluster_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/chat_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/whole_model_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-591">
+          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+          <folding>
+            <element signature="e#26#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/w2v_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/count_matrix_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="849">
+          <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/vocab_builder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/vizualize_points.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="51" column="7" selection-start-line="51" selection-start-column="7" selection-end-line="51" selection-end-column="7" />
+          <folding>
+            <element signature="e#27#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/python/utils/unicode_tokenizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/sentgen.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/tfidf_matrix_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="390">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/csv_text_extractor.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/params.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="288">
+          <caret line="56" column="35" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shell/build_vocab.sh">
+    <entry file="file://$PROJECT_DIR$/src/python/utils/aggregate_clusters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="384">
+          <caret line="94" column="83" selection-start-line="94" selection-start-column="76" selection-end-line="94" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

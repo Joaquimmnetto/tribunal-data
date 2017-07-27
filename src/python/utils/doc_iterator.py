@@ -1,5 +1,4 @@
 import csv
-from pprint import pprint
 
 
 class DocIterator(object):

@@ -1,5 +1,8 @@
-import args_proc as args
+from params import base,args_
+import utils
+
 import pandas
+
 
 def parse_time(timestamp):
   if type(timestamp) is str:
@@ -11,11 +14,9 @@ def parse_time(timestamp):
 
 
 def main():
-  chat_file = open(args.chat, 'r')
-  outp_file = open(args.chat_parsed, 'w')
-  # chat_df = pandas.read_csv(args.chat, usecols=range(5),
-  #                           names=['case', 'match', 'relation.offender', 'champion', 'timestamp'],
-  #                           header=None, error_bad_lines=False, warn_bad_lines=True, skip_blank_lines=True)
+  chat_base = args_.get('chat_base', 'base/chat.csv')
+  chat_file = open(chat_base, 'r')
+  outp_file = open(base.chat, 'w')
 
   chat_chunks = pandas.read_table(chat_file, chunksize=10000000, lineterminator='\n', quotechar='\"', sep=',',
                                   usecols=range(5),
@@ -31,4 +32,4 @@ def main():
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)

@@ -6,9 +6,10 @@ from doc_iterator import DocIterator
 from count_matrix_builder import CountDocIterator
 import count_matrix_builder
 
-import args_proc as args
+from params import args_,base,vecs
+import utils
 
-min_freq = int(args.params.get('min_freq', 150))
+min_freq = int(args_.get('min_freq', 150))
 
 
 def build_tfidf_matrix(chat_fn, corpus_fn):
@@ -21,13 +22,15 @@ def build_tfidf_matrix(chat_fn, corpus_fn):
 
 def main():
   print("Building tf-idf matrix")
-  docs, vocab, tfidf_matrix = build_tfidf_matrix(args.chat, args.corpus)
+  docs, vocab, tfidf_matrix = build_tfidf_matrix(base.chat, base.corpus)
   print("Saving models...")
-  count_matrix_builder.save_outp(row_doc=docs, row_doc_fn=args.tfidf_team_r2d,
-                                 vocab=vocab, vocab_fn=args.tfidf_team_vocab,
+  #TODO refatorar isso
+  count_matrix_builder.save_outp(row_doc=docs, row_doc_fn=vecs.tfidf.r2d,
+                                 vocab=vocab, vocab_fn=vecs.tfidf.vocab,
                                  matrix=None, matrix_fn=None)
-  scipy.io.mmwrite(args.tfidf_team, tfidf_matrix, field='real', precision=4)
+  #TODO dividir essa matriz.
+  # scipy.io.mmwrite(args.tfidf_team, tfidf_matrix, field='real', precision=4)
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)

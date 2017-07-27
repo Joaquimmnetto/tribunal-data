@@ -55,6 +55,14 @@ vignettes/*.pdf
 *.bin
 *.mm
 
+#Model Files
+*.gsm
+*.mtx
+*.bin
+*.state
+*.projection
+*.index
+
 #-----------------------Python--------------
 
 # Byte-compiled / optimized / DLL files

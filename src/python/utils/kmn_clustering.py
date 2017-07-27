@@ -11,10 +11,12 @@ import sklearn
 from sklearn.cluster import AgglomerativeClustering
 
 from sil_metric import silhouette_score_block
-import args_proc as args
+#import args_proc as args
+from params import args_, clt, vecs, model_dir
+import utils
 
-n_clusters = int(args.params.get('n_clusters', 4))
-sil_testing = bool(args.params.get('sil_testing', False))
+n_clusters = int(args_.get('n_clusters', 4))
+sil_testing = bool(args_.get('sil_testing', False))
 
 
 def load_tfidf(data_fn):
@@ -65,7 +67,7 @@ def kmeans(data, centers, n_clusters):
   return labels
 
 
-def clustering(data, n_clusters):
+def do_clusterization(data, n_clusters):
   print("Applying aggl on subdata to imporove starting centers...")
   smpl = buckshot_smpl(data, n_clusters)
   centers = buckshot(smpl, n_clusters)
@@ -86,7 +88,7 @@ def silhouette_analysis(data, smpl_size):
   calinskis = []
   print("Testing silhouettes...")
   for n_cl in range(2, 51, 1):
-    labels = clustering(sample, n_cl)
+    labels = do_clusterization(sample, n_cl)
     print("Processing silhouette")
     sil = silhouette_score_block(sample, labels, metric='cosine', n_jobs=2)
     cal = sklearn.metrics.calinski_harabaz_score(sample, labels)
@@ -100,7 +102,7 @@ def silhouette_analysis(data, smpl_size):
 
 def main():
   print("Loading matrix...")
-  data = load_d2v(args.d2v_team)
+  data = load_d2v(vecs.d2v.mtx)
   print(data.shape)
   if sil_testing:
     smpl_size = 1000
@@ -112,14 +114,14 @@ def main():
     print("calinskis:")
     pprint(calinskis)
 
-    plot_2dmatrix(silhouettes, "smpl_silhouettes_" + args.model_dir.replace('/', '#') + ".jpg")
-    plot_2dmatrix(calinskis, "smpl_calinskis_" + args.model_dir.replace('/', '#') + ".jpg")
+    plot_2dmatrix(silhouettes, "smpl_silhouettes_" + model_dir.replace('/', '#') + ".jpg")
+    plot_2dmatrix(calinskis, "smpl_calinskis_" + model_dir.replace('/', '#') + ".jpg")
 
   else:
-    labels = clustering(data, n_clusters)
+    labels = do_clusterization(data, n_clusters)
     print("Saving labels...")
-    args.save_pkl(args.kmn_team_labels.format(n_clusters), labels.tolist())
+    utils.save_pkl(clt.kmn.labels, labels.tolist())
 
 
 if __name__ == '__main__':
-  args.measure_time(main)
+  utils.measure_time(main)

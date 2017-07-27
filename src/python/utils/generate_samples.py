@@ -1,20 +1,14 @@
 import csv
 import datetime
-import threading
+import multiprocessing
 from multiprocessing import Queue
-import args_proc as args
+import params
 import traceback
 
-smpl_dir = args.model_dir + "/samples"
 
-matches_smpl_fn = smpl_dir + "/matches.csv"
-players_smpl_fn = smpl_dir + "/players.csv"
-chat_smpl_fn = smpl_dir + "/chat.csv"
-
-
-class NextMatchWr(threading.Thread):
+class NextMatchWr(multiprocessing.Process):
   def __init__(self, csv_rd, csv_wr):
-    threading.Thread.__init__(self)
+    multiprocessing.Process.__init__(self)
     self.i = 0
     self.matches = Queue()
     self.mstop = False
@@ -77,16 +71,7 @@ class NextMatchWr(threading.Thread):
       traceback.print_exc()
 
 
-players = csv.reader(open(args.players))
-chat = csv.reader(open(args.chat))
-players_smpl = csv.writer(open(players_smpl_fn, 'w'))
-chat_smpl = csv.writer(open(chat_smpl_fn, 'w'))
-
-players_cons = NextMatchWr(players, players_smpl)
-chat_cons = NextMatchWr(chat, chat_smpl)
-
-
-def create_samples(matches_smpl_fn):
+def create_samples(matches_smpl_fn, players_cons, chat_cons):
   with open(matches_smpl_fn) as inp:
     matches = csv.reader(inp)
     for row in matches:
@@ -102,13 +87,32 @@ def create_samples(matches_smpl_fn):
 
 
 def main():
+  smpl_dir = params.base_dir + "/samples"
+
+  players_fn = params.base_dir + "/players.csv"
+  chat_fn = params.base_dir + "/chat.csv"
+
+  matches_smpl_fn = smpl_dir + "/matches.csv"
+  players_smpl_fn = smpl_dir + "/players.csv"
+  chat_smpl_fn = smpl_dir + "/chat.csv"
+
+  players = csv.reader(open(players_fn))
+  chat = csv.reader(open(chat_fn))
+
+  players_smpl = csv.writer(open(players_smpl_fn, 'w'))
+  chat_smpl = csv.writer(open(chat_smpl_fn, 'w'))
+
+  players_cons = NextMatchWr(players, players_smpl)
+  chat_cons = NextMatchWr(chat, chat_smpl)
+
   before = datetime.datetime.now()
   print("This program requires that the inputs be sorted by case and match")
   print("Starting consumers thread...")
   players_cons.start()
   chat_cons.start()
+
   print("Starting the sample creation...")
-  create_samples(matches_smpl_fn)
+  create_samples(matches_smpl_fn, players_cons, chat_cons)
   print("Subtotal time elapsed:", datetime.datetime.now() - before)
 
   print("Waiting for consumers to finish...")
