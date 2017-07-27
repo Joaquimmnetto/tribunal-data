@@ -15,8 +15,7 @@ from sil_metric import silhouette_score_block
 from params import args_, clt, vecs, model_dir
 import utils
 
-n_clusters = int(args_.get('n_clusters', 4))
-sil_testing = bool(args_.get('sil_testing', False))
+
 
 
 def load_tfidf(data_fn):
@@ -101,6 +100,9 @@ def silhouette_analysis(data, smpl_size):
 
 
 def main():
+  n_clusters = int(args_.get('n_clusters', 10))
+  sil_testing = bool(args_.get('sil_testing', False))
+  
   print("Loading matrix...")
   data = load_d2v(vecs.d2v.mtx)
   print(data.shape)
