@@ -120,7 +120,7 @@ def main():
     plot_2dmatrix(calinskis, "smpl_calinskis_" + model_dir.replace('/', '#') + ".jpg")
 
   else:
-    labels = do_clusterization(data, n_clusters)
+    labels = do_clusterization(np.random.choice(data, size=30000), n_clusters)
     print("Saving labels...")
     utils.save_pkl(clt.kmn.labels, labels.tolist())
 
