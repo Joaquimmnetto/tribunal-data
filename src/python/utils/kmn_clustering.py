@@ -118,8 +118,7 @@ def plot_results(points, labels):
   fig = plt.figure()
   ax = fig.add_subplot(111, projection='3d')
   ax.scatter(d2_points[:, 0], d2_points[:, 1], d2_points[:, 2], c=labels)
-
-  #pyplot.scatter(d2_points[:, 0], d2_points[:, 1], c=labels)
+  
   pyplot.show()
   pyplot.savefig("points.png")
 
@@ -158,7 +157,7 @@ def main():
 
     print("Saving labels...")
     utils.save_pkl(clt.kmn.labels, labels.tolist())
-    utils.save_pkl(clt.kmn.r2d, labels.tolist())
+    utils.save_pkl(clt.kmn.r2l, labels.tolist())
 
 
 if __name__ == '__main__':
