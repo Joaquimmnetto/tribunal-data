@@ -36,7 +36,7 @@ def save_outp(d2v_model, row_doc):
 
 
 def main():
-  min_freq = int(args.get('min_freq', 5))
+  min_freq = int(args.get('min_freq', 800))
   before = datetime.datetime.now()
 
   print("Building d2v model")

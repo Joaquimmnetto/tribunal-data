@@ -4,10 +4,45 @@ from gensim.corpora import MmCorpus
 from gensim.matutils import Scipy2Corpus
 import numpy as np
 import utils
+
+from concurrent.future import ProcessPoolExecutor
+
 from params import vecs,clt
+from consumer import Consumer
 
 
-def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn):
+def aggregate_matrix(bow_mat, lda_model, start_row, vocab):
+  labels = range(0, lda_model.num_topics)
+  labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
+  topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
+  topics_count = dict([(label, 0) for label in labels])
+  r2l = dict()
+
+  row = start_row
+  for bow in bow_mat:      
+    topics = lda_model[bow]
+    first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
+    r2l[row] = first_topic
+    labels_sum[first_topic] += sparse2full(bow, len(vocab))
+    topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
+    topics_count[first_topic] += 1
+    row += 1
+  del bow_mat
+
+  return r2l, labels_sum, topics_sum, topics_count
+
+def append_results(promise, r2l, labels_sum, topics_sum, topics_count):
+  _r2l,_ls,_ts,_tc = promise.result()
+  r2l.update(_r2l)
+  for label in labels_sum.keys():
+    labels_sum[label] += _ls[label]
+    topics_sum[label] += _ts[label]
+    topics_count[label] += _tc[label]
+  
+
+
+
+def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn, n_workers=3):
   vocab = utils.load_obj(vocab_fn)
   lda_model = utils.load_obj(lda_fn, gensim_class=LdaMulticore)
 
@@ -18,19 +53,20 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn):
   r2l = dict()
   row = 0
 
+  promises = list()
+
   for part in range(0, vecs.n_matrix):
 
     scipy_mat = utils.load_obj(bow_mat_fn.format(part))
     bow_mat = Scipy2Corpus(scipy_mat.tocsc())
-    for bow in bow_mat:
-      topics = lda_model[bow]
-      first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
-      r2l[row] = first_topic
-      labels_sum[first_topic] += sparse2full(bow, len(vocab))
-      topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-      topics_count[first_topic] += 1
-      row += 1
-    del bow_mat
+    
+    start_row = part * scipy_mat.shape[0]
+    with ProcessPoolExecutor(max_workers=n_workers) as exec:
+      promise = exec.submit(aggregate_matrix, bow_mat, lda_model, start_row, vocab)
+      promises.append(promise)
+  
+    for promise in promises:
+      append_results(promise, r2l, labels_sum, topics_sum, topics_count)
 
   mat_len = sum(topics_count.values())
 
