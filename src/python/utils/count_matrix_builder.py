@@ -12,12 +12,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 min_freq = int(args.get('min_freq', 800))
 timeslice = int(args.get('timeslice', 600))
-champs = args.get("champs", 'base/champs.txt')
-stwords = args.get("stwords", 'base/en_stopwords.txt')
+champs_fn = args.get("champs", 'base/champs.txt')
+stwords_fn = args.get("stwords", 'base/en_stopwords.txt')
 
 
-#champs = [champ.strip('\n').strip(' ').lower() for champ in open(args.champs)]
-#stwords = [sw.strip('\n').strip(' ').lower() for sw in open(args.stwords)] + champs
+champs = [champ.strip('\n').strip(' ').lower() for champ in open(champs_fn)]
+stwords = [sw.strip('\n').strip(' ').lower() for sw in open(stwords_fn)] + champs
 # with open(args.words, 'rb') as inp:
 #   vocab_words = pickle.load(inp)
 
