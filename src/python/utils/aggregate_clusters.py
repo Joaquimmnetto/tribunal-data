@@ -2,6 +2,10 @@ from gensim.models import LdaMulticore
 from gensim.matutils import sparse2full
 from gensim.corpora import MmCorpus
 from gensim.matutils import Scipy2Corpus
+from gensim.models import Doc2Vec
+
+import sklearn.metrics.pairwise as metrics
+
 import numpy as np
 import utils
 
@@ -10,8 +14,31 @@ from concurrent.future import ProcessPoolExecutor
 from params import vecs,clt
 from consumer import Consumer
 
+def aggregate_kmn(bow_mat, points, clusters, centers, start_row, vocab):
+  labels = sorted(list(set(clusters))
+  labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
+  topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
+  topics_count = dict([(label, 0) for label in labels])
+  r2l = dict()
+  
+  bow_r2d = utils.load_obj(vecs.bow.r2d)
+  d2v_r2d = utils.load_obj(vecs.d2v.r2d)
+  
+  row = start_row
+  for bow in bow_mat:    
+    assert bow_r2d[row] == d2v_r2d[row]    
+    lb = clusters[row]    
+    r2l[row] = lb
+    labels_sum[lb] += sparse2full(bow, len(vocab))
+    topics_sum[lb] += metrics.cosine_similarity(centers[lb], points[lb])[0,0]
+    topics_count[lb] += 1
+    row += 1
+  del bow_mat
 
-def aggregate_matrix(bow_mat, lda_model, start_row, vocab):
+  return r2l, labels_sum, topics_sum, topics_count
+
+
+def aggregate_lda(bow_mat, lda_model, start_row, vocab):
   labels = range(0, lda_model.num_topics)
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
   topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
@@ -40,11 +67,14 @@ def append_results(promise, r2l, labels_sum, topics_sum, topics_count):
     topics_count[label] += _tc[label]
   
 
-
-
-def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn, n_workers=3):
+def summarize_topic_labels(model, bow_mat_fn, vocab_fn, n_workers=3):
   vocab = utils.load_obj(vocab_fn)
-  lda_model = utils.load_obj(lda_fn, gensim_class=LdaMulticore)
+  if model=='lda':
+    model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)
+  elif model=='kmn':
+    model = utils.load_obj(clt.kmn.label)
+    points = utils.load_obj(vecs.d2v.mtx, Doc2Vec).docvecs
+    centers = utils.load_obj(clt.kmn.postprocess)
 
   labels = range(0, lda_model.num_topics)
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
@@ -52,17 +82,20 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn, n_workers=3):
   topics_count = dict([(label, 0) for label in labels])
   r2l = dict()
   row = 0
-
   promises = list()
-
+      
   for part in range(0, vecs.n_matrix):
 
     scipy_mat = utils.load_obj(bow_mat_fn.format(part))
     bow_mat = Scipy2Corpus(scipy_mat.tocsc())
     
     start_row = part * scipy_mat.shape[0]
-    with ProcessPoolExecutor(max_workers=n_workers) as exec:
-      promise = exec.submit(aggregate_matrix, bow_mat, lda_model, start_row, vocab)
+    with ProcessPoolExecutor(max_workers=n_workers) as exc:
+      if model=='lda':
+        promise = exc.submit(aggregate_lda, bow_mat, lda_model, start_row, vocab)
+      elif model=='kmn':      
+        promise = exc.submit(aggregate_kmn, 
+                    bow_mat, points, model, centers, lda_model, start_row, vocab)
       promises.append(promise)
   
     for promise in promises:
@@ -79,57 +112,11 @@ def summarize_topic_labels(bow_mat_fn, vocab_fn, lda_fn, n_workers=3):
   return labels_sum, topics_sum, topics_count, r2l
 
 
-def summarize_labels(bow_mat, lda_model, vocab):
-  labels = range(0, lda_model.num_topics)
-  labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
-  topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
-  topics_count = dict([(label, 0) for label in labels])
-  r2l = dict()
-  row = 0
-
-  for bow in bow_mat:
-    topics = lda_model[bow]
-    first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
-    r2l[row] = first_topic
-
-    labels_sum[first_topic] += sparse2full(bow, len(vocab))
-    topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-    topics_count[first_topic] += 1
-    row += 1
-
-  mat_len = sum(topics_count.values())
-
-  for label, vec in labels_sum.items():
-    labels_sum[label] = sorted(list(zip(vocab, vec)), key=lambda x: x[1], reverse=True)
-
-  for label in topics_sum.keys():
-    topics_count[label] /= float(mat_len)
-
-  return labels_sum, topics_sum, topics_count, r2l
-
-
-def summarize_cluster_labels(bow_mat_fn, n_clusters, vocab_fn):
-  bow_mat = MmCorpus(bow_mat_fn)
-  vocab = utils.load_obj(vocab_fn)
-
-  labels = utils.load_obj(clt.kmn.format(n_clusters))
-
-  which_labels, counts = np.unique(labels, return_counts=True)
-
-  labels_sum = dict([(label, len(vocab)) for label in which_labels])
-  for i, bow in enumerate(bow_mat):
-    labels_sum[labels[i]] += sparse2full(bow, len(vocab))
-  del bow_mat
-
-  for label, vec in labels_sum.items():
-    labels_sum[label] = sorted(list(zip(vocab, vec)), key=lambda x: x[1], reverse=True)
-
-  return labels_sum, counts
-
-
 def main():
+  model = args.get("model","lda")
+
   print("Loading labels count")
-  labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(vecs.bow.mtx, vecs.bow.vocab, clt.lda.model)
+  labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(model, vecs.bow.mtx, vecs.bow.vocab, clt.lda.model)
   res = {"lda": True, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
 
   utils.save_pkl(clt.lda.postprocess, res)

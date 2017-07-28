@@ -157,7 +157,7 @@ def main():
 
     print("Saving labels...")
     utils.save_pkl(clt.kmn.labels, labels.tolist())
-    utils.save_pkl(clt.kmn.r2l, labels.tolist())
+    utils.save_pkl(clt.kmn.postprocess, kmn_centers)
 
 
 if __name__ == '__main__':
