@@ -15,7 +15,7 @@ from params import vecs,clt
 from consumer import Consumer
 
 def aggregate_kmn(bow_mat, points, clusters, centers, start_row, vocab):
-  labels = sorted(list(set(clusters))
+  labels = sorted(list(set(clusters)))
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
   topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
   topics_count = dict([(label, 0) for label in labels])
@@ -117,10 +117,13 @@ def main():
 
   print("Loading labels count")
   labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(model, vecs.bow.mtx, vecs.bow.vocab, clt.lda.model)
-  res = {"lda": True, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
-
-  utils.save_pkl(clt.lda.postprocess, res)
-  utils.save_pkl(clt.lda.r2l, r2l)
+  res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
+  if model=='lda':
+    utils.save_pkl(clt.lda.postprocess, res)
+    utils.save_pkl(clt.lda.r2l, r2l)
+  elif model=='kmn':
+    utils.save_pkl(clt.kmn.postprocess, res)
+    utils.save_pkl(clt.kmn.r2l, r2l)
 
 if __name__ == '__main__':
   utils.measure_time(main)
