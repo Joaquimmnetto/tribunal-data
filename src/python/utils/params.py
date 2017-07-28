@@ -61,7 +61,7 @@ def load_names(bdir, mdir):
   _model_t = namedtuple("Model",["model", "labels", "r2l", "postprocess"])
   clustering = namedtuple("clt", ["kmn", "lda"])(
     kmn = _model_t(
-        model=load_arg('kmn_model', 'kmn_model.bin', mdir),
+        model=load_arg('kmn_model', 'kmn_centres.pkl', mdir),
         labels=load_arg('kmn_labels', 'kmn_labels.pkl', mdir),
         r2l=load_arg('kmn_r2l', 'kmn_r2l.pkl', mdir),
         postprocess=load_arg('kmn_pp', 'kmn_pp.pkl', mdir)
