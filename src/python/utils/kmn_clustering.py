@@ -126,8 +126,8 @@ def plot_results(points, labels):
 
 def main():
   n_clusters = int(args.get('n_clusters', 8))
-  sil_testing = bool(args.get('sil_testing', False))
-  sampling = bool(args.get('sampling', True))
+  sil_testing = bool(args.get('sil_testing', "False")=="True")
+  sampling = bool(args.get('sampling', "True") == "True")
   smpl_size = int(args.get('smpl_size', 10000))
 
   print("Loading matrix...")
