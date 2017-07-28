@@ -31,7 +31,7 @@ def build_d2v_model(chat_fn, corpus_fn, min_freq):
 
 
 def save_outp(d2v_model, row_doc):
-  d2v_model.save(vecs.d2v.model)
+  d2v_model.save(vecs.d2v.mtx)
   utils.save_pkl(vecs.d2v.r2d, row_doc)
 
 
