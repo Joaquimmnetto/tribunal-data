@@ -58,7 +58,7 @@ def aggregate_lda(bow_mat, lda_model, part, vocab):
     r2l[row] = first_topic
     labels_sum[first_topic] += sparse2full(bow, len(vocab))
     topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-    topic s_count[first_topic] += 1
+    topics_count[first_topic] += 1
     row += 1
   del bow_mat
 
