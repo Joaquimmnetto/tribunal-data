@@ -39,21 +39,22 @@ def analysis(pp_fn, topic_probs, nwords):
     labels_weight = utils.topic_words(lda_model, topn_words=nwords)
     groups_cont = []
     topics_sum = dict()
-
-    return labels_weight, groups_cont, topics_sum
+   
+  return labels_weight, groups_cont, topics_sum
 
 
 def main():
   topic_probs = args.get('topic_probs', 'False') == 'True'
-  model_name = args.get('model', 'lda')
+  model_name = args.get('model', 'lda').strip()
   nwords = int(args.get('nwords', 100))
-  postprocess_fn = None  
+
   if model_name=='lda':
     postprocess_fn = clt.lda.postprocess
   elif model_name=='kmn':
     postprocess_fn = clt.kmn.postprocess
-    
-
+  
+  print(postprocess_fn, topic_probs, nwords)
+  analysis(postprocess_fn, topic_probs, nwords)
   labels_weight, groups_cont, topics_sum = analysis(postprocess_fn, topic_probs, nwords)
 
   print("Applying idf on top", nwords, "words")
@@ -80,8 +81,9 @@ def main():
 
     print("Avg. probability that a doc. belongs to a topic:")
     for topic in topics_sum.keys():
-      total = np.sum(topics_sum[topic])
-      topics_sum[topic] *= (100.0 / total)
+      pass
+      #total = np.sum(topics_sum[topic])
+      #topics_sum[topic] *= (100.0 / total)
 
     pprint(topics_sum)
 
