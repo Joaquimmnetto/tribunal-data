@@ -80,8 +80,7 @@ def main():
     pprint(groups_cont)
 
     print("Avg. probability that a doc. belongs to a topic:")
-    for topic in topics_sum.keys():
-      pass
+    #for topic in topics_sum.keys():
       #total = np.sum(topics_sum[topic])
       #topics_sum[topic] *= (100.0 / total)
 

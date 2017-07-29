@@ -32,7 +32,7 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
     lb = clusters[row]    
     r2l[row] = lb
     labels_sum[lb] += sparse2full(bow, len(vocab))
-    topics_sum[lb] += metrics.cosine_similarity(centers[lb].reshape(1,-1), points[lb].reshape(1,-1))[0,0]
+    topics_sum[lb] += np.fabs(metrics.cosine_similarity(centers[lb].reshape(1,-1), points[lb].reshape(1,-1))[0,0])
     topics_count[lb] += 1
     row += 1
   del bow_mat
