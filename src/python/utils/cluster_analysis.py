@@ -54,7 +54,7 @@ def main():
     postprocess_fn = clt.kmn.postprocess
     
 
-  labels_weight, groups_cont, topics_sum = analysis(clt.lda.postprocess, topic_probs, nwords)
+  labels_weight, groups_cont, topics_sum = analysis(postprocess_fn, topic_probs, nwords)
 
   print("Applying idf on top", nwords, "words")
   # [(label,[(word,weight),...])]
