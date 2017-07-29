@@ -26,10 +26,10 @@ def save_wc(wordcloud, sufixo):
   plt.savefig('wc_' + sufixo + '.png')
 
 
-def analysis_lda(topic_probs, nwords):
+def analysis(pp_fn, topic_probs, nwords):
   if not topic_probs:
     print("Aggregating labels count")
-    aggr_res = utils.load_obj(clt.lda.postprocess)
+    aggr_res = utils.load_obj(pp_fn)
     labels_weight = aggr_res['labels_weight']
     groups_cont = aggr_res['groups_cont']
     topics_sum = aggr_res['topics_sum']
@@ -38,17 +38,23 @@ def analysis_lda(topic_probs, nwords):
     lda_model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)
     labels_weight = utils.topic_words(lda_model, topn_words=nwords)
     groups_cont = []
-    topics_sum = []
+    topics_sum = dict()
 
     return labels_weight, groups_cont, topics_sum
 
 
 def main():
   topic_probs = args.get('topic_probs', 'False') == 'True'
-  lda = args.get('lda', 'True') == 'True'
+  model_name = args.get('model', 'lda')
   nwords = int(args.get('nwords', 100))
+  postprocess_fn = None  
+  if model_name=='lda':
+    postprocess_fn = clt.lda.postprocess
+  elif model_name=='kmn':
+    postprocess_fn = clt.kmn.postprocess
+    
 
-  labels_weight, groups_cont, topics_sum = analysis_lda(topic_probs,nwords)
+  labels_weight, groups_cont, topics_sum = analysis(clt.lda.postprocess, topic_probs, nwords)
 
   print("Applying idf on top", nwords, "words")
   # [(label,[(word,weight),...])]
