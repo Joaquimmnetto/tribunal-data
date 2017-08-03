@@ -22,6 +22,7 @@ stwords = [sw.strip('\n').strip(' ').lower() for sw in open(stwords_fn)] + champ
 #   vocab_words = pickle.load(inp)
 
 
+
 # vocab_words = [word for word in vocab_words if word not in stwords]
 
 
@@ -81,7 +82,7 @@ def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
 
 def main():
   print("Building counting matrix")
-  docs, cnt_vocab, cnt_matrix = build_cnt_matrix(base.chat, base.corpus, -1)
+  docs, cnt_vocab, cnt_matrix = build_cnt_matrix(base.chat, base.corpus, timeslice)
   print(cnt_matrix.shape[0])
 
   print("Saving models...")

@@ -77,7 +77,7 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
 
   if model_name=='lda':
     model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)    
-    labels = range(0, lda_model.num_topics)
+    labels = range(0, model.num_topics)
   elif model_name=='kmn':
     model = utils.load_obj(clt.kmn.labels)
     points = utils.load_obj(vecs.d2v.mtx, Doc2Vec).docvecs
@@ -94,7 +94,7 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
   for part in range(0, vecs.n_matrix):
     with ProcessPoolExecutor(max_workers=n_workers) as exc:
       if model_name=='lda':
-        promise = exc.submit(aggregate_lda, bow_mat_fn, lda_model, part, vocab)
+        promise = exc.submit(aggregate_lda, bow_mat_fn, model, part, vocab)
       elif model_name=='kmn':      
         promise = exc.submit(aggregate_kmn, 
                     bow_mat_fn, points, model, centers, part, vocab)

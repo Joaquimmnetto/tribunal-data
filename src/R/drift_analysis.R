@@ -41,34 +41,6 @@ topics[,topic.2 := factor(ifelse
 		)]
 }
 
-create_ts_data_row <- function(dt,ts) {
-	count <- length(dt[timeslice==ts]$topic)
-	row <- data.table(t(prop.table(summary(dt[timeslice==ts]$topic))),t(prop.table(summary(dt[timeslice==ts]$topic.2)))
-										,timeslice=ts, count=count)
-	return(row)
-}
-
-create_ts_data <- function(dt,max_ts=10){
-	ts_data <- create_ts_data_row(dt,0)
-	for(ts in 1:max_ts){
-		row <- create_ts_data_row(dt,ts)
-		ts_data<- rbind(ts_data,row,fill=TRUE)
-	}
-	return(ts_data)
-}
-
-ts.data <- create_ts_data(topics,max_ts=5)
-
-
-ggplot(ts.data) + geom_line(aes(x=timeslice, y=tactics),color='red' ) + geom_point(aes(x=timeslice, y=tactics)) + 
-									geom_line(aes(x=timeslice, y=tactics.pos, color='green')) + geom_point(aes(x=timeslice, y=tactics.pos)) +
-									geom_line(aes(x=timeslice, y=complaints, color='blue')) + geom_point(aes(x=timeslice, y=complaints)) +
-									geom_line(aes(x=timeslice, y=arguments, color='yellow')) + geom_point(aes(x=timeslice, y=arguments)) +
-									geom_line(aes(x=timeslice, y=insults, color='black')) + geom_point(aes(x=timeslice, y=insults)) +
-									geom_line(aes(x=timeslice, y=taunts, color='white')) + geom_point(aes(x=timeslice, y=taunts)) + ggtitle("offender")
-
-hist(topics$timeslice)
-
 build.topics.aggr <- function(dt = topics, value.col, topics.col, col.name = 'value', agr.size = 10000){
 	num.agrs = as.integer((nrow(dt)/agr.size))
 	agr.group <- rep(1:num.agrs, each=agr.size)
@@ -104,37 +76,28 @@ build.topics.aggr <- function(dt = topics, value.col, topics.col, col.name = 'va
 }
 
 ts.aggr = build.topics.aggr(dt=topics, value.col='timeslice', topics.col='topic',agr.size = 10000)
+ts.aggr.offender = build.topics.aggr(dt=topics[relation.offender=='offender'], value.col='timeslice', topics.col='topic',agr.size = 10000)
+ts.aggr.ally = build.topics.aggr(dt=topics[relation.offender=='ally'], value.col='timeslice', topics.col='topic',agr.size = 10000)
+ts.aggr.enemy = build.topics.aggr(dt=topics[relation.offender=='enemy'], value.col='timeslice', topics.col='topic',agr.size = 10000)
 
 
-ggplot(ts.aggr) + geom_smooth(aes(x=value, y=tactics), color='red') + geom_tile(aes(x=value, y=tactics),color='red') +
-									geom_smooth(aes(x=value, y=tactics.pos), color='green') + geom_tile(aes(x=value, y=tactics.pos), color='green') +
-									geom_smooth(aes(x=value, y=complaints), color='yellow') + geom_tile(aes(x=value, y=complaints), color='yellow') +
-									geom_smooth(aes(x=value, y=arguments), color='blue') + geom_tile(aes(x=value, y=arguments), color='blue') +
-									geom_smooth(aes(x=value, y=insults), color='black') + geom_tile(aes(x=value, y=insults),color='black') +
-									geom_smooth(aes(x=value, y=taunts), color='#FF00FF') + geom_tile(aes(x=value, y=taunts),color='#FF00FF') +
-								 coord_cartesian(xlim=c(0, 5))
-	
-ggplot(ts.aggr) + geom_smooth(aes(x=value, y=pos),color='red') + geom_tile(aes(x=value, y=pos),color='red') +
-	geom_smooth(aes(x=value, y=neg),color='green') + geom_tile(aes(x=value, y=neg), color='green') +
-	coord_cartesian(xlim=c(0, 5))
+plot.aggr <- function(dt,title='all'){
+	ggplot(dt) + geom_smooth(aes(x=value, y=tactics, color="Tactics"), span=0.8) + 
+		geom_smooth(aes(x=value, y=tactics.pos, color="Tactics/Pos"), span=0.8) + 
+		geom_smooth(aes(x=value, y=complaints, color="Complaints"), span=0.8) + 
+		geom_smooth(aes(x=value, y=arguments, color="Arguments"), span=0.8) + 
+		geom_smooth(aes(x=value, y=insults, color="Insults"), span=0.8) + 
+		geom_smooth(aes(x=value, y=taunts, color="Taunts"), span=0.8) +
+		ggtitle(title) + coord_cartesian(xlim=c(0, 5))
+}
 
-ggplot(ts.data) + geom_line(aes(x=timeslice, y=positive),color='red' ) + geom_point(aes(x=timeslice, y=positive),color='red') + 
-	geom_line(aes(x=timeslice, y=negative),color='green') + geom_point(aes(x=timeslice, y=negative),color='green')
-
-	
-	#geom_smooth(aes(x=value, y=tactics.pos, color='green')) + geom_point(aes(x=value, y=tactics.pos, alpha=0.01)) +
-	#geom_smooth(aes(x=value, y=complaints, color='blue')) + geom_point(aes(x=value, y=complaints, alpha=0.01)) +
-	#geom_smooth(aes(x=value, y=arguments, color='yellow')) + geom_point(aes(x=value, y=arguments, alpha=0.01)) +
-	#geom_smooth(aes(x=value, y=insults, color='black')) + geom_point(aes(x=value, y=insults, alpha=0.01)) +
-	#geom_smooth(aes(x=value, y=taunts, color='white')) + geom_point(aes(x=value, y=taunts, alpha=0.01))
 
 #60? Visualmente de acordo com o gráfico de densidade de tempos de partida. 99% dos valores se encaixam nesse intervalo, 
 #enquanto 94% se encaixam para 50, e apenas 74% para 40.
 #passo 0: definir um escopo de tempo relevante [0,60](0,1,2,3,4,5)
-ts.topics <- topics[timeslice < 6]
 
 #passo 0.5: mostrar os topicos usados em cada intervalo por coluna, não por linha.
-ts.topics.col <- ts.topics[timeslice==0,.(case,match,relation.offender,topic)]
+ts.topics.col <- topics[timeslice < 6][timeslice==0,.(case,match,relation.offender,topic)]
 setnames(ts.topics.col,'topic','ts.0')
 setkey(ts.topics.col,case,match,relation.offender)
 
@@ -143,19 +106,44 @@ for(i in 1:5){
 	setnames(ts.topics.col,'topic',sprintf('ts.%d',i))
 	setkey(ts.topics.col,case,match,relation.offender)
 }
+ts.topics.col = ts.topics.col[matches[,.(case,match,time.played)]]
+ts.topics.col[time.played > 10 & is.na(ts.0), ts.0 := 'empty']
+ts.topics.col[time.played > 20 & is.na(ts.1), ts.1 := 'empty']
+ts.topics.col[time.played > 30 & is.na(ts.2), ts.2 := 'empty']
+ts.topics.col[time.played > 40 & is.na(ts.3), ts.3 := 'empty']
+ts.topics.col[time.played > 50 & is.na(ts.4), ts.4 := 'empty']
+ts.topics.col[time.played > 60 & is.na(ts.5), ts.5 := 'empty']
 
-#Passo 1: apriori para verificar quais são os drifts.
+
+#Passo 1: apriori para verificar quais são as mudanças
 require(arules)
-ap.results <- apriori(ts.topics.col[relation.offender=='offender',.(ts.1,ts.2,ts.3,ts.4,ts.5)],parameter=list(confidence=0.01,target='rules'))
-inspect(ap.results,by='lift')
+ap.all <- apriori(ts.topics.col[,.(ts.0,ts.1,ts.2,ts.3,ts.4,ts.5)] ,
+											parameter=list(confidence=0.5, support=0.05, target='rules'))
+inspect(sort(ap.all, by='lift'))rm()
+
 
 #apriori(ts.topics.col[relation.offender=='enemy',.(ts.1,ts.2,ts.3,ts.4,ts.5)],parameter=list(confidence=0.40,target='rules'))
 #inspect(head(ap.results,by='lift'))
 
-#passo 2: remover partidas aonde não há drift, já que elas não nos interessam(não há mudança de tópicos durante a partida)
-	#não parece realmente necessario no momento
+#passo 1.5: Quantificar partidas aonde não há mudanças
+ts.topics.col[,no.change:=FALSE]
+ts.topics.col[(ts.0 == ts.1 | is.na(ts.0) | is.na(ts.1))  
+											 & (ts.1 == ts.2 | is.na(ts.1) | is.na(ts.2))  
+											 & (ts.2 == ts.3 | is.na(ts.2) | is.na(ts.3))  
+											 & (ts.3 == ts.4 | is.na(ts.3) | is.na(ts.4)) 
+											 & (ts.4 == ts.5 | is.na(ts.4) | is.na(ts.5))
+												,no.change := TRUE]
+									
+#Porcentagem de partidas com topicos iguais:
+#ts0 a ts1	#ts0 a ts2	#ts0 a ts3	#ts0 a ts4	#ts0 a ts5
+#0.36251		#0.1835695	#0.142846		#0.1342556	#0.1330021
+
+#passo 2: remover partidas aonde não há mudanças, já que elas não nos interessam(não há mudança de tópicos durante a partida)
+	#não parece realmente necessario no momento.
 
 #passo 3: plotar partidas que driftam e verificar quais são as tendências.
+#ggplot(data=ts.topics.col[no.change==FALSE]) 
+
 
 #passo 4: Procurar e confirmar a existência de um ponto específico aonde o ofensor começa a apresentar comportamento tóxico.
 

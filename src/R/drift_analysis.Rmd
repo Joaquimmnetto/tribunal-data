@@ -1,13 +1,191 @@
 ---
-title: "Drift Analysis"
+title: "Topic Change Analysis"
 author: "Joaquim Neto"
-date: "04/07/2017"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=TRUE}
+	require(ggplot2)
 	setwd("~/PyCharm-Workspace/tribunaldb/")
-	read_chunk("src/R/utils.R")
-	pkl2R("")
-
+	load('ts_data.RData')
 ```
+
+
+#Objetivos:
+###1) Descobrir possíveis pontos de virada, aonde o *ofensor* passa de um comportamento normal para um comportamento tóxico
+###2) Descobrir os principais tópicos para cada _timeslice_
+###3) Descobrir quais as principais tendências de troca de tópico
+(ie. topico a tende a mudar para topico b)
+
+#Parâmetros
+
+####Tamanho de cada timeslice:
+600s
+
+####Clusterizador e dados usados: 
+LDA, sem divisão de grupos por timeslice, dataset NA completo.
+
+####Peso usado na interpretação
+tf(cluster)-idf(corpus) aplicado nas top-100 palavras de cada cluster.
+
+#Preprocessamento
+####1) Removido timeslices acima de 60min(engloba ~95% das tslices) 
+```{r echo=FALSE}
+ggplot(topics) + geom_histogram(aes(x=timeslice),bins=30)
+```
+
+
+#Análise
+##Uso dos tópicos através dos timeslices
+###Método:
+
+####Todos os grupos
+```{r echo=FALSE}
+plot.aggr(ts.aggr)
+```
+
+####Grupos inimigos
+```{r echo=FALSE}
+plot.aggr(ts.aggr.enemy, 'enemies')
+```
+
+####Grupos aliados
+```{r echo=FALSE}
+plot.aggr(ts.aggr.ally, 'aliados')
+```
+
+####Grupos ofensores
+```{r echo=FALSE}
+plot.aggr(ts.aggr.offender, 'ofensores')
+```
+
+###Divisão em pos/neg
+
+####Todos os Grupos:
+```{r echo=FALSE}
+ggplot(ts.aggr) + geom_smooth(aes(x=value, y=pos,color='Positive'),span=0.8) + geom_tile(aes(x=value, y=pos, color='Positive')) +
+	geom_smooth(aes(x=value, y=neg, color='Negative'),span=0.8) + geom_tile(aes(x=value, y=neg, color='Negative')) +
+	coord_cartesian(xlim=c(0, 5))
+```
+
+####Grupos Aliados:
+```{r echo=FALSE}
+ggplot(ts.aggr.ally) + geom_smooth(aes(x=value, y=pos,color='Positive'),span=0.8) + geom_tile(aes(x=value, y=pos, color='Positive')) +
+	geom_smooth(aes(x=value, y=neg, color='Negative'),span=0.8) + geom_tile(aes(x=value, y=neg, color='Negative')) +
+	coord_cartesian(xlim=c(0, 5))
+```
+
+####Grupos Inimigos:
+```{r echo=FALSE}
+ggplot(ts.aggr.enemy) + geom_smooth(aes(x=value, y=pos,color='Positive'),span=0.8) + geom_tile(aes(x=value, y=pos, color='Positive')) +
+	geom_smooth(aes(x=value, y=neg, color='Negative'),span=0.8) + geom_tile(aes(x=value, y=neg, color='Negative')) +
+	coord_cartesian(xlim=c(0, 5))
+```
+
+####Grupos Ofensores:
+```{r echo=FALSE}
+ggplot(ts.aggr.offender) + geom_smooth(aes(x=value, y=pos,color='Positive'),span=0.8) + geom_tile(aes(x=value, y=pos, color='Positive')) +
+	geom_smooth(aes(x=value, y=neg, color='Negative'),span=0.8) + geom_tile(aes(x=value, y=neg, color='Negative')) +
+	coord_cartesian(xlim=c(0, 5))
+```
+
+##Relação entre tópicos em diferentes timeslices
+
+###Experimento 0:
+Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 0 e 1, intervalo no qual os gráficos apresentam alguma variação
+
+####ts.0=Tactics
+{ts.1=tactics} => {ts.0=tactics} com 40% de suporte
+
+####ts.0=Tactics.Pos,
+Nenhum resultado relevante.
+
+####ts.0=small.talk
+Nenhum resultado relevante.
+
+####ts.0=complaints
+Nenhum resultado relevante.
+
+####ts.0=arguments
+Nenhum resultado relevante.
+
+####ts.0=insults
+Nenhum resultado relevante.
+
+####ts.0=taunts
+Nenhum resultado relevante.
+
+####Conclusões
+Não parecem existir relações significantes
+
+```{r echo=FALSE}
+#ap.all <- apriori(ts.topics.col[ts.0=='taunts',.(ts.0, ts.1)] ,
+#											parameter=list(confidence=0.33, support=0.33, target='rules'))
+#inspect(sort(ap.all, by='lift'))
+```
+
+###Experimento 1:
+Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 1 e 2, intervalo no qual os gráficos apresentam alguma variação
+
+####ts.1=Tactics
+ts2.tactics -> ts.1.tactics com 38% de suporte e 100% de confiança.
+
+####ts.1=Tactics.Pos,
+Nenhum resultado relevante.
+
+####ts.1=small.talk
+Nenhum resultado relevante.
+
+####ts.1=complaints
+Nenhum resultado relevante.
+
+####ts.1=arguments
+Nenhum resultado relevante.
+
+####ts.1=insults
+Nenhum resultado relevante.
+
+####ts.1=taunts
+Nenhum resultado relevante.
+
+####Conclusões
+Não parecem existir relações significantes
+
+###Experimento 2:
+Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 2 e 3, intervalo no qual os gráficos apresentam alguma variação
+
+####ts.2=Tactics
+Nenhum resultado relevante.
+
+####ts.2=Tactics.Pos,
+{ts.3=empty} => {ts.2=tactics.pos}, com 44% de suporte
+
+####ts.2=small.talk
+{ts.3=empty} => {ts.2=small.talk} com 40% de suporte
+
+####ts.2=complaints
+{ts.3=empty} => {ts.2=complaints} com 42% de suporte
+
+####ts.2=arguments
+{ts.3=empty} => {ts.2=arguments} com 38% de suporte
+
+####ts.2=insults
+{ts.3=empty} => {ts.2=insults} com 43% de suporte
+
+####ts.2=taunts
+{ts.3=empty} => {ts.2=taunts} com 43% de suporte
+
+####Conclusões
+Esses resultados não parecem significar muita coisa além de uma quantidade maior de 'empty'(sem conversas) em ts.3 do que em ts.2, o que de fato acontece(43% vs 14%).
+
+
+###Experimento 3:
+Apriori com 33% de confiança e 5% de suporte, usando todas as timeslices, e todos os tópicos. Suporte é baixo devido aos desbalanceamentos entre os grupos.
+
+####Conclusões
+Sem resultados conclusivos, de 300+ regras, a maioria esmagadora dizia de algum modo que empty -> empty e topic -> topic
+
+
+
