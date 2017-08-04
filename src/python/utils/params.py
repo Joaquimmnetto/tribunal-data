@@ -35,7 +35,7 @@ def load_names(bdir, mdir):
   )
 
   _matrix_t = namedtuple("Matrix", ["mtx", "r2d", "vocab"])
-  matrixes = namedtuple("matrixes",['bow','tfidf','d2v','df','n_matrix'])(
+  vecs = namedtuple("matrixes",['bow','tfidf','d2v','df','n_matrix'])(
 
       bow = _matrix_t(
         mtx = load_arg('bow_mtx', 'bow_{0}.mtx', mdir),
@@ -59,7 +59,7 @@ def load_names(bdir, mdir):
 
 
   _model_t = namedtuple("Model",["model", "labels", "r2l", "postprocess"])
-  clustering = namedtuple("clt", ["kmn", "lda"])(
+  clt = namedtuple("clt", ["kmn", "lda"])(
     kmn = _model_t(
         model=load_arg('kmn_model', 'kmn_centres.pkl', mdir),
         labels=load_arg('kmn_labels', 'kmn_labels.pkl', mdir),
@@ -74,8 +74,6 @@ def load_names(bdir, mdir):
       )
   )
 
-  return base,matrixes,clustering
-
 
 if len(sys.argv) > 1:
   read_args(sys.argv[1:])
@@ -86,7 +84,7 @@ base_dir = args.get("base_dir", "../../../data/base/samples")
 model_dir = load_model_dir(args.get("model_dir", "../../../data/full/samples"))
 print("Model dir:{0}",model_dir)
 
-base, vecs, clt = load_names(base_dir, model_dir)
+load_names(base_dir, model_dir)
 
 
 
