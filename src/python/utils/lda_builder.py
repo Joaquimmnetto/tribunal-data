@@ -22,7 +22,7 @@ def main():
     bow_names = (vecs.bow.mtx.format(i) for i in range(0,vecs.n_matrix))
     gsm_corpus = BowGensimIterator(*bow_names)    
     id2word = load_obj(vocab)
-    id2word = dict([(i, v) for i, v in enumerate(id2word))
+    id2word = dict([(i, v) for i, v in enumerate(id2word)])
 
     print("Making lda model with first matrix:")
     lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics)
