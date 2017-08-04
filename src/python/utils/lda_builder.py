@@ -21,12 +21,12 @@ def main():
     print("Loading bow matrix:")    
     bow_names = (vecs.bow.mtx.format(i) for i in range(0,vecs.n_matrix))
     gsm_corpus = BowGensimIterator(*bow_names)    
-    id2word = load_obj(vocab)
+    id2word = utils.load_obj(vecs.bow.vocab)
     id2word = dict([(i, v) for i, v in enumerate(id2word)])
 
     print("Making lda model with first matrix:")
     lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics)
-    del spy_mat,gsm_corpus,id2word
+    del gsm_corpus,id2word
 
     # for i in range(1, vecs.n_matrix):
     #     print("Updating model with matrix {0}:".format(i))
