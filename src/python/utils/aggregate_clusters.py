@@ -15,7 +15,7 @@ from params import vecs,clt,args
 
 def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):  
   scipy_mat = utils.load_obj(bow_mat_fn.format(part))
-  bow_mat = Scipy2Corpus(scipy_mat.tocsc())    
+  bow_mat = Scipy2Corpus(scipy_mat.tocsc())
   row = part * scipy_mat.shape[0]
 
   labels = sorted(list(set(clusters)))
@@ -92,16 +92,15 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
   r2l = dict()
   row = 0
   promises = list()
-      
-  for part in range(0, vecs.n_matrix):
-    with ProcessPoolExecutor(max_workers=n_workers) as exc:
+  with ProcessPoolExecutor(max_workers=n_workers) as exc:   
+    for part in range(0, vecs.n_matrix):   
       if model_name=='lda':
         promise = exc.submit(aggregate_lda, bow_mat_fn, model, part, vocab)
       elif model_name=='kmn':      
         promise = exc.submit(aggregate_kmn, 
                     bow_mat_fn, points, model, centers, part, vocab)
       promises.append(promise)
-  
+    
     for promise in promises:
       append_results(promise, r2l, labels_sum, topics_sum, topics_count)
 
