@@ -1,13 +1,19 @@
 from gensim.corpora import MmCorpus
+from gensim.corpora import IndexedCorpus
 
-class BowGensimIterator:
+class BowGensimIterator(IndexedCorpus):
 
 
-  def __init__(self,*files):
+  def __init__(self, files):
+    IndexedCorpus.__init__(self,files[0])
     self.mm_corpora = []
     for file in files:
       self.mm_corpora.append(MmCorpus(file))
 
   def __iter__(self):
     for corpus in self.mm_corpora:
-      yield corpus.__iter__()
+        for value in corpus:
+            yield value
+
+  def __len__(self):
+      return sum([len(corpus) for corpus in self.mm_corpora])
