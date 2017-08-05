@@ -27,6 +27,10 @@ def load_model_dir(directory):
   sys.path.append(directory)
   return directory
 
+base = None
+vecs = None
+clt = None
+
 def load_names(bdir, mdir):
 
   base = namedtuple("base", ['chat', 'corpus'])(
@@ -74,6 +78,7 @@ def load_names(bdir, mdir):
       )
   )
 
+  
 
 if len(sys.argv) > 1:
   read_args(sys.argv[1:])
