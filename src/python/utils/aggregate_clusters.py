@@ -30,7 +30,8 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   for bow in bow_mat:    
     assert bow_r2d[row] == d2v_r2d[row]    
     lb = clusters[row]    
-    r2l[row] = lb
+    r2l[row] = np.zeros(len(labels))
+    r2l[row][lb] = 1
     labels_sum[lb] += sparse2full(bow, len(vocab))
     topics_sum[lb] += np.fabs(metrics.cosine_similarity(centers[lb].reshape(1,-1), points[lb].reshape(1,-1))[0,0])
     topics_count[lb] += 1
@@ -54,7 +55,8 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
   for bow in bow_mat:      
     topics = lda_model[bow]
     first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
-    r2l[row] = first_topic
+    #r2l[row] = first_topic
+    r2l[row] = topics
     labels_sum[first_topic] += sparse2full(bow, len(vocab))
     topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
     topics_count[first_topic] += 1
