@@ -17,7 +17,7 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   # scipy_mat = utils.load_obj(bow_mat_fn.format(part))
   # bow_mat = Scipy2Corpus(scipy_mat.tocsc())
   bow_mat = MmCorpus(bow_mat_fn.format(part))
-  row = part * scipy_mat.shape[0]
+  row = part * len(bow_mat)
 
   labels = sorted(list(set(clusters)))
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
@@ -46,8 +46,8 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
   #scipy_mat = utils.load_obj(bow_mat_fn.format(part))
   #bow_mat = Scipy2Corpus(scipy_mat.tocsc())    
   bow_mat = MmCorpus(bow_mat_fn.format(part))
-  row = part * scipy_mat.shape[0]
-
+  row = part * len(bow_mat)
+  
   labels = range(0, lda_model.num_topics)
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
   topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
