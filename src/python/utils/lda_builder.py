@@ -10,7 +10,7 @@ from params import args, vecs, clt
 
 
 def lda_topic_discovery(corpus, id2word, num_topics):
-    lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, num_topics=num_topics, id2word=id2word, workers=5)
+    lda_model = LdaMulticore(corpus=corpus.mm_corpora[0], minimum_probability=0, num_topics=num_topics, id2word=id2word, workers=5)
     return lda_model
 
 
@@ -19,7 +19,7 @@ def main():
     analysis = bool(args.get("analysis", False))
 
     print("Loading bow matrix:")    
-    bow_names = (vecs.bow.mtx.format(i) for i in range(0,vecs.n_matrix))
+    bow_names = [vecs.bow.mtx.format(i) for i in range(0,vecs.n_matrix)]
     gsm_corpus = BowGensimIterator(bow_names)    
     id2word = utils.load_obj(vecs.bow.vocab)
 
