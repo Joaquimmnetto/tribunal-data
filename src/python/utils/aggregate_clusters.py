@@ -93,7 +93,8 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
   row = 0
   promises = list()
   with ProcessPoolExecutor(max_workers=n_workers) as exc:   
-    for part in range(0, vecs.n_matrix):   
+    for part in range(0, vecs.n_matrix):
+      print("starting matrix",part)   
       if model_name=='lda':
         promise = exc.submit(aggregate_lda, bow_mat_fn, model, part, vocab)
       elif model_name=='kmn':      
@@ -101,9 +102,10 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
                     bow_mat_fn, points, model, centers, part, vocab)
       promises.append(promise)
     
+    print("waiting for results")
     for promise in promises:
       append_results(promise, r2l, labels_sum, topics_sum, topics_count)
-
+    print("matrix processing finished")
   mat_len = sum(topics_count.values())
 
   for label, vec in labels_sum.items():
@@ -121,7 +123,8 @@ def main():
   print("Loading labels count")
   labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(model, vecs.bow.mtx, vecs.bow.vocab)
   res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
-  if model=='lda':
+  print("saving results...")
+  if model=='lda':    
     utils.save_pkl(clt.lda.postprocess, res)
     utils.save_pkl(clt.lda.r2l, r2l)
   elif model=='kmn':

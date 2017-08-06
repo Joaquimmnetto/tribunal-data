@@ -27,9 +27,6 @@ def load_model_dir(directory):
   sys.path.append(directory)
   return directory
 
-base = None
-vecs = None
-clt = None
 
 def load_names(bdir, mdir):
 
@@ -77,6 +74,7 @@ def load_names(bdir, mdir):
         postprocess=load_arg('lda_pp', 'lda_pp.pkl', mdir)
       )
   )
+  return base,vecs,clt
 
   
 
@@ -86,9 +84,9 @@ if len(sys.argv) > 1:
 sys.path.append("../../../data/")
 
 base_dir = args.get("base_dir", "../../../data/base/samples")
-model_dir = load_model_dir(args.get("model_dir", "../../../data/full/samples"))
+model_dir = load_model_dir(args.get("model_dir", "../../../data/model_drift/samples"))
 print("Model dir:{0}",model_dir)
-load_names(base_dir, model_dir)
+base,vecs,clt = load_names(base_dir, model_dir)
 
 
 
