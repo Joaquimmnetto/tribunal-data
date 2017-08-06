@@ -1,11 +1,10 @@
 from gensim.corpora import MmCorpus
 from gensim.corpora import IndexedCorpus
 
-class BowGensimIterator(IndexedCorpus):
+class BowGensimIterator:
 
 
   def __init__(self, files):
-    IndexedCorpus.__init__(self,list(files)[0])
     self.mm_corpora = []
     for file in files:
       self.mm_corpora.append(MmCorpus(file))

@@ -14,8 +14,9 @@ from concurrent.futures import ProcessPoolExecutor
 from params import vecs,clt,args
 
 def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):  
-  scipy_mat = utils.load_obj(bow_mat_fn.format(part))
-  bow_mat = Scipy2Corpus(scipy_mat.tocsc())
+  # scipy_mat = utils.load_obj(bow_mat_fn.format(part))
+  # bow_mat = Scipy2Corpus(scipy_mat.tocsc())
+  bow_mat = MmCorpus(bow_mat_fn.format(part))
   row = part * scipy_mat.shape[0]
 
   labels = sorted(list(set(clusters)))
@@ -42,8 +43,9 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
 
 
 def aggregate_lda(bow_mat_fn, lda_model, part, vocab):  
-  scipy_mat = utils.load_obj(bow_mat_fn.format(part))
-  bow_mat = Scipy2Corpus(scipy_mat.tocsc())    
+  #scipy_mat = utils.load_obj(bow_mat_fn.format(part))
+  #bow_mat = Scipy2Corpus(scipy_mat.tocsc())    
+  bow_mat = MmCorpus(bow_mat_fn.format(part))
   row = part * scipy_mat.shape[0]
 
   labels = range(0, lda_model.num_topics)
