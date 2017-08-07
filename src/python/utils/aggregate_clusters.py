@@ -58,7 +58,9 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
     topics = lda_model[bow]
     first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
     #r2l[row] = first_topic
-    r2l[row] = topics
+    r2l[row] = np.array([val for clt,val in sorted(topics, key=lambda x:x[0])])
+    assert r2l[row].shape[0] == len(labels)
+    
     labels_sum[first_topic] += sparse2full(bow, len(vocab))
     topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
     topics_count[first_topic] += 1
