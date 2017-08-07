@@ -18,14 +18,10 @@ def load_arg(arg, fname, _dir=model_dir):
     args[arg] = default_val
   return args[arg]
 
-def load_model_dir(directory):
-  global model_dir
-  if model_dir in sys.path:
-    sys.path.remove(model_dir)
-
-  model_dir = directory
-  sys.path.append(directory)
-  return directory
+# def load_model_dir(directory):
+#   model_dir = directory
+#   sys.path.append(directory)
+#   return directory
 
 
 def load_names(bdir, mdir):
@@ -70,7 +66,7 @@ def load_names(bdir, mdir):
       lda = _model_t(
         model=load_arg('lda_model', "lda_model.gsm", mdir),
         labels=load_arg('lda_labels', 'lda_labels.pkl', mdir),
-        r2l=load_arg('lda_r2l', 'lda_r2l.pkl', mdir),
+        r2l=load_arg('lda_r2l', 'lda_r2l_{0}.pkl', mdir),
         postprocess=load_arg('lda_pp', 'lda_pp.pkl', mdir)
       )
   )
@@ -84,7 +80,7 @@ if len(sys.argv) > 1:
 sys.path.append("../../../data/")
 
 base_dir = args.get("base_dir", "../../../data/base/samples")
-model_dir = load_model_dir(args.get("model_dir", "../../../data/model_drift/samples"))
+model_dir = args.get("model_dir", "../../../data/model_drift/samples")
 print("Model dir:{0}",model_dir)
 base,vecs,clt = load_names(base_dir, model_dir)
 

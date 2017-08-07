@@ -31,8 +31,7 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   for bow in bow_mat:    
     assert bow_r2d[row] == d2v_r2d[row]    
     lb = clusters[row]    
-    r2l[row] = np.zeros(len(labels))
-    r2l[row][lb] = 1
+    r2l[row] = lb    
     labels_sum[lb] += sparse2full(bow, len(vocab))
     topics_sum[lb] += np.fabs(metrics.cosine_similarity(centers[lb].reshape(1,-1), points[lb].reshape(1,-1))[0,0])
     topics_count[lb] += 1
@@ -43,8 +42,6 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
 
 
 def aggregate_lda(bow_mat_fn, lda_model, part, vocab):  
-  #scipy_mat = utils.load_obj(bow_mat_fn.format(part))
-  #bow_mat = Scipy2Corpus(scipy_mat.tocsc())    
   bow_mat = MmCorpus(bow_mat_fn.format(part))
   row = part * len(bow_mat)
   
@@ -57,21 +54,24 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
   for bow in bow_mat:      
     topics = lda_model[bow]
     first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
-    #r2l[row] = first_topic
     r2l[row] = np.array([val for clt,val in sorted(topics, key=lambda x:x[0])])
     assert r2l[row].shape[0] == len(labels)
     
-    labels_sum[first_topic] += sparse2full(bow, len(vocab))
-    topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-    topics_count[first_topic] += 1
+    #labels_sum[first_topic] += sparse2full(bow, len(vocab))
+    #topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
+    #topics_count[first_topic] += 1
     row += 1
   del bow_mat
 
   return r2l, labels_sum, topics_sum, topics_count
 
-def append_results(promise, r2l, labels_sum, topics_sum, topics_count):
+def append_results(promise, labels_sum, topics_sum, topics_count, part):
+  print("Processing ",str(part))
   _r2l,_ls,_ts,_tc = promise.result()
-  r2l.update(_r2l)
+  print("Saving r2l of",str(part))
+  utils.save_pkl(clt.lda.r2l+".{0}".format(part),_r2l)
+  #r2l.update(_r2l)
+  print("Filling postprocessing aggrs. of ",str(part))
   for label in labels_sum.keys():
     labels_sum[label] += _ls[label]
     topics_sum[label] += _ts[label]
@@ -107,8 +107,8 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
       promises.append(promise)
     
     print("waiting for results")
-    for promise in promises:
-      append_results(promise, r2l, labels_sum, topics_sum, topics_count)
+    for i,promise in enumerate(promises):
+      append_results(promise, r2l, labels_sum, topics_sum, topics_count,i)
     print("matrix processing finished")
   mat_len = sum(topics_count.values())
 
@@ -123,14 +123,16 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
 
 def main():
   model = args.get("model","lda").strip()
-
+  n_workers = int(args.get("n_workers",3))
+  
   print("Loading labels count")
-  labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(model, vecs.bow.mtx, vecs.bow.vocab)
+  labels_weight, topics_sum, groups_cont, r2l = summarize_topic_labels(model, vecs.bow.mtx, vecs.bow.vocab, n_workers)
   res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
   print("saving results...")
   if model=='lda':    
-    utils.save_pkl(clt.lda.postprocess, res)
-    utils.save_pkl(clt.lda.r2l, r2l)
+    pas
+    #utils.save_pkl(clt.lda.postprocess, res)
+    #utils.save_pkl(clt.lda.r2l, r2l)
   elif model=='kmn':
     utils.save_pkl(clt.kmn.postprocess, res)
     utils.save_pkl(clt.kmn.r2l, r2l)

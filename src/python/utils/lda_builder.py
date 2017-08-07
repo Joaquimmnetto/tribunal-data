@@ -10,7 +10,8 @@ from params import args, vecs, clt
 
 
 def lda_topic_discovery(corpus, id2word, num_topics):
-    lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, num_topics=num_topics, id2word=id2word, workers=5)
+    #lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, num_topics=num_topics, id2word=id2word, workers=5)
+    lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, alpha='auto', num_topics=num_topics, id2word=id2word, workers=5)
     return lda_model
 
 

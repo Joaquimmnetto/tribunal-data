@@ -9,7 +9,7 @@ from params import args,clt,vecs
 
 from concurrent.futures import ProcessPoolExecutor
 import pyLDAvis
-
+#pyLDAvis params:
 #  topic_term_dists : array-like, shape (`n_topics`, `n_terms`)
 #         Matrix of topic-term probabilities. Where `n_terms` is `len(vocab)`.
 
@@ -30,12 +30,15 @@ import pyLDAvis
 
 
 
-def process_dtd(lda, r2l):
-  doc_topic_dist = np.zeros(shape=(len(r2l),lda.num_topics))
+def process_dtd(lda, r2l_fn):
+  r2l_len = sum(len(utils.load_obj(r2l_fn.format(i))) for i in vecs.n_matrix)
+  doc_topic_dist = np.zeros(shape=(len(r2l_len),lda.num_topics))
 
-  for row in r2l.keys():
-    for topic,prob in r2l[row]:
-      doc_topic_dist[row,topic] = prob
+  for part in range(0,vecs.n_matrix):
+    r2l = utils.load_obj(r2l_fn.format(i))    
+    for row in r2l.keys():
+      for topic,prob in r2l[row]:
+        doc_topic_dist[row,topic] = prob
 
   return doc_topic_dist
 
@@ -58,18 +61,17 @@ def process_doclens(bow):
   return doc_len, tfs
 
 def main():
-  lda = utils.load_obj(clt.lda.model, LdaMulticore)
-  r2l = utils.load_obj(clt.lda.r2l)
+  lda = utils.load_obj(clt.lda.model, LdaMulticore)  
   vocab = utils.load_obj(vecs.bow.vocab)
-  #term_frequency = utils.load_obj(vecs.df)
-  n_workers = args.get('n_workers',2)
+  
+  n_workers = args.get('n_workers',3)
   with ProcessPoolExecutor(max_workers=n_workers) as exc:
-    print('dtd')
-    dtd_promise = exc.submit(process_dtd,lda,r2l)
-    print('ttd')
-    ttd_promise = exc.submit(process_ttd,lda, np.array(range(0,len(vocab))))
+    print('queue dtd')
+    dtd_promise = exc.submit(process_dtd, lda, clt.lda.r2l)
+    print('queue ttd')
+    ttd_promise = exc.submit(process_ttd, lda, np.array(range(0,len(vocab))))
     bow_promises = []  
-    print('matrixes')
+    print('queue matrixes')
     for part in range(0, vecs.n_matrix):
       bow = utils.load_obj(vecs.bow.mtx.format(part))
       bow_promises.append(exc.submit(process_doclens, bow))
@@ -82,7 +84,7 @@ def main():
     term_frequency = None    
     for promise in bow_promises:
       dl,freqs = promise.result()
-      doc_lengths = np.append(doc_lengths,dl)
+      doc_lengths = np.append(doc_lengths, dl)
       
       if term_frequency is None:
         term_frequency = freqs
@@ -92,7 +94,7 @@ def main():
   term_frequency = np.array(term_frequency)[0]
   print(term_frequency)
   print('processing vis')
-  vis = pyLDAvis.prepare(topic_term_dists, doc_topic_dists, doc_lengths,vocab, term_frequency)
+  vis = pyLDAvis.prepare(topic_term_dists, doc_topic_dists, doc_lengths, vocab, term_frequency)
   pyLDAvis.save_html(vis, 'vis.html')
   pyLDAvis.save_json(vis, 'vis.json')
 
