@@ -65,13 +65,10 @@ def process_doclens(bow):
 
 def main():
   lda = utils.load_obj(clt.lda.model, LdaMulticore)  
-  vocab = utils.load_obj(vecs.bow.vocab)
-  
-  n_workers = int(args.get('n_workers',3)
-          )
+  vocab = utils.load_obj(vecs.bow.vocab)  
+  n_workers = int(args.get('n_workers',3))
+
   with ProcessPoolExecutor(max_workers=n_workers) as exc:
-    print('queue dtd')
-    dtd_promise = exc.submit(process_dtd, lda, clt.lda.r2l)
     print('queue ttd')
     ttd_promise = exc.submit(process_ttd, lda, np.array(range(0,len(vocab))))
     bow_promises = []  
@@ -81,7 +78,7 @@ def main():
       bow_promises.append(exc.submit(process_doclens, bow))
 
     print('processing results')
-    doc_topic_dists = dtd_promise.result()
+    #doc_topic_dists = dtd_promise.result()
     topic_term_dists = ttd_promise.result()
 
     doc_lengths = []
@@ -94,8 +91,11 @@ def main():
         term_frequency = freqs
       else:
         term_frequency = term_frequency + freqs
-      
+         
+  print('process dtd')
+  doc_topic_dists = process_dtd(lda, clt.lda.r2l)
   term_frequency = np.array(term_frequency)[0]
+  
   print(term_frequency)
   print('processing vis')
   vis = pyLDAvis.prepare(topic_term_dists, doc_topic_dists, doc_lengths, vocab, term_frequency)
