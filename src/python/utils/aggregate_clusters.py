@@ -38,7 +38,10 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
     row += 1
   del bow_mat
 
-  return r2l, labels_sum, topics_sum, topics_count
+  print("Saving r2l of",str(part))
+  utils.save_pkl(clt.kmn.r2l+".{0}".format(part),r2l)
+
+  return labels_sum, topics_sum, topics_count
 
 
 def aggregate_lda(bow_mat_fn, lda_model, part, vocab):  
@@ -72,13 +75,14 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
     row += 1
   del bow_mat
 
-  return r2l, labels_sum, topics_sum, topics_count
+  print("Saving r2l of",str(part))
+  utils.save_pkl(clt.lda.r2l.format(part),r2l)
+  
+  return labels_sum, topics_sum, topics_count
 
 def append_results(promise, labels_sum, topics_sum, topics_count, part):
   print("Processing ",str(part))
-  _r2l,_ls,_ts,_tc = promise.result()
-  print("Saving r2l of",str(part))
-  utils.save_pkl(clt.lda.r2l+".{0}".format(part),_r2l)
+  _ls,_ts,_tc = promise.result()
   #r2l.update(_r2l)
   print("Filling postprocessing aggrs. of ",str(part))
   for label in labels_sum.keys():

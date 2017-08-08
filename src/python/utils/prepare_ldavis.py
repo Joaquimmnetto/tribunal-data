@@ -31,13 +31,14 @@ import pyLDAvis
 
 
 def process_dtd(lda, r2l_fn):
-  r2l_len = sum(len(utils.load_obj(r2l_fn.format(i))) for i in vecs.n_matrix)
-  doc_topic_dist = np.zeros(shape=(len(r2l_len),lda.num_topics))
-
+  print("processing dtd")
+  r2l_len = sum([len(utils.load_obj(r2l_fn.format(i))) for i in range(0,vecs.n_matrix)])
+  doc_topic_dist = np.zeros(shape=(r2l_len, lda.num_topics))
+  print("dtd matrix allocated:",doc_topic_dist.shape) 
   for part in range(0,vecs.n_matrix):
-    r2l = utils.load_obj(r2l_fn.format(i))    
+    r2l = utils.load_obj(r2l_fn.format(part))    
     for row in r2l.keys():
-      for topic,prob in r2l[row]:
+      for topic,prob in enumerate(r2l[row]):
         doc_topic_dist[row,topic] = prob
 
   return doc_topic_dist
@@ -45,6 +46,7 @@ def process_dtd(lda, r2l_fn):
 
 
 def process_ttd(lda, ids):  
+  print("processing ttd")
   if hasattr(lda, 'lda_beta'):
     topic = lda.lda_beta
   else:
@@ -56,6 +58,7 @@ def process_ttd(lda, ids):
 
 
 def process_doclens(bow):
+  print("Processing doclen")
   doc_len = bow.sum(axis=1)
   tfs = bow.sum(axis=0)
   return doc_len, tfs
@@ -64,7 +67,8 @@ def main():
   lda = utils.load_obj(clt.lda.model, LdaMulticore)  
   vocab = utils.load_obj(vecs.bow.vocab)
   
-  n_workers = args.get('n_workers',3)
+  n_workers = int(args.get('n_workers',3)
+          )
   with ProcessPoolExecutor(max_workers=n_workers) as exc:
     print('queue dtd')
     dtd_promise = exc.submit(process_dtd, lda, clt.lda.r2l)
