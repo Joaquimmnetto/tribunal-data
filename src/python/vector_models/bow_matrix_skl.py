@@ -3,9 +3,9 @@ import scipy.io
 from six import iteritems
 
 from params import args, vecs, base
-import utils.utils as utils
+from utils import utils
 
-from trib_specific.bow_iterator import CountDocIterator
+from bow_iterator import CountDocIterator
 
 from gensim.corpora import Dictionary
 from doc_iterator import DocIterator

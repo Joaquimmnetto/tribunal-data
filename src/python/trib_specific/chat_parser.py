@@ -1,5 +1,5 @@
-from params import base,args
-import utils
+from utils.params import base,args,base_dir
+from utils import utils
 
 import pandas
 
@@ -14,11 +14,11 @@ def parse_time(timestamp):
 
 
 def main():
-  chat_base = args.get('chat_base', 'base/chat.csv')
-  chat_file = open(chat_base, 'r')
-  outp_file = open(base.chat, 'w')
+  chat_base = args.get('chat_base', base_dir+'/chat.csv')
+  chat_file = open(chat_base, 'r', encoding='utf8')
+  outp_file = open(base.chat, 'w', encoding='utf8')
 
-  chat_chunks = pandas.read_table(chat_file, chunksize=10000000, lineterminator='\n', quotechar='\"', sep=',',
+  chat_chunks = pandas.read_table(chat_file, chunksize=1000000, lineterminator='\n', quotechar='\"', sep=',',
                                   usecols=range(5),
                                   names=['case', 'match', 'relation.offender', 'champion', 'timestamp'],
                                   header=None, error_bad_lines=False, warn_bad_lines=True, skip_blank_lines=True)

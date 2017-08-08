@@ -7,11 +7,13 @@ from gensim.models import Doc2Vec
 import sklearn.metrics.pairwise as metrics
 
 import numpy as np
-import utils
+from tools.params import vecs,clt,args
+
+from tools import utils
 
 from concurrent.futures import ProcessPoolExecutor
 
-from params import vecs,clt,args
+
 
 def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):  
   # scipy_mat = utils.load_obj(bow_mat_fn.format(part))
@@ -42,8 +44,15 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
 
 
 def aggregate_lda(bow_mat_fn, lda_model, part, vocab):  
+  print("Starting part ",part)
+  #skmat = utils.load_obj(bow_mat_fn.format(part))
+  print("Matrix load at part ",part)
   bow_mat = MmCorpus(bow_mat_fn.format(part))
+  #bow_mat = Scipy2Corpus(skmat.tocsc())
+  #row = part * skmat.shape[0]
   row = part * len(bow_mat)
+
+  #del skmat
   
   labels = range(0, lda_model.num_topics)
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
@@ -51,8 +60,10 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
   topics_count = dict([(label, 0) for label in labels])
   r2l = dict()
   
-  for bow in bow_mat:      
+  for bow in bow_mat:
     topics = lda_model[bow]
+    if row % 10000 == 0:
+      print(row)
     first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
     r2l[row] = np.array([val for clt,val in sorted(topics, key=lambda x:x[0])])
     assert r2l[row].shape[0] == len(labels)
@@ -108,15 +119,15 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
     
     print("waiting for results")
     for i,promise in enumerate(promises):
-      append_results(promise, r2l, labels_sum, topics_sum, topics_count,i)
+      append_results(promise, labels_sum, topics_sum, topics_count, i)
     print("matrix processing finished")
   mat_len = sum(topics_count.values())
 
   for label, vec in labels_sum.items():
     labels_sum[label] = sorted(list(zip(vocab, vec)), key=lambda x: x[1], reverse=True)
 
-  for label in topics_sum.keys():
-    topics_count[label] /= float(mat_len)
+  #for label in topics_sum.keys():
+    #topics_count[label] /= float(mat_len)
 
   return labels_sum, topics_sum, topics_count, r2l
 
@@ -130,7 +141,7 @@ def main():
   res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
   print("saving results...")
   if model=='lda':    
-    pas
+    pass
     #utils.save_pkl(clt.lda.postprocess, res)
     #utils.save_pkl(clt.lda.r2l, r2l)
   elif model=='kmn':

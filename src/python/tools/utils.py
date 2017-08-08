@@ -9,8 +9,8 @@ def measure_time(main):
   before = datetime.datetime.now()
   try:
     main()
-  except e:
-    traceback.print_exc(e)
+  except Exception as e:
+    traceback.print_exc()
   
   print("Time elapsed:", datetime.datetime.now() - before)
 

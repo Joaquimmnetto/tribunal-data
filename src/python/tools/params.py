@@ -77,10 +77,10 @@ def load_names(bdir, mdir):
 if len(sys.argv) > 1:
   read_args(sys.argv[1:])
 
-sys.path.append("../../../data/")
+#sys.path.append("../../data/")
 
-base_dir = args.get("base_dir", "../../../data/base/samples")
-model_dir = args.get("model_dir", "../../../data/model_drift/samples")
+base_dir = args.get("base_dir", "../../data/base/samples")
+model_dir = args.get("model_dir", "../../data/model_drift/samples")
 print("Model dir:{0}",model_dir)
 base,vecs,clt = load_names(base_dir, model_dir)
 
