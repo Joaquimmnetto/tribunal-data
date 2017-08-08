@@ -3,11 +3,15 @@ import pickle
 import scipy.io
 import math
 import csv
-
+import traceback
 
 def measure_time(main):
   before = datetime.datetime.now()
-  main()
+  try:
+    main()
+  except e:
+    traceback.print_exc(e)
+  
   print("Time elapsed:", datetime.datetime.now() - before)
 
 
