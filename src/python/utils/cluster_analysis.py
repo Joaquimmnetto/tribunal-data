@@ -5,25 +5,25 @@ from gensim.models import LdaMulticore
 from params import args, clt, vecs
 import utils
 import numpy as np
-import wordcloud
+#import wordcloud
 
 
 print("Loading inputs")
 
-def save_wordclouds(weights, sufixo=""):
-  for l, v in weights:
-    wc = wordcloud.WordCloud(max_font_size=250, width=500, height=500, max_words=100,
-                             background_color='white').fit_words(v)
-    sufixo = ""
-    sufixo += str(l) + '_' + "full"
-    save_wc(wc, sufixo)
+# def save_wordclouds(weights, sufixo=""):
+#   for l, v in weights:
+#     wc = wordcloud.WordCloud(max_font_size=250, width=500, height=500, max_words=100,
+#                              background_color='white').fit_words(v)
+#     sufixo = ""
+#     sufixo += str(l) + '_' + "full"
+#     save_wc(wc, sufixo)
 
 
-def save_wc(wordcloud, sufixo):
-  plt.figure()
-  plt.imshow(wordcloud)
-  plt.axis("off")
-  plt.savefig('wc_' + sufixo + '.png')
+# def save_wc(wordcloud, sufixo):
+#   plt.figure()
+#   plt.imshow(wordcloud)
+#   plt.axis("off")
+#   plt.savefig('wc_' + sufixo + '.png')
 
 
 def analysis(pp_fn, topic_probs, nwords):
@@ -61,30 +61,41 @@ def main():
   # [(label,[(word,weight),...])]
   if nwords > 0:
     df = utils.load_obj(vecs.df)
-    lst_fwords = utils.groups_tfidf(labels_weight, df, num_words=nwords)
+    lst_fwords = dict(utils.groups_tfidf(labels_weight, df, num_words=nwords))
   else:
     #
-    lst_fwords = [(n, [(w, wht) for w, wht in sorted(ws, key=lambda v: v[1], reverse=True)]) for n, ws in
-                  labels_weight.items()]
-
-  #save_wordclouds(lst_fwords, 'topic_prob' if topic_probs else 'bow_sum')
+    lst_fwords = dict([(n, [(w, wht) for w, wht in sorted(ws, key=lambda v: v[1], reverse=True)]) for n, ws in
+                  labels_weight.items()])
+  
+  clusters_bysize = [cl for cl,perc in sorted(groups_cont.items(),key=lambda x:x[1],reverse=True)]
+  #save_wordclouds(lst_fwords, 'topic_prob' if topic_probs else 'bow_sum')""
   print("WordClouds saved")
   print("-------------Results----------------")
   print("Top 10 words for each cluster:")
-  for gr_lst in lst_fwords:
-    print("Cluster", gr_lst[0])
-    print([(word, "%.2f" % w) for word, w in gr_lst[1][:10]])
+  for i,cl in enumerate(clusters_bysize):    
+    print(i+1, ":",cl, "-", "%.2f"%(100*groups_cont[cl])+"%")          
+    print([word for word, w in lst_fwords[cl][:10]])     
 
   if not topic_probs:
-    print("Cluster/Topic distribution:")
-    pprint(groups_cont)
+    # print("Cluster/Topic distribution:")
+    # for i,cl in enumerate(clusters_bysize):
+    #   print(i+1, ":",cl, "-", groups_cont[cl])    
+    print("Avg. likelyhood that a doc. belongs to a topic:")
+    for topic in topics_sum.keys():
+      total = np.sum(topics_sum[topic])
+      topics_sum[topic] *= (100.0 / total)
 
-    print("Avg. probability that a doc. belongs to a topic:")
-    #for topic in topics_sum.keys():
-      #total = np.sum(topics_sum[topic])
-      #topics_sum[topic] *= (100.0 / total)
+    print("\t\t",end="")
+    for i in range(len(clusters_bysize)):
+      print(i,end="\t")
+    print("")
+    for i,cl in enumerate(clusters_bysize):
+      print(i+1, ":",cl, "- ", end="\t")
+      for lk in topics_sum[cl]:
+        print("%.1f" % lk,"", end="\t")
+      print("")
 
-    pprint(topics_sum)
+    
 
 
 if __name__ == '__main__':
