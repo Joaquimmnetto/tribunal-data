@@ -69,9 +69,9 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
     r2l[row] = np.array([val for clt,val in sorted(topics, key=lambda x:x[0])])
     assert r2l[row].shape[0] == len(labels)
     
-    #labels_sum[first_topic] += sparse2full(bow, len(vocab))
-    #topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
-    #topics_count[first_topic] += 1
+    labels_sum[first_topic] += sparse2full(bow, len(vocab))
+    topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
+    topics_count[first_topic] += 1
     row += 1
   del bow_mat
 
@@ -128,8 +128,8 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
   for label, vec in labels_sum.items():
     labels_sum[label] = sorted(list(zip(vocab, vec)), key=lambda x: x[1], reverse=True)
 
-  #for label in topics_sum.keys():
-    #topics_count[label] /= float(mat_len)
+  for label in topics_sum.keys():
+    topics_count[label] /= float(mat_len)
 
   return labels_sum, topics_sum, topics_count, r2l
 
@@ -143,9 +143,8 @@ def main():
   res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
   print("saving results...")
   if model=='lda':    
-    pass
-    #utils.save_pkl(clt.lda.postprocess, res)
-    #utils.save_pkl(clt.lda.r2l, r2l)
+    utils.save_pkl(clt.lda.postprocess, res)
+    utils.save_pkl(clt.lda.r2l, r2l)
   elif model=='kmn':
     utils.save_pkl(clt.kmn.postprocess, res)
     utils.save_pkl(clt.kmn.r2l, r2l)

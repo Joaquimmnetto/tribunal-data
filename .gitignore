@@ -62,6 +62,7 @@ vignettes/*.pdf
 *.state
 *.projection
 *.index
+*.id2word
 
 #-----------------------Python--------------
 
