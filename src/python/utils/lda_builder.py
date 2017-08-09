@@ -1,4 +1,4 @@
-from gensim.models import LdaMulticore
+from gensim.models import LdaMulticore, LdaModel
 from gensim.matutils import Scipy2Corpus
 from gensim.corpora import MmCorpus
 
@@ -9,15 +9,18 @@ from params import args, vecs, clt
 
 
 
-def lda_topic_discovery(corpus, id2word, num_topics):
+def lda_topic_discovery(corpus, id2word, num_topics, multithread):
     #lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, num_topics=num_topics, id2word=id2word, workers=5)
-    lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, alpha='auto', num_topics=num_topics, id2word=id2word, workers=5)
+    if multithread:
+      lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, alpha='asymmetric', iterations=100, num_topics=num_topics, id2word=id2word, workers=5)
+    else:
+      lda_model = LdaModel(corpus=corpus, minimum_probability=0, alpha='auto', iterations=100, num_topics=num_topics, id2word=id2word)
     return lda_model
 
 
 def main():
     num_topics = int(args.get("num_topics", 15))
-    analysis = bool(args.get("analysis", False))
+    multithread = args.get("mt", 'True') == 'True' 
 
     print("Loading bow matrix:")        
     gsm_corpus = MmCorpus(vecs.bow.mtx.format(0))    
@@ -26,7 +29,7 @@ def main():
     id2word = dict([(i, v) for i, v in enumerate(id2word)])
 
     print("Updating model with matrix 0:")
-    lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics)
+    lda_model = lda_topic_discovery(gsm_corpus, id2word, num_topics, multithread)
     del gsm_corpus
 
     for i in range(1, vecs.n_matrix):
