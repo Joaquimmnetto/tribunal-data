@@ -1,4 +1,4 @@
-{'model_dir': 'model_drift', 'base_dir': 'base'}
+{'base_dir': 'base', 'model_dir': 'model_drift'}
 Model dir:{0} model_drift
 Loading inputs
 model_drift/lda_pp.pkl False 100
@@ -55,4 +55,4 @@ Avg. likelyhood that a doc. belongs to a topic:
 13 : 8 - 	2.8 	5.6 	3.3 	6.1 	4.2 	4.1 	5.2 	3.5 	44.0 	3.7 	3.4 	2.6 	3.3 	4.2 	4.3 	
 14 : 11 - 	3.6 	5.3 	3.6 	4.7 	5.0 	4.4 	5.8 	2.4 	3.3 	3.4 	2.3 	44.6 	3.4 	4.0 	4.2 	
 15 : 10 - 	2.3 	5.4 	2.2 	6.6 	2.8 	3.1 	5.1 	10.1 	4.1 	3.2 	43.3 	2.0 	2.7 	3.3 	3.8 	
-Time elapsed: 0:00:00.742796
+Time elapsed: 0:00:00.791567

@@ -56,7 +56,7 @@ def load_names(bdir, mdir):
 
 
   _model_t = namedtuple("Model",["model", "labels", "r2l", "postprocess"])
-  clt = namedtuple("clt", ["kmn", "lda"])(
+  clt = namedtuple("clt", ["kmn", "lda", 'hdp'])(
     kmn = _model_t(
         model=load_arg('kmn_model', 'kmn_centres.pkl', mdir),
         labels=load_arg('kmn_labels', 'kmn_labels.pkl', mdir),
@@ -68,8 +68,15 @@ def load_names(bdir, mdir):
         labels=load_arg('lda_labels', 'lda_labels.pkl', mdir),
         r2l=load_arg('lda_r2l', 'lda_r2l_{0}.pkl', mdir),
         postprocess=load_arg('lda_pp', 'lda_pp.pkl', mdir)
+      ),
+      hdp = _model_t(
+        model=load_arg('hdp_model', "hdp_model.gsm", mdir),
+        labels=load_arg('hdp_labels', 'hdp_labels.pkl', mdir),
+        r2l=load_arg('hdp_r2l', 'hdp_r2l_{0}.pkl', mdir),
+        postprocess=load_arg('hdp_pp', 'hdp_pp.pkl', mdir)
       )
   )
+
   return base,vecs,clt
 
   
@@ -77,23 +84,12 @@ def load_names(bdir, mdir):
 if len(sys.argv) > 1:
   read_args(sys.argv[1:])
 
-sys.path.append("../../../data/")
+data_dir = "../../../data/"
 
 base_dir = args.get("base_dir", "../../../data/base/samples")
 model_dir = args.get("model_dir", "../../../data/model_drift/samples")
 print("Model dir:{0}",model_dir)
 base,vecs,clt = load_names(base_dir, model_dir)
-
-
-
-
-# modelos basicos de vocabulário
-
-#vocab_csv = load_arg('vocab_csv', "chat_tkn.vocab")
-
-#words = load_arg('words', "words.pkl")
-#chat_parsed = load_arg('chat_parsed', "chat_parsed.csv")
-
 
 # Ideias:
 # Bigramas

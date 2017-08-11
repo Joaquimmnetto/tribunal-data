@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore")
 import utils
 import numpy as np
 
-from gensim.models import LdaMulticore
+from gensim.models import HdpModel
 from params import args,clt,vecs
 
 from concurrent.futures import ProcessPoolExecutor
@@ -45,12 +45,13 @@ def process_dtd(lda, r2l_fn):
 
 
 
-def process_ttd(lda, ids):  
+def process_ttd(model, ids):  
   print("processing ttd")
-  if hasattr(lda, 'lda_beta'):
-    topic = lda.lda_beta
+  #Case HDP:
+  if hasattr(model, 'lda_beta'):
+    topic = model.lda_beta
   else:
-    topic = lda.state.get_lambda()
+    topic = model.state.get_lambda()
     topic = topic / topic.sum(axis=1)[:, None]
   topic_term_dists = topic[:, ids]
   return topic_term_dists
@@ -64,23 +65,29 @@ def process_doclens(bow):
   return doc_len, tfs
 
 def main():
-  lda = utils.load_obj(clt.lda.model, LdaMulticore)  
+  model = args.get("model","lda")
+  
+  if model == 'lda':
+    model = utils.load_obj(clt.lda.model, LdaMulticore)  
+  elif model == 'hdp':
+    model = utils.load_obj(clt.hdp.model, HdpModel)  
+
+  
   vocab = utils.load_obj(vecs.bow.vocab)  
   n_workers = int(args.get('n_workers',3))
 
   with ProcessPoolExecutor(max_workers=n_workers) as exc:
     print('queue ttd')
-    ttd_promise = exc.submit(process_ttd, lda, np.array(range(0,len(vocab))))
+    ttd_promise = exc.submit(process_ttd, model, np.array(range(0,len(vocab))))
     bow_promises = []  
+    
     print('queue matrixes')
     for part in range(0, vecs.n_matrix):
       bow = utils.load_obj(vecs.bow.mtx.format(part))
       bow_promises.append(exc.submit(process_doclens, bow))
 
-    print('processing results')
-    #doc_topic_dists = dtd_promise.result()
+    print('processing results')    
     topic_term_dists = ttd_promise.result()
-
     doc_lengths = []
     term_frequency = None    
     for promise in bow_promises:
@@ -93,7 +100,7 @@ def main():
         term_frequency = term_frequency + freqs
          
   print('process dtd')
-  doc_topic_dists = process_dtd(lda, clt.lda.r2l)
+  doc_topic_dists = process_dtd(lda,clt.lda.r2l if model=='lda' else clt.hdp.r2l)
   term_frequency = np.array(term_frequency)[0]
   
   print(term_frequency)

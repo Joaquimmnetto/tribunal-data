@@ -2,6 +2,7 @@ import scipy.sparse
 import scipy.io
 from six import iteritems
 
+import params
 from params import args, vecs, base
 import utils
 
@@ -12,8 +13,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 min_freq = int(args.get('min_freq', 800))
 timeslice = int(args.get('timeslice', 600))
-champs_fn = args.get("champs", 'base/champs.txt')
-stwords_fn = args.get("stwords", 'base/en_stopwords.txt')
+champs_fn = args.get("champs", params.data_dir+'base/champs.txt')
+stwords_fn = args.get("stwords", params.data_dir+'base/en_stopwords.txt')
 
 
 champs = [champ.strip('\n').strip(' ').lower() for champ in open(champs_fn)]

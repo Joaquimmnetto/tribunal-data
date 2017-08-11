@@ -68,7 +68,9 @@ def main():
                   labels_weight.items()])
   
   clusters_bysize = [cl for cl,perc in sorted(groups_cont.items(),key=lambda x:x[1],reverse=True)]
+  
   #save_wordclouds(lst_fwords, 'topic_prob' if topic_probs else 'bow_sum')""
+  
   print("WordClouds saved")
   print("-------------Results----------------")
   print("Top 10 words for each cluster:")
@@ -76,10 +78,7 @@ def main():
     print(i+1, ":",cl, "-", "%.2f"%(100*groups_cont[cl])+"%")          
     print([word for word, w in lst_fwords[cl][:10]])     
 
-  if not topic_probs:
-    # print("Cluster/Topic distribution:")
-    # for i,cl in enumerate(clusters_bysize):
-    #   print(i+1, ":",cl, "-", groups_cont[cl])    
+  if not topic_probs:  
     print("Avg. likelyhood that a doc. belongs to a topic:")
     for topic in topics_sum.keys():
       total = np.sum(topics_sum[topic])

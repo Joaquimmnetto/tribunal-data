@@ -1,4 +1,4 @@
-from gensim.models import LdaMulticore
+from gensim.models import LdaMulticore, HdpModel
 from gensim.matutils import sparse2full
 from gensim.corpora import MmCorpus
 from gensim.matutils import Scipy2Corpus
@@ -14,8 +14,6 @@ from concurrent.futures import ProcessPoolExecutor
 from params import vecs,clt,args
 
 def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):  
-  # scipy_mat = utils.load_obj(bow_mat_fn.format(part))
-  # bow_mat = Scipy2Corpus(scipy_mat.tocsc())
   bow_mat = MmCorpus(bow_mat_fn.format(part))
   row = part * len(bow_mat)
 
@@ -44,18 +42,15 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   return labels_sum, topics_sum, topics_count
 
 
-def aggregate_lda(bow_mat_fn, lda_model, part, vocab):  
+def aggregate_lda(bow_mat_fn, lda_model, part, vocab, hdp=False):  
   print("Starting part ",part)
-  #skmat = utils.load_obj(bow_mat_fn.format(part))
   print("Matrix load at part ",part)
   bow_mat = MmCorpus(bow_mat_fn.format(part))
-  #bow_mat = Scipy2Corpus(skmat.tocsc())
-  #row = part * skmat.shape[0]
   row = part * len(bow_mat)
+    
+  num_topics = lda_model.num_topics    
+  labels = range(0, num_topics)   
 
-  #del skmat
-  
-  labels = range(0, lda_model.num_topics)
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
   topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
   topics_count = dict([(label, 0) for label in labels])
@@ -65,25 +60,30 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab):
     topics = lda_model[bow]
     if row % 10000 == 0:
       print(row)
-    first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
+        
     r2l[row] = np.array([val for clt,val in sorted(topics, key=lambda x:x[0])])
     assert r2l[row].shape[0] == len(labels)
     
+    first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
     labels_sum[first_topic] += sparse2full(bow, len(vocab))
-    topics_sum[first_topic] += sparse2full(topics, lda_model.num_topics)
+    topics_sum[first_topic] += sparse2full(topics, num_topics)
     topics_count[first_topic] += 1
     row += 1
   del bow_mat
 
   print("Saving r2l of",str(part))
-  utils.save_pkl(clt.lda.r2l.format(part),r2l)
+  if hdp:
+    utils.save_pkl(clt.hdp.r2l.format(part),r2l)
+  else:
+    utils.save_pkl(clt.lda.r2l.format(part),r2l)
+
+    
   
   return labels_sum, topics_sum, topics_count
 
 def append_results(promise, labels_sum, topics_sum, topics_count, part):
   print("Processing ",str(part))
-  _ls,_ts,_tc = promise.result()
-  #r2l.update(_r2l)
+  _ls,_ts,_tc = promise.result()  
   print("Filling postprocessing aggrs. of ",str(part))
   for label in labels_sum.keys():
     labels_sum[label] += _ls[label]
@@ -97,11 +97,15 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
   if model_name=='lda':
     model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)    
     labels = range(0, model.num_topics)
+  elif model_name=='hdp':
+    model = utils.load_obj(clt.hdp.model, gensim_class=HdpModel)        
+    labels = range(0, model.suggested_lda_model().num_topics)    
   elif model_name=='kmn':
     model = utils.load_obj(clt.kmn.labels)
     points = utils.load_obj(vecs.d2v.mtx, Doc2Vec).docvecs
     centers = utils.load_obj(clt.kmn.model)
     labels = range(0, len(centers))
+
 
   labels_sum = dict([(label, np.zeros(len(vocab))) for label in labels])
   topics_sum = dict([(label, np.zeros(len(labels))) for label in labels])
@@ -113,7 +117,9 @@ def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
     for part in range(0, vecs.n_matrix):
       print("starting matrix",part)   
       if model_name=='lda':
-        promise = exc.submit(aggregate_lda, bow_mat_fn, model, part, vocab)
+        promise = exc.submit(aggregate_lda, bow_mat_fn, model, part, vocab, False)
+      if model_name=='hdp':
+        promise = exc.submit(aggregate_lda, bow_mat_fn, model.suggested_lda_model(), part, vocab, True)
       elif model_name=='kmn':      
         promise = exc.submit(aggregate_kmn, 
                     bow_mat_fn, points, model, centers, part, vocab)
@@ -145,9 +151,13 @@ def main():
   if model=='lda':    
     utils.save_pkl(clt.lda.postprocess, res)
     utils.save_pkl(clt.lda.r2l, r2l)
+  elif model=='hdp':
+    utils.save_pkl(clt.hdp.postprocess, res)
+    utils.save_pkl(clt.hdp.r2l, r2l)
   elif model=='kmn':
     utils.save_pkl(clt.kmn.postprocess, res)
     utils.save_pkl(clt.kmn.r2l, r2l)
+
 
 if __name__ == '__main__':
   utils.measure_time(main)

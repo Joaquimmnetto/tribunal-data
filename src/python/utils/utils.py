@@ -42,7 +42,7 @@ def groups_tfidf(groups, dfs, num_words=100):
   for num, words in groups.items():
     new_words = []
     for w, p in words[:num_words]:
-      if p == 0 or dfs[w] == 0:
+      if p == 0 or (w not in dfs.keys()) or dfs[w] == 0:
         idfp = -math.inf
       else:
         idfp = math.log(p * (1.0 / float(dfs[w])))
