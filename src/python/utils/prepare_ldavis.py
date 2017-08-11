@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore")
 import utils
 import numpy as np
 
-from gensim.models import HdpModel
+from gensim.models import LdaMulticore, HdpModel
 from params import args,clt,vecs
 
 from concurrent.futures import ProcessPoolExecutor
@@ -65,11 +65,11 @@ def process_doclens(bow):
   return doc_len, tfs
 
 def main():
-  model = args.get("model","lda")
+  model_name = args.get("model","lda")
   
-  if model == 'lda':
+  if model_name == 'lda':
     model = utils.load_obj(clt.lda.model, LdaMulticore)  
-  elif model == 'hdp':
+  elif model_name == 'hdp':
     model = utils.load_obj(clt.hdp.model, HdpModel)  
 
   
@@ -100,7 +100,7 @@ def main():
         term_frequency = term_frequency + freqs
          
   print('process dtd')
-  doc_topic_dists = process_dtd(lda,clt.lda.r2l if model=='lda' else clt.hdp.r2l)
+  doc_topic_dists = process_dtd(model,clt.lda.r2l if model_name=='lda' else clt.hdp.r2l)
   term_frequency = np.array(term_frequency)[0]
   
   print(term_frequency)
