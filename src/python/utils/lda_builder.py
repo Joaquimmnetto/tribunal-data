@@ -9,8 +9,12 @@ from params import args, vecs, clt
 
 
 
-def lda_topic_discovery(corpus, id2word, num_topics, alpha, n_workers):    
-    lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, alpha=alpha,
+def lda_topic_discovery(corpus, id2word, num_topics, alpha, n_workers):
+    if alpha=='auto':
+        lda_model = LdaModel(corpus=corpus, minimum_probability=0, alpha=alpha,
+                             iterations=100, num_topics=num_topics, id2word=id2word)
+    else:
+        lda_model = LdaMulticore(corpus=corpus, minimum_probability=0, alpha=alpha,
                              iterations=100, num_topics=num_topics, id2word=id2word, workers=n_workers)    
     return lda_model
 
