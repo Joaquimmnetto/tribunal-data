@@ -1,0 +1,37 @@
+{'base_dir': 'base', 'model_dir': 'model_drift'}
+Model dir:{0} model_drift
+Loading inputs
+model_drift/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 1 - 32.51%
+['ult', 'flash', 'wards', 'hit', 'ward', 'fight', 'tower', 'dat', 'got', 'get']
+2 : 6 - 18.28%
+['playing', 'people', 'game', 'cause', 'lost', 'said', 'play', 'even', 'lane', 'troll']
+3 : 0 - 14.67%
+['mia', 'leash', 'ss', 'mid', 'top', 'omw', 'invade', 'care', 'bot', 'gank']
+4 : 3 - 13.57%
+['noob', 'noobs', 'fking', 'idiot', 'omg', 'feed', 'ks', 'stupid', 'omfg', 'vs']
+5 : 7 - 8.39%
+['lag', 'gl', 'xd', 'hahaha', 'haha', 'ks', 'np', 'close', 'sorry', 'sry']
+6 : 4 - 5.16%
+['nigger', 'mom', 'faggot', 'cunt', 'fag', 'dick', 'reported', 'kid', 'mad', 'bg']
+7 : 5 - 3.83%
+['together', 'gg', 'wp', 'defend', 'stick', 'group', 'def', 'finish', 'baron', 'inhib']
+8 : 2 - 3.58%
+['vos', 'pero', 'mira', 'eso', 'asi', 'qe', 'para', 'jugar', 'una', 'como']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	
+1 : 1 - 	9.2 	54.9 	1.3 	6.6 	4.9 	5.9 	9.8 	7.3 	
+2 : 6 - 	7.6 	12.6 	1.4 	8.0 	7.3 	4.9 	51.5 	6.7 	
+3 : 0 - 	54.5 	10.4 	2.5 	7.2 	4.6 	5.1 	7.7 	8.0 	
+4 : 3 - 	7.8 	8.3 	2.9 	52.8 	5.9 	6.0 	8.1 	8.2 	
+5 : 7 - 	8.4 	10.0 	2.9 	8.0 	5.9 	6.8 	7.5 	50.5 	
+6 : 4 - 	6.0 	9.7 	2.3 	8.2 	50.1 	5.4 	10.0 	8.3 	
+7 : 5 - 	6.6 	8.4 	3.2 	8.2 	5.4 	52.4 	6.4 	9.4 	
+8 : 2 - 	7.5 	5.3 	61.6 	8.1 	3.4 	4.0 	3.8 	6.3 	
+Time elapsed: 0:00:00.489837

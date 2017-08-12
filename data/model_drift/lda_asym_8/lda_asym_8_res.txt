@@ -1,0 +1,37 @@
+{'base_dir': 'base', 'model_dir': 'model_drift_asym'}
+Model dir:{0} model_drift_asym
+Loading inputs
+model_drift_asym/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 1 - 22.32%
+['lag', 'haha', 'xd', 'damn', 'dat', 'sry', 'sorry', 'np', 'op', 'lol']
+2 : 0 - 20.60%
+['noob', 'noobs', 'idiot', 'retard', 'suck', 'report', 'stupid', 'stfu', 'feed', 'shut']
+3 : 3 - 19.48%
+['drag', 'eve', 'flash', 'warded', 'cs', 'lane', 'tower', 'red', 'hit', 'ult']
+4 : 7 - 15.88%
+['trolling', 'kid', 'mad', 'talking', 'reported', 'people', 'playing', 'troll', 'game', 'said']
+5 : 6 - 9.35%
+['mia', 'ss', 'leash', 'mid', 'top', 'omw', 'gl', 're', 'care', 'ty']
+6 : 5 - 8.97%
+['group', 'together', 'baron', 'defend', 'push', 'base', 'lets', 'stay', 'end', 'fight']
+7 : 2 - 3.22%
+['vos', 'pero', 'mira', 'eso', 'asi', 'qe', 'jugar', 'una', 'weon', 'wn']
+8 : 4 - 0.18%
+['fica', 'joga', 'olha', 'agora', 'jogo', 'vc', 'pra', 'essa', 'isso', 'ajuda']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	
+1 : 1 - 	11.1 	54.1 	2.2 	9.5 	1.7 	6.6 	7.6 	7.1 	
+2 : 0 - 	55.9 	11.6 	2.8 	8.0 	1.9 	5.6 	6.3 	7.9 	
+3 : 3 - 	11.0 	12.6 	1.1 	50.9 	1.1 	8.0 	7.5 	8.0 	
+4 : 7 - 	12.5 	10.7 	1.4 	9.2 	1.3 	5.2 	5.4 	54.4 	
+5 : 6 - 	10.2 	12.2 	2.5 	8.5 	1.6 	5.3 	54.5 	5.2 	
+6 : 5 - 	10.3 	12.1 	2.1 	9.9 	1.6 	52.8 	5.3 	5.9 	
+7 : 2 - 	10.1 	8.8 	61.3 	3.4 	3.5 	3.7 	6.0 	3.2 	
+8 : 4 - 	11.2 	9.9 	12.6 	4.0 	46.7 	5.3 	6.1 	4.3 	
+Time elapsed: 0:00:00.527819
