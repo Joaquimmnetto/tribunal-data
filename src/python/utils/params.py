@@ -24,7 +24,7 @@ def load_arg(arg, fname, _dir=model_dir):
 #   return directory
 
 
-def load_names(bdir, mdir):
+def load_names(bdir, mdir, vdir):
 
   base = namedtuple("base", ['chat', 'corpus'])(
     chat=load_arg('chat', "chat_parsed.csv",_dir=bdir),
@@ -35,23 +35,23 @@ def load_names(bdir, mdir):
   vecs = namedtuple("matrixes",['bow','tfidf','d2v','df','n_matrix'])(
 
       bow = _matrix_t(
-        mtx = load_arg('bow_mtx', 'bow_{0}.mtx', mdir),
-        r2d = load_arg('bow_r2d', "bow_r2d.pkl", mdir),
-        vocab = load_arg("bow_vocab", 'bow_vocab.pkl', mdir)
+        mtx = load_arg('bow_mtx', 'bow_{0}.mtx', vdir),
+        r2d = load_arg('bow_r2d', "bow_r2d.pkl", vdir),
+        vocab = load_arg("bow_vocab", 'bow_vocab.pkl', vdir)
       ),
       tfidf = _matrix_t(
-        mtx = load_arg('tfidf_mtx', 'tfidf_{0}.mtx', mdir),
-        r2d = load_arg('tfidf_r2d', "tfidf_r2d.pkl", mdir),
-        vocab = load_arg("tfidf_vocab", 'tfidf_vocab.pkl', mdir)
+        mtx = load_arg('tfidf_mtx', 'tfidf_{0}.mtx', vdir),
+        r2d = load_arg('tfidf_r2d', "tfidf_r2d.pkl", vdir),
+        vocab = load_arg("tfidf_vocab", 'tfidf_vocab.pkl', vdir)
       ),
       d2v = _matrix_t(
-        mtx = load_arg('d2v_model', 'd2v_model.bin', mdir),
-        r2d = load_arg('d2v_r2l', 'd2v_r2d.pkl', mdir),
-        vocab = load_arg('d2v_vocab', 'd2v_vocab.pkl', mdir)
+        mtx = load_arg('d2v_model', 'd2v_model.bin', vdir),
+        r2d = load_arg('d2v_r2l', 'd2v_r2d.pkl', vdir),
+        vocab = load_arg('d2v_vocab', 'd2v_vocab.pkl', vdir)
       ),
 
       n_matrix = args.get("n_matrix", 5),
-      df = load_arg('df', 'df.pkl', bdir)
+      df = load_arg('df', 'bow_df.pkl', vdir)
   )
 
 
@@ -88,8 +88,9 @@ data_dir = "../../../data/"
 
 base_dir = args.get("base_dir", "../../../data/base/samples")
 model_dir = args.get("model_dir", "../../../data/model_drift/samples")
+vecs_dir = args.get("vecs_dir", "../../../data/vecs/timeslice-10-full/samples")
 print("Model dir:{0}",model_dir)
-base,vecs,clt = load_names(base_dir, model_dir)
+base,vecs,clt = load_names(base_dir, model_dir, vecs_dir)
 
 # Ideias:
 # Bigramas
