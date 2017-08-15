@@ -1,7 +1,8 @@
 import scipy.sparse
 import scipy.io
+import numpy as np
 from six import iteritems
-
+from calculate_df import process_df
 import params
 from params import args, vecs, base
 import utils
@@ -82,14 +83,19 @@ def save_outp(row_doc, row_doc_fn, vocab, vocab_fn, matrix, matrix_fn):
 
 
 def main():
+  freq = None
   print("Building counting matrix")
   docs, cnt_vocab, cnt_matrix = build_cnt_matrix(base.chat, base.corpus, timeslice)
-  print(cnt_matrix.shape[0])
+      
+  freq = cnt_matrix.sum(axis=0)   
+  freq = np.array(freq)[0] 
+
+  utils.save_pkl(vecs.df, freq)
 
   print("Saving models...")
   save_outp(docs, vecs.bow.r2d,
             cnt_vocab, vecs.bow.vocab,
-            cnt_matrix, vecs.bow.mtx)
+            cnt_matrix, vecs.bow.mtx)            
 
 
 # print("Total time elapsed:", datetime.datetime.now() - before)
