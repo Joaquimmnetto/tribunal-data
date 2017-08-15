@@ -37,7 +37,8 @@ def topic_words(topic_model, topn_topics=-1, topn_words=100):
   return dict(topics)
 
 
-def groups_tfidf(groups, dfs, num_words=100):
+def groups_tfidf(groups, vocab, dfs, num_words=100):
+  dfs = dict(zip(vocab, dfs))
   result = []
   for num, words in groups.items():
     new_words = []
