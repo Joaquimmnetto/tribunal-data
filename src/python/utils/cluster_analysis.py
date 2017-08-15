@@ -47,6 +47,7 @@ def main():
   topic_probs = args.get('topic_probs', 'False') == 'True'
   model_name = args.get('model', 'lda').strip()
   nwords = int(args.get('nwords', 100))
+  vocab = utils.load_obj(vecs.bow.vocab)
 
   if model_name=='lda':
     postprocess_fn = clt.lda.postprocess
@@ -61,7 +62,7 @@ def main():
   # [(label,[(word,weight),...])]
   if nwords > 0:
     df = utils.load_obj(vecs.df)
-    lst_fwords = dict(utils.groups_tfidf(labels_weight, df, num_words=nwords))
+    lst_fwords = dict(utils.groups_tfidf(labels_weight, vocab, df, num_words=nwords))
   else:
     #
     lst_fwords = dict([(n, [(w, wht) for w, wht in sorted(ws, key=lambda v: v[1], reverse=True)]) for n, ws in
