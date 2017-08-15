@@ -89,7 +89,9 @@ data_dir = "../../../data/"
 base_dir = args.get("base_dir", "../../../data/base/samples")
 model_dir = args.get("model_dir", "../../../data/model_drift/samples")
 vecs_dir = args.get("vecs_dir", "../../../data/vecs/timeslice-10-full/samples")
-print("Model dir:{0}",model_dir)
+print("Base dir: ",base_dir)
+print("Model dir: ",model_dir)
+print("Vectors dir: ",vecs_dir)
 base,vecs,clt = load_names(base_dir, model_dir, vecs_dir)
 
 # Ideias:

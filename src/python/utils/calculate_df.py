@@ -7,6 +7,7 @@ from params import base,vecs
 def process_df(bow_mtx_fn):
   freq = None
   for i in range(0,vecs.n_matrix):
+    print("Processing matrix",i)
     bow = utils.load_obj(bow_mtx_fn.format(i))
     if freq is None:
       freq = bow.sum(axis=0)
