@@ -1,0 +1,39 @@
+{'vecs_dir': 'vecs/timeslice-10-full', 'base_dir': 'base', 'model_dir': 'model_drift/lda_sym_8', 'nshow': '15'}
+Base dir:  base
+Model dir:  model_drift/lda_sym_8
+Vectors dir:  vecs/timeslice-10-full
+Loading inputs
+model_drift/lda_sym_8/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 1 - 32.51% - Tactics
+['ult', 'flash', 'wards', 'hit', 'ward', 'fight', 'tower', 'dat', 'got', 'get', 'red', 'baron', 'getting', 'ez', 'warded']
+2 : 6 - 18.28% - Arguments
+['playing', 'people', 'game', 'cause', 'lost', 'said', 'play', 'even', 'lane', 'troll', 'lose', 'say', 'never', 'cs', 'better']
+3 : 0 - 14.67% - Tactics
+['mia', 'leash', 'ss', 'mid', 'top', 'omw', 'invade', 'care', 'bot', 'gank', 'ty', 're', 'warded', 'blue', 'brb']
+4 : 3 - 13.57% - Insults
+['noob', 'noobs', 'fking', 'idiot', 'omg', 'feed', 'ks', 'stupid', 'omfg', 'vs', 'report', 'retard', 'fk', 'surrender', 'suck']
+5 : 7 - 8.39% - Positive/Small talk
+['lag', 'gl', 'xd', 'hahaha', 'haha', 'ks', 'np', 'close', 'sorry', 'sry', 'brb', 'nice', 'lol', 'damn', 'gj']
+6 : 4 - 5.16% - Taunts
+['nigger', 'mom', 'faggot', 'cunt', 'fag', 'dick', 'reported', 'kid', 'mad', 'bg', 'bitch', 'ass', 'reporting', 'little', 'report']
+7 : 5 - 3.83% - Tactics
+['together', 'gg', 'wp', 'defend', 'stick', 'group', 'def', 'finish', 'baron', 'inhib', 'push', 'end', 'base', 'lets', 'wait']
+8 : 2 - 3.58% - Other langs.
+['vos', 'pero', 'mira', 'eso', 'asi', 'qe', 'para', 'jugar', 'una', 'como', 'mas', 'torre', 'todos', 'con', 'wn']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	
+1 : 1 - 	9.2 	54.9 	1.3 	6.6 	4.9 	5.9 	9.8 	7.3 	
+2 : 6 - 	7.6 	12.6 	1.4 	8.0 	7.3 	4.9 	51.5 	6.7 	
+3 : 0 - 	54.5 	10.4 	2.5 	7.2 	4.6 	5.1 	7.7 	8.0 	
+4 : 3 - 	7.8 	8.3 	2.9 	52.8 	5.9 	6.0 	8.1 	8.2 	
+5 : 7 - 	8.4 	10.0 	2.9 	8.0 	5.9 	6.8 	7.5 	50.5 	
+6 : 4 - 	6.0 	9.7 	2.3 	8.2 	50.1 	5.4 	10.0 	8.3 	
+7 : 5 - 	6.6 	8.4 	3.2 	8.2 	5.4 	52.4 	6.4 	9.4 	
+8 : 2 - 	7.5 	5.3 	61.6 	8.1 	3.4 	4.0 	3.8 	6.3 	
+Time elapsed: 0:00:00.453818

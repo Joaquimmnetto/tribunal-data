@@ -1,0 +1,45 @@
+{'base_dir': 'base', 'vecs_dir': 'vecs/timeslice-10-full', 'model_dir': 'model_drift/lda_auto_10', 'nshow': '15'}
+Base dir:  base
+Model dir:  model_drift/lda_auto_10
+Vectors dir:  vecs/timeslice-10-full
+Loading inputs
+model_drift/lda_auto_10/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 8 - 82.91%
+['omg', 'wtf', 'back', 'damn', 'run', 'sorry', 'come', 'wow', 'go', 'nice', 'help', 'focus', 'ok', 'gj', 'kill']
+2 : 9 - 12.21%
+['kid', 'mad', 'talking', 'people', 'ur', 'cuz', 'game', 'cause', 'doesnt', 'rofl', 'said', 'fucking', 'even', 'stfu', 'play']
+3 : 6 - 2.58%
+['drag', 'red', 'gold', 'ward', 'wards', 'dragon', 'buy', 'tf', 'flash', 'ult', 'ez', 'dat', 'baron', 'worth', 'oom']
+4 : 0 - 1.30%
+['vos', 'vida', 'cuando', 'pero', 'qe', 'asi', 'tiene', 'mira', 'mas', 'como', 'una', 'weon', 'para', 'todo', 'jugar']
+5 : 7 - 0.94%
+['mia', 'ss', 're', 'mid', 'hf', 'top', 'cover', 'care', 'omw', 'warded', 'gl', 'mias', 'brb', 'ty', 'wolves']
+6 : 2 - 0.02%
+['bark', 'ggggggg', 'ggggggggggggggggggggg', 'gggggggggggggggggggg', 'lololololololol', 'museum', 'gggg', 'gggggg', 'ggggggggggggg', 'ggggggggg', 'gggggggggggg', 'gggggggggg', 'ggggg', 'ggggggggggggggg', 'gggggggg']
+7 : 1 - 0.02%
+['eport', 'butter', 'anal', 'virgin', 'usa', 'vote', 'feeds', 'ban', 'yes', 'plis', 'intentional', 'verbal', 'abuse', 'surrender', 'intentionally']
+8 : 4 - 0.02%
+['ahahahahahaha', 'ahahahahaha', 'hahahahahahaha', 'ahahahaha', 'hahahahahaha', 'niggers', 'ahahahahahahaha', 'hahahahahahahaha', 'oob', 'hahahahaha', 'ahahaha', 'nooblord', 'cker', 'ahahahahah', 'ahahahah']
+9 : 5 - 0.00%
+['wub', 'dickk', 'taco', 'defeated', 'poop', 'dese', 'geegee', 'woof', 'hol', 'nooobs', 'lel', 'nashor', 'sk', 'miamid', 'ninja']
+10 : 3 - 0.00%
+['mountain', 'nutsack', 'eet', 'toooooo', 'pussssy', 'cone', 'england', 'ono', 'john', 'fds', 'york', 'wif', 'empire', 'og', 'gayyy']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	8	9	
+1 : 8 - 	1.3 	4.3 	2.5 	1.8 	3.1 	3.5 	17.5 	10.2 	34.7 	21.1 	
+2 : 9 - 	0.8 	4.7 	2.0 	1.8 	2.9 	2.9 	15.6 	7.5 	27.3 	34.4 	
+3 : 6 - 	0.8 	3.4 	2.3 	1.6 	2.3 	4.0 	30.7 	9.9 	26.3 	18.6 	
+4 : 0 - 	36.5 	3.3 	2.6 	3.7 	3.0 	2.3 	9.4 	6.7 	21.5 	11.0 	
+5 : 7 - 	1.1 	3.4 	2.0 	1.5 	2.4 	2.7 	15.4 	30.8 	24.9 	15.8 	
+6 : 2 - 	0.9 	3.3 	33.9 	1.4 	3.1 	2.6 	12.1 	6.7 	21.0 	15.0 	
+7 : 1 - 	1.6 	29.7 	2.8 	1.5 	4.0 	2.8 	11.6 	6.2 	22.6 	17.1 	
+8 : 4 - 	2.1 	5.0 	3.2 	1.7 	31.3 	2.6 	10.3 	6.1 	21.7 	16.1 	
+9 : 5 - 	1.6 	3.6 	3.2 	1.6 	2.9 	28.6 	13.9 	8.3 	21.3 	14.9 	
+10 : 3 - 	1.3 	3.1 	2.3 	37.2 	2.9 	2.1 	11.1 	5.6 	19.3 	15.1 	
+Time elapsed: 0:00:00.555447

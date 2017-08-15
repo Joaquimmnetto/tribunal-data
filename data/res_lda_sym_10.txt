@@ -1,0 +1,45 @@
+{'base_dir': 'base', 'model_dir': 'model_drift/lda_sym_10', 'vecs_dir': 'vecs/timeslice-10-full', 'nshow': '15'}
+Base dir:  base
+Model dir:  model_drift/lda_sym_10
+Vectors dir:  vecs/timeslice-10-full
+Loading inputs
+model_drift/lda_sym_10/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 1 - 30.97% - Tactics
+['cs', 'lane', 'tower', 'farm', 'flash', 'fight', 'wards', 'getting', 'hit', 'ward', 'warded', 'ult', 'didnt', 'red', 'would']
+2 : 0 - 16.70% - Small Talk
+['xd', 'lag', 'haha', 'close', 'dat', 'op', 'damn', 'lol', 'ks', 'love', 'nice', 'sorry', 'oh', 'sry', 'np']
+3 : 4 - 13.50% - Arguments
+['kid', 'mad', 'talking', 'playing', 'people', 'fun', 'reported', 'game', 'make', 'troll', 'said', 'say', 'play', 'cause', 'like']
+4 : 3 - 11.77% - Tactics
+['defend', 'push', 'go', 'solo', 'together', 'stay', 'back', 'help', 'come', 'omg', 'turret', 'wait', 'mid', 'wtf', 'run']
+5 : 5 - 10.71% - Tactics
+['mia', 'ss', 'leash', 'wolves', 'gl', 'omw', 'mid', 're', 'invade', 'top', 'care', 'ty', 'warded', 'blue', 'brb']
+6 : 6 - 5.69% - Taunts/Insults
+['nigger', 'mother', 'noob', 'noobs', 'faggot', 'dick', 'suck', 'retard', 'idiot', 'fking', 'stfu', 'fuckin', 'stupid', 'ks', 'shut']
+7 : 8 - 3.37% - Other langs.
+['vos', 'mira', 'pero', 'eso', 'asi', 'jugar', 'qe', 'para', 'una', 'como', 'weon', 'mas', 'torre', 'todos', 'con']
+8 : 9 - 3.09% - Complaints
+['bg', 'vote', 'verbal', 'abuse', 'report', 'feeder', 'surrender', 'pls', 'feeding', 'afk', 'please', 'reported', 'plz', 'ban', 'troll']
+9 : 7 - 2.91% - Tactics
+['ga', 'baron', 'stick', 'group', 'fu', 'together', 'inhib', 'def', 'buy', 'focus', 'defend', 'tank', 'end', 'kog', 'fight']
+10 : 2 - 1.27% - Endgame
+['ggggggg', 'gggggg', 'gggg', 'ggggg', 'ggg', 'gg', 'nubs', 'wp', 'ff', 'ggwp', 'pew', 'scrubs', 'wo', 'noobs', 'bg']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	8	9	
+1 : 1 - 	8.3 	54.8 	1.9 	6.4 	7.3 	7.5 	4.6 	4.9 	0.9 	3.2 	
+2 : 0 - 	50.2 	8.4 	3.1 	7.0 	7.5 	7.1 	5.5 	5.3 	2.0 	3.9 	
+3 : 4 - 	8.8 	9.6 	2.2 	6.3 	50.0 	5.5 	6.6 	4.1 	1.3 	5.5 	
+4 : 3 - 	8.3 	7.5 	2.5 	50.7 	6.6 	6.7 	6.2 	5.4 	2.2 	4.0 	
+5 : 5 - 	8.1 	8.0 	2.6 	6.8 	5.8 	53.9 	4.8 	4.2 	2.2 	3.7 	
+6 : 6 - 	7.8 	6.8 	2.8 	7.1 	7.9 	5.7 	48.6 	5.1 	2.4 	5.9 	
+7 : 8 - 	5.9 	3.4 	2.2 	6.2 	3.4 	6.7 	4.1 	4.4 	55.2 	8.6 	
+8 : 9 - 	7.0 	5.3 	3.9 	6.2 	7.5 	5.6 	7.9 	4.9 	3.3 	48.4 	
+9 : 7 - 	8.7 	8.4 	3.7 	7.7 	6.0 	5.7 	5.8 	47.0 	2.2 	4.8 	
+10 : 2 - 	8.4 	4.2 	52.9 	4.7 	5.0 	5.0 	5.6 	5.1 	3.6 	5.4 	
+Time elapsed: 0:00:00.556353

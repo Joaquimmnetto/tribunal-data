@@ -1,0 +1,60 @@
+{'nshow': '15', 'model_dir': 'model_drift/lda_auto_15', 'base_dir': 'base', 'vecs_dir': 'vecs/timeslice-10-full'}
+Base dir:  base
+Model dir:  model_drift/lda_auto_15
+Vectors dir:  vecs/timeslice-10-full
+Loading inputs
+model_drift/lda_auto_15/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 6 - 97.08% - I dont even.
+['cait', 'ward', 'wards', 'pls', 'support', 'lane', 'gj', 'fight', 'win', 'even', 'play', 'ult', 'didnt', 'game', 'op']
+2 : 7 - 2.16%
+['hahahahahahaha', 'gt', 'mierda', 'noob', 'noobs', 'report', 'de', 'te', 'es', 'el', 'que', 'pls', 'la', 'si', 'vs']
+3 : 1 - 0.34%
+['qlo', 'weon', 'vos', 'todo', 'mira', 'wea', 'como', 'pero', 'el', 'vida', 'juego', 'para', 'cuando', 'te', 'asi']
+4 : 12 - 0.25%
+['ha', 'inhib', 'defend', 'def', 'group', 'baron', 'push', 'wait', 'stay', 'lets', 'back', 'drag', 'bait', 'fight', 'dragon']
+5 : 4 - 0.09%
+['ia', 'mia', 'mid', 'mis', 're', 'care', 'top', 'mias', 'omw', 'mi', 'cover', 'bot', 'call', 'gj', 'coming']
+6 : 5 - 0.07%
+['pete', 'sabes', 'vos', 'sos', 'tenes', 'pelotudo', 'mejor', 'wn', 'porque', 'jugar', 'pero', 'qe', 'vida', 'que', 'hace']
+7 : 10 - 0.01%
+['ggggggg', 'ggggggggggggg', 'gggggggggggggggggggg', 'gggggggggg', 'gggggggg', 'ggggggggg', 'gggggg', 'gggggggggggggggggg', 'ggggggggggggggggg', 'gggg', 'gggggggggggggggg', 'ggggggggggggggggggg', 'ggggggggggg', 'ggggg', 'gggggggggggg']
+8 : 9 - 0.00%
+['heil', 'hitler', 'jews', 'faggots', 'hahahahahahahah', 'fags', 'incompetent', 'retar', 'gggg', 'gas', 'nigg', 'ers', 'ggggggggggggg', 'jizz', 'votes']
+9 : 0 - 0.00%
+['japan', 'semen', 'gou', 'zai', 'shuo', 'daily', 'boop', 'jizz', 'quan', 'jiu', 'jiao', 'laji', 'beep', 'gei', 'jian']
+10 : 13 - 0.00%
+['gggggggggggggggggggggg', 'xc', 'vc', 'morre', 'tenho', 'muito', 'sua', 'vou', 'caralho', 'ajuda', 'sei', 'esse', 'essa', 'minha', 'joga']
+11 : 2 - 0.00%
+['brandon', 'asia', 'europe', 'fgt', 'south', 'ohhhh', 'mexico', 'maddd', 'ugly', 'nigger', 'turkey', 'america', 'der', 'australia', 'gger']
+12 : 8 - 0.00%
+['heil', 'hitler', 'jajajajajaja', 'ih', 'aj', 'diu', 'sk', 'undo', 'ly', 'jg', 'john', 'ck', 'bic', 'aja', 'ckin']
+13 : 14 - 0.00%
+['spam', 'dg', 'bam', 'wag', 'asdf', 'ily', 'ly', 'gayy', 'tra', 'gayyy', 'xx', 'sp', 'ang', 'ow', 'jan']
+14 : 3 - 0.00%
+['museum', 'belong', 'lt', 'gfo', 'ahahahahahah', 'elis', 'assasin', 'coop', 'clsoe', 'dbl', 'ga', 'gt', 'horribly', 'dian', 'swag']
+15 : 11 - 0.00%
+['dickk', 'russia', 'jews', 'yt', 'tyt', 'gggggg', 'ggg', 'water', 'dic', 'jew', 'gggg', 'ggggggg', 'tyty', 'nigger', 'bobo']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	
+1 : 6 - 	1.3 	1.3 	1.6 	1.3 	7.8 	1.6 	37.5 	18.0 	1.7 	3.1 	2.1 	4.9 	12.6 	0.6 	4.4 	
+2 : 7 - 	1.2 	3.0 	1.3 	1.3 	7.7 	2.9 	25.4 	30.6 	2.1 	2.9 	2.1 	4.2 	11.0 	0.8 	3.6 	
+3 : 1 - 	1.2 	24.6 	0.9 	0.8 	5.0 	14.9 	16.6 	14.3 	3.7 	1.7 	2.1 	2.6 	6.2 	2.9 	2.5 	
+4 : 12 - 	1.1 	1.0 	1.2 	1.6 	8.5 	1.3 	25.1 	16.0 	1.5 	2.5 	1.8 	4.9 	28.8 	0.5 	4.2 	
+5 : 4 - 	1.1 	1.5 	1.2 	1.0 	28.6 	1.7 	24.0 	15.2 	1.5 	2.3 	2.0 	5.2 	10.5 	0.5 	3.7 	
+6 : 5 - 	1.2 	17.1 	0.9 	0.8 	5.0 	22.7 	16.7 	14.2 	3.6 	1.6 	2.0 	2.6 	6.2 	2.8 	2.5 	
+7 : 10 - 	0.8 	1.9 	1.1 	0.9 	4.2 	1.2 	20.1 	10.1 	1.0 	2.9 	42.7 	3.2 	7.1 	0.4 	2.5 	
+8 : 9 - 	0.9 	1.1 	3.6 	1.3 	3.2 	1.2 	17.6 	14.0 	6.8 	36.6 	1.6 	2.4 	6.3 	1.5 	1.8 	
+9 : 0 - 	24.5 	6.9 	1.1 	1.0 	3.9 	1.9 	17.3 	11.2 	7.0 	2.3 	2.3 	5.5 	5.9 	5.9 	3.2 	
+10 : 13 - 	1.0 	5.7 	1.2 	1.0 	6.1 	4.2 	18.9 	14.5 	2.8 	1.8 	2.0 	3.1 	7.4 	27.3 	3.1 	
+11 : 2 - 	1.5 	3.3 	39.7 	0.7 	3.3 	1.0 	21.1 	11.5 	1.2 	4.6 	1.0 	2.2 	6.1 	0.3 	2.6 	
+12 : 8 - 	1.1 	2.2 	1.3 	1.6 	5.2 	1.6 	21.2 	12.8 	33.0 	3.0 	1.9 	2.9 	8.2 	0.8 	3.1 	
+13 : 14 - 	1.8 	1.0 	1.0 	0.9 	4.0 	1.4 	21.2 	11.6 	1.9 	2.4 	1.7 	2.6 	9.2 	0.4 	38.8 	
+14 : 3 - 	6.4 	1.0 	1.3 	35.2 	4.1 	1.1 	20.3 	11.7 	1.2 	1.7 	2.5 	2.8 	7.5 	0.3 	2.9 	
+15 : 11 - 	1.2 	2.4 	1.1 	1.2 	6.9 	1.4 	21.7 	12.9 	1.7 	2.6 	1.7 	32.4 	8.7 	1.2 	2.8 	
+Time elapsed: 0:00:00.772566

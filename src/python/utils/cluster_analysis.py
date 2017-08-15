@@ -32,7 +32,7 @@ def analysis(pp_fn, topic_probs, nwords):
     aggr_res = utils.load_obj(pp_fn)
     labels_weight = aggr_res['labels_weight']
     groups_cont = aggr_res['groups_cont']
-    topics_sum = aggr_res['topics_sum']
+    topics_sum = aggr_res['topics_sum']    
   else:
     print("Getting topics higest-prob. words")
     lda_model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)
@@ -47,6 +47,8 @@ def main():
   topic_probs = args.get('topic_probs', 'False') == 'True'
   model_name = args.get('model', 'lda').strip()
   nwords = int(args.get('nwords', 100))
+  nshow = int(args.get('nshow', 10))
+
   vocab = utils.load_obj(vecs.bow.vocab)
 
   if model_name=='lda':
@@ -77,7 +79,7 @@ def main():
   print("Top 10 words for each cluster:")
   for i,cl in enumerate(clusters_bysize):    
     print(i+1, ":",cl, "-", "%.2f"%(100*groups_cont[cl])+"%")          
-    print([word for word, w in lst_fwords[cl][:10]])     
+    print([word for word, w in lst_fwords[cl][:nshow]])     
 
   if not topic_probs:  
     print("Avg. likelyhood that a doc. belongs to a topic:")

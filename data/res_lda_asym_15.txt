@@ -1,0 +1,60 @@
+{'model_dir': 'model_drift/lda_asym_15', 'nshow': '15', 'vecs_dir': 'vecs/timeslice-10-full', 'base_dir': 'base'}
+Base dir:  base
+Model dir:  model_drift/lda_asym_15
+Vectors dir:  vecs/timeslice-10-full
+Loading inputs
+model_drift/lda_asym_15/lda_pp.pkl False 100
+Aggregating labels count
+Aggregating labels count
+Applying idf on top 100 words
+WordClouds saved
+-------------Results----------------
+Top 10 words for each cluster:
+1 : 0 - 19.41% - Complaints
+['away', 'cait', 'run', 'turret', 'died', 'fight', 'mf', 'focus', 'adc', 'die', 'didnt', 'hit', 'tower', 'could', 'dude']
+2 : 6 - 15.16% - Arguments
+['people', 'reported', 'game', 'playing', 'troll', 'said', 'feeding', 'say', 'report', 'play', 'please', 'like', 'us', 'cause', 'would']
+3 : 5 - 10.87% - Small talk
+['lt', 'gt', 'ap', 'build', 'op', 'ad', 'damage', 'dmg', 'dat', 'hp', 'ult', 'flash', 'much', 'adc', 'mana']
+4 : 7 - 9.60% - Complaints/Insults
+['noob', 'noobs', 'report', 'pls', 'feed', 'vs', 'ks', 'omg', 'idiot', 'plz', 'surrender', 'stupid', 'afk', 'shut', 'please']
+5 : 9 - 8.45% - Tactics
+['wolves', 'red', 'invade', 'blue', 'smite', 'warded', 'drag', 'flash', 'leash', 'ward', 'omw', 'oom', 'ty', 'take', 'tf']
+6 : 3 - 8.30% - Tactics
+['lane', 'ganks', 'gank', 'jungler', 'jungle', 'bot', 'farm', 'top', 'solo', 'help', 'coming', 'go', 'ill', 'come', 'cs']
+7 : 13 - 6.69% - Tactics
+['inhib', 'group', 'baron', 'together', 'defend', 'push', 'drag', 'lets', 'end', 'fight', 'buy', 'mf', 'wait', 'wards', 'dragon']
+8 : 8 - 6.25% - Small talk
+['mad', 'haha', 'hahaha', 'bro', 'lol', 'cool', 'fun', 'close', 'lmao', 'oh', 'love', 'nice', 'ks', 'hey', 'damn']
+9 : 14 - 5.33% - Tactics/Pos
+['mia', 'ss', 'hf', 'mid', 'mias', 're', 'gl', 'call', 'brb', 'top', 'care', 'gj', 'ty', 'omw', 'np']
+10 : 11 - 4.26% - Taunts
+['trash', 'kid', 'worst', 'ur', 'rofl', 'elo', 'adc', 'talk', 'cs', 'mad', 'cuz', 'lmao', 'lvl', 'ever', 'tf']
+11 : 12 - 2.78% - Other langs.
+['vos', 'pero', 'jugar', 'vida', 'eso', 'todo', 'mira', 'tiene', 'asi', 'una', 'weon', 'todos', 'qe', 'con', 'sos']
+12 : 10 - 1.43% - Taunts
+['nigger', 'faggots', 'fags', 'niggers', 'piece', 'cunt', 'faggot', 'asshole', 'mom', 'dick', 'mother', 'fat', 'pussy', 'fag', 'eat']
+13 : 1 - 0.68% - Other langs.
+['ahahahahahaha', 'ahahahahaha', 'hahahahahahaha', 'jiu', 'ahahahaha', 'guo', 'zai', 'shang', 'hui', 'yao', 'zhe', 'hahahahahaha', 'bie', 'zhong', 'mei']
+14 : 2 - 0.48% - uhh, noise?
+['heil', 'hitler', 'ggggggg', 'gggggggg', 'gggggg', 'vc', 'pra', 'ff', 'ele', 'gggg', 'vai', 'ggggg', 'nao', 'ggg', 'eu']
+15 : 4 - 0.32% - noise
+['gon', 'umad', 'swag', 'milk', 'glhf', 'yolo', 'clap', 'lag', 'lagg', 'today', 'tresh', 'spike', 'fps', 'lagging', 'alt']
+Avg. likelyhood that a doc. belongs to a topic:
+		0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	
+1 : 0 - 	46.0 	2.0 	2.2 	5.9 	1.7 	5.7 	5.7 	4.4 	5.0 	5.1 	2.6 	3.8 	0.9 	5.1 	4.1 	
+2 : 6 - 	7.6 	1.6 	1.9 	5.9 	1.5 	5.9 	46.0 	4.2 	5.1 	4.8 	3.2 	4.6 	0.6 	3.7 	3.4 	
+3 : 5 - 	7.6 	2.0 	2.4 	5.7 	1.7 	45.1 	5.9 	4.1 	4.9 	4.7 	2.5 	4.0 	0.8 	4.7 	4.0 	
+4 : 7 - 	6.5 	3.0 	3.0 	5.0 	1.9 	4.2 	4.2 	46.9 	4.5 	3.6 	3.1 	3.8 	2.3 	3.7 	4.2 	
+5 : 9 - 	7.9 	1.8 	2.5 	6.1 	1.5 	5.2 	5.7 	4.1 	4.5 	45.2 	2.1 	3.4 	0.7 	4.6 	4.6 	
+6 : 3 - 	7.6 	1.9 	2.3 	44.6 	1.6 	5.5 	5.8 	5.0 	5.2 	5.2 	2.7 	3.8 	0.9 	3.6 	4.4 	
+7 : 13 - 	9.5 	1.9 	2.5 	4.8 	1.5 	6.1 	5.2 	4.6 	4.4 	5.0 	2.2 	3.0 	0.8 	44.8 	3.5 	
+8 : 8 - 	7.7 	2.9 	3.0 	5.0 	2.3 	5.6 	5.1 	5.4 	44.2 	3.7 	3.2 	3.8 	1.1 	3.5 	3.6 	
+9 : 14 - 	7.0 	2.8 	3.2 	4.6 	2.0 	4.6 	4.0 	5.0 	4.1 	4.2 	2.3 	2.7 	1.4 	3.7 	48.5 	
+10 : 11 - 	7.8 	2.1 	2.2 	5.3 	1.7 	5.7 	6.3 	6.4 	5.3 	3.9 	3.4 	42.8 	0.7 	3.3 	3.1 	
+11 : 12 - 	7.1 	10.4 	4.8 	2.7 	1.6 	3.5 	1.7 	9.8 	2.5 	2.2 	1.4 	1.2 	45.2 	2.4 	3.5 	
+12 : 10 - 	7.6 	3.0 	2.6 	4.4 	2.4 	4.4 	6.0 	6.6 	5.6 	2.9 	43.1 	4.4 	1.1 	2.8 	3.0 	
+13 : 1 - 	6.1 	43.2 	5.2 	3.7 	3.4 	3.8 	2.8 	6.1 	4.5 	2.6 	3.1 	2.5 	6.9 	2.6 	3.4 	
+14 : 2 - 	5.9 	4.8 	45.4 	4.1 	3.6 	3.8 	3.3 	5.3 	5.9 	2.8 	3.0 	2.8 	2.7 	2.8 	3.9 	
+15 : 4 - 	6.7 	4.5 	4.0 	3.7 	45.4 	3.7 	3.5 	4.8 	5.4 	2.5 	4.3 	3.2 	1.9 	2.6 	3.6 	
+Time elapsed: 0:00:00.786429
