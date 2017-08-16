@@ -36,7 +36,7 @@ def build_bow_skl(corpus, stop_words, min_df, max_df = 1.0, vocab=None):
 def main():
   min_df = float(args.get('min_df', 240000)) #240.000 is 1% of the document total (24.000.000) for tribunaldb. 
   min_df = int(min_df) if min_df > 1.0 else min_df  #gensim only accepts full count value for this, sklearn accepts percentage(in [0.0,1.0]) also
-  max_df = float(args.get('min_df', 0.9)) #90%~95% para considerar stopword é um valor comum na literatura
+  max_df = float(args.get('max_df', 0.9)) #90%~95% para considerar stopword é um valor comum na literatura
   timeslice = int(args.get('timeslice', 600))
   gensim = args.get('gensim',"False") == "True"
 
