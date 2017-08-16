@@ -5,6 +5,7 @@ import csv
 
 import scipy.io
 import scipy.sparse
+import numpy as np
 from gensim.corpora import MmCorpus
 
 
