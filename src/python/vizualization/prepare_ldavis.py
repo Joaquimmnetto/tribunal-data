@@ -66,7 +66,8 @@ def process_doclens(bow):
 
 def main():
   model_name = args.get("model","lda")
-  
+  outp = args.get("output","vis")
+
   if model_name == 'lda':
     model = utils.load(clt.lda.model, LdaMulticore)  
   elif model_name == 'hdp':
@@ -106,8 +107,8 @@ def main():
   print(term_frequency)
   print('processing vis')
   vis = pyLDAvis.prepare(topic_term_dists, doc_topic_dists, doc_lengths, vocab, term_frequency)
-  pyLDAvis.save_html(vis, 'vis.html')
-  pyLDAvis.save_json(vis, 'vis.json')
+  pyLDAvis.save_html(vis, '{0}.html'.format(outp))
+  pyLDAvis.save_json(vis, '{0}.json'.format(outp))
 
 if __name__=='__main__':
   utils.measure_time(main)

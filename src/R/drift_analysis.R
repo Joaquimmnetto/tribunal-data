@@ -8,7 +8,7 @@ source("src/R/utils.R")
 dataset="model_drift"
 r2d_fl = paste("data/",dataset,"/r2d.csv", sep='')
 topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
-	col.names = c("case", "match", "relation.offender", "timeslice","topic"),
+	col.names = c("case", "match", "relation.offender", "timeslice", "topic"),
 	colClasses = c("factor", "factor", "factor", "integer", "factor")
 )
 
