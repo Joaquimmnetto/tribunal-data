@@ -1,6 +1,6 @@
 import numpy as np
-import utils
-from params import base,vecs
+import tools.utils as utils
+from tools.params import base,vecs
 
 
 

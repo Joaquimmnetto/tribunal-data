@@ -1,6 +1,6 @@
-import params
-from params import base,args,clt,vecs
-import utils
+import tools.params
+from tools.params import base,args,clt,vecs
+import tools.utils as utils
 import count_matrix_builder as bow_builder
 
 from gensim.models import LdaMulticore
@@ -21,7 +21,7 @@ def main():
 
   print("Loading bow matrix with timeslices")
   
-  lda = utils.load_obj(clt.lda.model, LdaMulticore)
+  lda = utils.load(clt.lda.model, LdaMulticore)
 
   lda_vocab = { v:k for k,v in lda.id2word.items()}
   
@@ -32,21 +32,16 @@ def main():
                                                                 vocab=lda_vocab
                                                                 )
   print(len(lda.id2word), bow_matrix.shape)
-  
-  bow_builder.save_outp(row2doc, vecs.bow.r2d,
-                        bow_vocab, vecs.bow.vocab,
-                        bow_matrix, vecs.bow.mtx)
-
-  gsm_corpus = Scipy2Corpus(bow_matrix)
-  
+    
+  gsm_corpus = Scipy2Corpus(bow_matrix)  
   print("Labeling docs...")
   for row in gsm_corpus:
     topics = lda[row]
     first_topic = sorted(topics, key=lambda x: x[1], reverse=True)[0][0]
     row2lab.append(first_topic)
 
-  utils.save_pkl(vecs.bow.r2d, row2doc)
-  utils.save_pkl(clt.lda.r2l, row2lab)
+  utils.save(vecs.bow.r2d, row2doc)
+  utils.save(clt.lda.r2l, row2lab)
 
 
 if __name__ == '__main__':

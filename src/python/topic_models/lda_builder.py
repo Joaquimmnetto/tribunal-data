@@ -1,10 +1,9 @@
-
 from gensim.models import LdaMulticore, LdaModel, HdpModel
 from gensim.matutils import Scipy2Corpus
 from gensim.corpora import MmCorpus
 
-import utils
-from params import args, vecs, clt
+import tools.utils as utils
+from tools.params import args, vecs, clt
 
 
 
@@ -32,7 +31,7 @@ def main():
     print("Loading bow matrix:")            
     gsm_corpus = MmCorpus(vecs.bow.mtx.format(0))    
 
-    id2word = utils.load_obj(vecs.bow.vocab)
+    id2word = utils.load(vecs.bow.vocab)
     id2word = dict([(i, v) for i, v in enumerate(id2word)])
     print("Using",model)
     print("Updating model with matrix 0:")

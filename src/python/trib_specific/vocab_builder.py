@@ -2,10 +2,10 @@ import datetime
 import pickle
 import sys
 
-from params import args
+from tools.params import args
 #import args_proc as args
 
-min_freq = int(args.get('min_freq', 150))
+
 
 
 def save_out(vocab_freq, words, vocab_freq_fn, words_fn):
@@ -52,5 +52,6 @@ def build_vocab(vocab_fn, min_freq, vocab_freq_fn, words_fn):
 
 
 before = datetime.datetime.now()
+min_freq = int(args.get('min_freq', 150))
 build_vocab(args.vocab_csv, min_freq, args.vocab, args.words)
 print("Time elapsed:", datetime.datetime.now() - before)

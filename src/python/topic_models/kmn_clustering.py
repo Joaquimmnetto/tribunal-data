@@ -17,8 +17,8 @@ from sklearn.cluster import AgglomerativeClustering
 
 from sil_metric import silhouette_score_block
 #import args_proc as args
-from params import args, clt, vecs, model_dir
-import utils
+from tools.params import args, clt, vecs, model_dir
+import tools.utils as utils
 
 
 
@@ -156,8 +156,8 @@ def main():
       labels,kmn_centers = do_clusterization(data, n_clusters)
 
     print("Saving labels...")
-    utils.save_pkl(clt.kmn.labels, labels.tolist())
-    utils.save_pkl(clt.kmn.model, kmn_centers)
+    utils.save(clt.kmn.labels, labels.tolist())
+    utils.save(clt.kmn.model, kmn_centers)
 
 
 if __name__ == '__main__':

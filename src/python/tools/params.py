@@ -84,11 +84,11 @@ def load_names(bdir, mdir, vdir):
 if len(sys.argv) > 1:
   read_args(sys.argv[1:])
 
-data_dir = "../../../data/"
+data_dir = "../../data/"
 
-base_dir = args.get("base_dir", "../../../data/base/samples")
-model_dir = args.get("model_dir", "../../../data/model_drift/samples")
-vecs_dir = args.get("vecs_dir", "../../../data/vecs/timeslice-10-full/samples")
+base_dir = args.get("base_dir", data_dir+"base/samples")
+model_dir = args.get("model_dir", data_dir+"model_drift/samples")
+vecs_dir = args.get("vecs_dir", data_dir+"vecs/timeslice-10-full/samples")
 print("Base dir: ",base_dir)
 print("Model dir: ",model_dir)
 print("Vectors dir: ",vecs_dir)

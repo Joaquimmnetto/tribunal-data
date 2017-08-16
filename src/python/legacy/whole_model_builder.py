@@ -1,13 +1,13 @@
 #import args_proc as args
 import count_matrix_builder as bow_builder
 import aggregate_clusters as summarize
-import lda_builder
+import vector_models.lda_builder
 import numpy as np
 from gensim.matutils import Scipy2Corpus
 from pprint import pprint
 
-from params import args,vecs,clt,base
-import utils
+from tools.params import args,vecs,clt,base
+import tools.utils
 
 ntop_words = args.get('ntop_words', 100)
 num_topics = args.get('num_topics', 10)

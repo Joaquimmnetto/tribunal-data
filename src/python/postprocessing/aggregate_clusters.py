@@ -7,11 +7,11 @@ from gensim.models import Doc2Vec
 import sklearn.metrics.pairwise as metrics
 
 import numpy as np
-import utils
+import tools.utils as utils
 
 from concurrent.futures import ProcessPoolExecutor
 
-from params import vecs,clt,args
+from tools.params import vecs,clt,args
 
 def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):  
   bow_mat = MmCorpus(bow_mat_fn.format(part))
@@ -23,8 +23,8 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   topics_count = dict([(label, 0) for label in labels])
   r2l = dict()
   
-  bow_r2d = utils.load_obj(vecs.bow.r2d)
-  d2v_r2d = utils.load_obj(vecs.d2v.r2d)  
+  bow_r2d = utils.load(vecs.bow.r2d)
+  d2v_r2d = utils.load(vecs.d2v.r2d)  
   
   for bow in bow_mat:    
     assert bow_r2d[row] == d2v_r2d[row]    
@@ -37,7 +37,7 @@ def aggregate_kmn(bow_mat_fn, points, clusters, centers, part, vocab):
   del bow_mat
 
   print("Saving r2l of",str(part))
-  utils.save_pkl(clt.kmn.r2l+".{0}".format(part),r2l)
+  utils.save(clt.kmn.r2l+".{0}".format(part),r2l)
 
   return labels_sum, topics_sum, topics_count
 
@@ -73,9 +73,9 @@ def aggregate_lda(bow_mat_fn, lda_model, part, vocab, hdp=False):
 
   print("Saving r2l of",str(part))
   if hdp:
-    utils.save_pkl(clt.hdp.r2l.format(part),r2l)
+    utils.save(clt.hdp.r2l.format(part),r2l)
   else:
-    utils.save_pkl(clt.lda.r2l.format(part),r2l)
+    utils.save(clt.lda.r2l.format(part),r2l)
 
     
   
@@ -92,18 +92,18 @@ def append_results(promise, labels_sum, topics_sum, topics_count, part):
   
 
 def summarize_topic_labels(model_name, bow_mat_fn, vocab_fn, n_workers=3):
-  vocab = utils.load_obj(vocab_fn)
+  vocab = utils.load(vocab_fn)
 
   if model_name=='lda':
-    model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)    
+    model = utils.load(clt.lda.model, gensim_class=LdaMulticore)    
     labels = range(0, model.num_topics)
   elif model_name=='hdp':
-    model = utils.load_obj(clt.hdp.model, gensim_class=HdpModel)        
+    model = utils.load(clt.hdp.model, gensim_class=HdpModel)        
     labels = range(0, model.suggested_lda_model().num_topics)    
   elif model_name=='kmn':
-    model = utils.load_obj(clt.kmn.labels)
-    points = utils.load_obj(vecs.d2v.mtx, Doc2Vec).docvecs
-    centers = utils.load_obj(clt.kmn.model)
+    model = utils.load(clt.kmn.labels)
+    points = utils.load(vecs.d2v.mtx, Doc2Vec).docvecs
+    centers = utils.load(clt.kmn.model)
     labels = range(0, len(centers))
 
 
@@ -149,14 +149,14 @@ def main():
   res = {"model": model, "labels_weight": labels_weight, "topics_sum": topics_sum, "groups_cont": groups_cont}
   print("saving results...")
   if model=='lda':    
-    utils.save_pkl(clt.lda.postprocess, res)
-    utils.save_pkl(clt.lda.r2l, r2l)
+    utils.save(clt.lda.postprocess, res)
+    utils.save(clt.lda.r2l, r2l)
   elif model=='hdp':
-    utils.save_pkl(clt.hdp.postprocess, res)
-    utils.save_pkl(clt.hdp.r2l, r2l)
+    utils.save(clt.hdp.postprocess, res)
+    utils.save(clt.hdp.r2l, r2l)
   elif model=='kmn':
-    utils.save_pkl(clt.kmn.postprocess, res)
-    utils.save_pkl(clt.kmn.r2l, r2l)
+    utils.save(clt.kmn.postprocess, res)
+    utils.save(clt.kmn.r2l, r2l)
 
 
 if __name__ == '__main__':

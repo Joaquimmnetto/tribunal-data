@@ -2,7 +2,7 @@ import csv
 import datetime
 import multiprocessing
 from multiprocessing import Queue
-import params
+import tool.params as params
 import traceback
 
 

@@ -1,9 +1,9 @@
 import datetime
 from gensim.models.doc2vec import TaggedDocument, Doc2Vec
-from doc_iterator import DocIterator
 
-from params import args, vecs, base
-import utils
+from trib_specific.doc_iterator import DocIterator
+from tools.params import args, vecs, base
+import tools.utils as utils
 
 
 class D2VDocIterator(object):
@@ -32,7 +32,7 @@ def build_d2v_model(chat_fn, corpus_fn, min_freq):
 
 def save_outp(d2v_model, row_doc):
   d2v_model.save(vecs.d2v.mtx)
-  utils.save_pkl(vecs.d2v.r2d, row_doc)
+  
 
 
 def main():
@@ -43,7 +43,8 @@ def main():
   row_doc, d2v_model = build_d2v_model(base.chat, base.corpus, min_freq)
   print("Subtotal time elapsed:", datetime.datetime.now() - before)
   print("Saving models...")
-  save_outp(d2v_model, row_doc)
+  utils.save(vecs.d2v.mtx, d2v_model)
+  utils.save(vecs.d2v.r2d, row_doc)  
 
 
 if __name__ == '__main__':

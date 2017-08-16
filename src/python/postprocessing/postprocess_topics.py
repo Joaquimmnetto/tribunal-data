@@ -1,17 +1,17 @@
 import numpy as np
 
-import utils
+import tools.utils as utils
 from gensim.matutils import sparse2full
 from concurrent.futures import ProcessPoolExecutor
-from params import vecs,clt,args
+from tools.params import vecs,clt,args
 
 
 
 def postprocess(vocab, part):  
   print("Starting part ",part)  
  
-  bow_mtx = utils.load_obj(vecs.bow.mtx.format(part)).tocsr()  
-  r2l = utils.load_obj(clt.lda.r2l.format(part))
+  bow_mtx = utils.load(vecs.bow.mtx.format(part)).tocsr()  
+  r2l = utils.load(clt.lda.r2l.format(part))
   print("Files lodaded for part",part)
   row = part * bow_mtx.shape[0]
   labels = range(0, r2l[row].shape[0])
@@ -41,7 +41,7 @@ def instance_or_update(src_dict,new_dict):
 def main():
 
   n_workers = int(args.get("n_workers", 2))
-  vocab = utils.load_obj(vecs.bow.vocab)
+  vocab = utils.load(vecs.bow.vocab)
 
   labels_sum = None
   topics_sum = None
@@ -71,7 +71,7 @@ def main():
     topics_count[label] /= float(mat_len)
   
   res = {"model": 'lda', "labels_weight": labels_sum, "topics_sum": topics_sum, "groups_cont": topics_count}
-  utils.save_pkl(clt.lda.postprocess, res)
+  utils.save(clt.lda.postprocess, res)
 
 if __name__=="__main__":
   utils.measure_time(main)

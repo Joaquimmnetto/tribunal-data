@@ -62,7 +62,7 @@ class DocIterator(object):
           chats[team].append(line)
         else:
           if len(chats[team]) - 1 < timeslice:
-            for s in range(len(chats[team]), timeslice + 1):
+            for _ in range(len(chats[team]), timeslice + 1):
               chats[team].append(list())
 
           chats[team][timeslice].append(line)

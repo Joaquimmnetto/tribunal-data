@@ -2,8 +2,8 @@ from pprint import pprint
 import matplotlib.pyplot as plt
 from gensim.models import LdaMulticore
 
-from params import args, clt, vecs
-import utils
+from tools.params import args, clt, vecs
+import tools.utils as utils
 import numpy as np
 #import wordcloud
 
@@ -29,13 +29,13 @@ print("Loading inputs")
 def analysis(pp_fn, topic_probs, nwords):
   if not topic_probs:
     print("Aggregating labels count")
-    aggr_res = utils.load_obj(pp_fn)
+    aggr_res = utils.load(pp_fn)
     labels_weight = aggr_res['labels_weight']
     groups_cont = aggr_res['groups_cont']
     topics_sum = aggr_res['topics_sum']    
   else:
     print("Getting topics higest-prob. words")
-    lda_model = utils.load_obj(clt.lda.model, gensim_class=LdaMulticore)
+    lda_model = utils.load(clt.lda.model, gensim_class=LdaMulticore)
     labels_weight = utils.topic_words(lda_model, topn_words=nwords)
     groups_cont = []
     topics_sum = dict()
@@ -49,7 +49,7 @@ def main():
   nwords = int(args.get('nwords', 100))
   nshow = int(args.get('nshow', 10))
 
-  vocab = utils.load_obj(vecs.bow.vocab)
+  vocab = utils.load(vecs.bow.vocab)
 
   if model_name=='lda':
     postprocess_fn = clt.lda.postprocess
@@ -63,7 +63,7 @@ def main():
   print("Applying idf on top", nwords, "words")
   # [(label,[(word,weight),...])]
   if nwords > 0:
-    df = utils.load_obj(vecs.df)
+    df = utils.load(vecs.df)
     lst_fwords = dict(utils.groups_tfidf(labels_weight, vocab, df, num_words=nwords))
   else:
     #

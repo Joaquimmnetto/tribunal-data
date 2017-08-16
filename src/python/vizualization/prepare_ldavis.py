@@ -1,11 +1,11 @@
 import warnings
 warnings.filterwarnings("ignore")
 
-import utils
+import tools.utils as utils
 import numpy as np
 
 from gensim.models import LdaMulticore, HdpModel
-from params import args,clt,vecs
+from tools.params import args,clt,vecs
 
 from concurrent.futures import ProcessPoolExecutor
 import pyLDAvis
@@ -32,11 +32,11 @@ import pyLDAvis
 
 def process_dtd(lda, r2l_fn):
   print("processing dtd")
-  r2l_len = sum([len(utils.load_obj(r2l_fn.format(i))) for i in range(0,vecs.n_matrix)])
+  r2l_len = sum([len(utils.load(r2l_fn.format(i))) for i in range(0,vecs.n_matrix)])
   doc_topic_dist = np.zeros(shape=(r2l_len, lda.num_topics))
   print("dtd matrix allocated:",doc_topic_dist.shape) 
   for part in range(0,vecs.n_matrix):
-    r2l = utils.load_obj(r2l_fn.format(part))    
+    r2l = utils.load(r2l_fn.format(part))    
     for row in r2l.keys():
       for topic,prob in enumerate(r2l[row]):
         doc_topic_dist[row,topic] = prob
@@ -68,12 +68,12 @@ def main():
   model_name = args.get("model","lda")
   
   if model_name == 'lda':
-    model = utils.load_obj(clt.lda.model, LdaMulticore)  
+    model = utils.load(clt.lda.model, LdaMulticore)  
   elif model_name == 'hdp':
-    model = utils.load_obj(clt.hdp.model, HdpModel)  
+    model = utils.load(clt.hdp.model, HdpModel)  
 
   
-  vocab = utils.load_obj(vecs.bow.vocab)  
+  vocab = utils.load(vecs.bow.vocab)  
   n_workers = int(args.get('n_workers',3))
 
   with ProcessPoolExecutor(max_workers=n_workers) as exc:
@@ -83,7 +83,7 @@ def main():
     
     print('queue matrixes')
     for part in range(0, vecs.n_matrix):
-      bow = utils.load_obj(vecs.bow.mtx.format(part))
+      bow = utils.load(vecs.bow.mtx.format(part))
       bow_promises.append(exc.submit(process_doclens, bow))
 
     print('processing results')    
