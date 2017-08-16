@@ -1,5 +1,5 @@
 
-pydir=../src/python/utils
+pydir=../src/python
 
 pyexec='python'
 unamestr=`uname`
