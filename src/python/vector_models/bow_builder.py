@@ -58,7 +58,7 @@ def main():
     bow_matrix = utils.load(vecs.bow.mtx).tocsr()
   else:
     print("Building scipy matrix")    
-    bow_vocab, bow_matrix = build_bow_skl(chat, stop_words=stwords, min_df=min_df)      
+    bow_vocab, bow_matrix = build_bow_skl(chat, stop_words=stwords, min_df=min_df, max_df=max_df)      
   
   print("Calculating wf")
   freq = bow_matrix.sum(axis=0)
