@@ -5,8 +5,7 @@ source("src/R/utils.R")
 
 
 
-dataset="model_drift"
-r2d_fl = paste("data/",dataset,"/r2d.csv", sep='')
+r2d_fl="data/model_drift/lda_sym_15/labels.csv"
 topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
 	col.names = c("case", "match", "relation.offender", "timeslice", "topic"),
 	colClasses = c("factor", "factor", "factor", "integer", "factor")
@@ -15,16 +14,16 @@ topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
 setkey(topics, case, match, relation.offender, timeslice)
 {
 topics[,topic := factor(
-	ifelse(topic==10 | topic==12,
+	ifelse(topic==9 | topic==12 | topic==13,
 				 "tactics",
-				 ifelse(topic==4 | topic==7,
+				 ifelse(topic==2 | topic==14,
 				 			 "complaints",
 				ifelse(topic==5, "arguments",
-				ifelse(topic==1 | topic==9, "tactics.pos",
-				ifelse(topic==2, "small.talk",						 			 
+				ifelse(topic==1, "tactics.pos",
+				ifelse(topic==6, "small.talk",						 			 
 				ifelse(topic==3, "insults",						 			 
-				ifelse(topic==0, "taunts",						 			 
-				ifelse(topic==8 | topic==11 | topic==13, "other.langs",
+				ifelse(topic==4, "taunts",						 			 
+				ifelse(topic==7 | topic==8 | topic==10, "other.langs",
 				"other")))))))))
 	]
 
@@ -102,11 +101,12 @@ setnames(ts.topics.col,'topic','ts.0')
 setkey(ts.topics.col,case,match,relation.offender)
 
 for(i in 1:5){
-	ts.topics.col <- merge(ts.topics.col,ts.topics[timeslice==i,.(case,match,relation.offender,topic)],all=TRUE)
+	ts.topics.col <- merge(ts.topics.col,topics[timeslice==i,.(case,match,relation.offender,topic)],all=TRUE)
 	setnames(ts.topics.col,'topic',sprintf('ts.%d',i))
 	setkey(ts.topics.col,case,match,relation.offender)
 }
 ts.topics.col = ts.topics.col[matches[,.(case,match,time.played)]]
+ts.topics.col = ts.topics.col[, time.played := time.played/60]
 ts.topics.col[time.played > 10 & is.na(ts.0), ts.0 := 'empty']
 ts.topics.col[time.played > 20 & is.na(ts.1), ts.1 := 'empty']
 ts.topics.col[time.played > 30 & is.na(ts.2), ts.2 := 'empty']
