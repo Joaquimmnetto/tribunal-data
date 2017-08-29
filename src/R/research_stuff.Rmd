@@ -29,10 +29,12 @@ source("src/R/utils.R")
 			ggplot() + 
 			geom_smooth(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally)) +
 			geom_point(data=ally.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$ally), alpha=0.5) + 
-			geom_smooth(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec)) +
-				geom_point(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec), alpha=0.5) +
-			geom_smooth(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc)) +
-				geom_point(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc), alpha=0.5) + 
+			geom_smooth(data=enemy.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$enemy)) +
+			geom_point(data=enemy.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$enemy), alpha=0.5) +
+			# 	geom_smooth(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec)) +
+			# 	geom_point(data=ec.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$ec), alpha=0.5) +
+			# geom_smooth(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc)) +
+			# 	geom_point(data=nc.topics.perf, aes(x=values, y=get(col.name) * 100, color=names$nc), alpha=0.5) + 
 			geom_smooth(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender)) +
 				geom_point(data=offender.topics.perf, aes(x=performance, y=get(col.name) * 100, color=names$offender), alpha=0.5)
 			,col.scale = colors)

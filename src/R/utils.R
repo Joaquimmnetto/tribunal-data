@@ -3,8 +3,8 @@ create.color.scale <- function(sub.name = 'Relations', plot.names = levels(playe
 	require(RColorBrewer)
 	#myColors <- brewer.pal(length(plot.names),"Greys")
 	#myColors <- brewer.pal(length(plot.names),"Spectral")
-	#myColors <- brewer.pal(length(plot.names),"Set2")
-	myColors <- c("#000000","#444444","#888888","#BBBBBB","#999999")
+	myColors <- brewer.pal(length(plot.names),"Set2")
+	#myColors <- c("#000000","#444444","#888888","#BBBBBB","#999999")
 	names(myColors) <- plot.names
 	col.scale <- scale_colour_manual(name = sub.name, values = myColors)
 }

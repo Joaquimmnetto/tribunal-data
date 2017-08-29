@@ -13,6 +13,7 @@ topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
 
 setkey(topics, case, match, relation.offender, timeslice)
 {
+	#lda_sym_15
 topics[,topic := factor(
 	ifelse(topic==9 | topic==12 | topic==13,
 				 "tactics",
@@ -114,16 +115,106 @@ ts.topics.col[time.played > 40 & is.na(ts.3), ts.3 := 'empty']
 ts.topics.col[time.played > 50 & is.na(ts.4), ts.4 := 'empty']
 ts.topics.col[time.played > 60 & is.na(ts.5), ts.5 := 'empty']
 
+#-----------------------arules---------------------------
+# item.name <- function(str){
+# 	return (
+# 			gsub(".+=","",
+# 			 gsub("[{}]","",str)
+# 		))
+# }
+# 
+# lrhs.name <- function(str){
+# 	return (
+# 			gsub("=.+","",
+# 			 gsub("[{}]","",str)
+# 		))
+# }
+# 
+# get.perc <- function(lrhs, percs){
+# 	if(class(lrhs)=="character"){
+# 		items <- item.name(lrhs)
+# 		col.names <- lrhs.name(lrhs)
+# 	}
+# 	else{
+# 		items <- item.name(labels(lrhs))
+# 		col.names <- lrhs.name(labels(lrhs))	
+# 	}
+# 	
+# 	comb.names <- copy(col.names)
+# 	
+# 	for(i in 1:length(items)){
+# 		comb.names[i] <- paste(col.names[i],items[i],sep = ".")
+# 	}
+# 	
+# 	return(unlist(percs[col.names])[comb.names])
+# }
 
-#Passo 1: apriori para verificar quais são as mudanças
-require(arules)
-ap.all <- apriori(ts.topics.col[,.(ts.0,ts.1,ts.2,ts.3,ts.4,ts.5)] ,
-											parameter=list(confidence=0.5, support=0.05, target='rules'))
-inspect(sort(ap.all, by='lift'))rm()
+filter.rules <- function(dt, rules, lift.dist, min.sup){
+	
+	percs = list()
+	for(name in names(dt)){
+		percs[[name]] = prop.table(summary(dt[,get(name)]))	
+	}
+	rules = subset(rules, subset=(abs(lift - 1) > lift.dist))
+
+	return(rules)
+}
 
 
-#apriori(ts.topics.col[relation.offender=='enemy',.(ts.1,ts.2,ts.3,ts.4,ts.5)],parameter=list(confidence=0.40,target='rules'))
-#inspect(head(ap.results,by='lift'))
+graph_arules <- function(rules){
+
+
+	require(arulesViz)
+	ig <- plot( rules, method="graph")
+	ig_df <- get.data.frame( ig, what = "both" )
+	ig_df$vertices = transform(ig_df$vertices, support = c(NA, support[-nrow(ig_df$vertices)]))
+	ig_df$vertices = transform(ig_df$vertices, confidence = c(NA, confidence[-nrow(ig_df$vertices)]))
+	ig_df$vertices = transform(ig_df$vertices, lift = c(NA, lift[-nrow(ig_df$vertices)]))
+	
+	return (visNetwork(
+		nodes = data.frame(
+			id = ig_df$vertices$name
+			,value = abs(ig_df$vertices$lift - 1) # could change to lift or confidence
+			,color = ifelse(ig_df$vertices$lift < 1, 'red', 'green')
+			,title = sprintf("s:%.3f, c:%.2f, l:%.2f",
+											 ig_df$vertices$support, 
+											 ig_df$vertices$confidence, 
+											 ig_df$vertices$lift
+											)
+			
+			,ig_df$vertices
+		)
+		, edges = ig_df$edges
+	) %>% visEdges(arrows = "to") %>%	visOptions(highlightNearest = T)
+	)
+}
+
+slices.arules <- function(dt,global.sup = 0.003, 
+													min.confidence = 0.33, 
+													min.lift.dist=0.25){
+	require(arules)
+	rules = apriori(dt,
+									parameter=list(confidence=min.confidence, support=global.sup)
+	)
+	rules = filter.rules(dt, rules, 
+											 lift.dist = min.lift.dist, 
+											 min.sup = local.sup
+	)
+	
+	ruledf = data.frame(
+		lhs = labels(rules@lhs),
+		rhs = labels(rules@rhs), 
+		rules@quality)
+	
+	graph = graph_arules(rules)
+	return(list(rules=rules, rules.table=ruledf, rules.graph=graph))
+}
+
+results = slices.arules(ts.topics.col[ts.1!=ts.2,.(ts.1,ts.2)])
+View(results$rules.table)
+results$rules.graph
+
+
 
 #passo 1.5: Quantificar partidas aonde não há mudanças
 ts.topics.col[,no.change:=FALSE]
@@ -133,7 +224,8 @@ ts.topics.col[(ts.0 == ts.1 | is.na(ts.0) | is.na(ts.1))
 											 & (ts.3 == ts.4 | is.na(ts.3) | is.na(ts.4)) 
 											 & (ts.4 == ts.5 | is.na(ts.4) | is.na(ts.5))
 												,no.change := TRUE]
-									
+		
+							
 #Porcentagem de partidas com topicos iguais:
 #ts0 a ts1	#ts0 a ts2	#ts0 a ts3	#ts0 a ts4	#ts0 a ts5
 #0.36251		#0.1835695	#0.142846		#0.1342556	#0.1330021
