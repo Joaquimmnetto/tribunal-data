@@ -7,4 +7,4 @@ if [[ "$unamestr" == 'Linux' ]]; then
    pyexec='python3'
 fi
 
-${pyexec} ${pydir}/$@
+PYTHONPATH=${pydir} ${pyexec} -m $@

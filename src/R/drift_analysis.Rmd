@@ -6,17 +6,45 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=TRUE}
+```{r setup, echo=FALSE, include=TRUE}
 	require(ggplot2)
+	require(data.table)
+	require(igraph)
+	require(visNetwork)
+	require(arules)
+	require(rpart)
+	require(rattle)
 	setwd("~/PyCharm-Workspace/tribunaldb/")
-	load('ts_data.RData')
+	#load('ts_data_lda_sym_15.RData')
+	
+	plot.aggr <- function(dt,title='all'){
+	ggplot(dt) + geom_smooth(aes(x=value, y=tactics, color="Tactics"), span=0.8) + 
+		geom_smooth(aes(x=value, y=tactics.pos, color="Tactics/Pos"), span=0.8) + 
+		geom_smooth(aes(x=value, y=small.talk, color="Small Talk"), span=0.8) + 
+		geom_smooth(aes(x=value, y=complaints, color="Complaints"), span=0.8) + 
+		geom_smooth(aes(x=value, y=arguments, color="Arguments"), span=0.8) + 
+		geom_smooth(aes(x=value, y=insults, color="Insults"), span=0.8) + 
+		geom_smooth(aes(x=value, y=taunts, color="Taunts"), span=0.8) +
+		ggtitle(title) + coord_cartesian(xlim=c(0, 5))
+}
 ```
 
 
 #Objetivos:
 ###1) Descobrir possíveis pontos de virada, aonde o *ofensor* passa de um comportamento normal para um comportamento tóxico
+	
+* Até agora (com os experimentos usando apriori), não fica evidente que exista tal ponto de virada. Fica evidente que o ofensor se comporta toxicamente desde do começo da partida, apesar desse comportamento intensificar um pouco no decorrer desta.
+	
 ###2) Descobrir os principais tópicos para cada _timeslice_
+
+* Há pouca variação de tópicos no geral entre timeslices, o que não implica que não haja uma troca.
+
 ###3) Descobrir quais as principais tendências de troca de tópico
+
+* A prinicipal tendência é dos topícos manterem-se os mesmos, mas estamos escavando as situações de troca para entender como elas ocorrem.
+* Apriori não tá me levando muito longe...
+* Também pode ser lido como tentar prever ts.x a partir de ts.(x-1)...?
+	
 (ie. topico a tende a mudar para topico b)
 
 #Parâmetros
@@ -91,101 +119,762 @@ ggplot(ts.aggr.offender) + geom_smooth(aes(x=value, y=pos,color='Positive'),span
 	coord_cartesian(xlim=c(0, 5))
 ```
 
+#Experimentos com apriori
+
 ##Relação entre tópicos em diferentes timeslices
 
-###Experimento 0:
-Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 0 e 1, intervalo no qual os gráficos apresentam alguma variação
+###Experimento 1:
+Apriori com 30% de confiança(correlação fraca), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos, somente aonde lhs!=rhs.
 
-####ts.0=Tactics
-{ts.1=tactics} => {ts.0=tactics} com 40% de suporte
-
-####ts.0=Tactics.Pos,
-Nenhum resultado relevante.
-
-####ts.0=small.talk
-Nenhum resultado relevante.
-
-####ts.0=complaints
-Nenhum resultado relevante.
-
-####ts.0=arguments
-Nenhum resultado relevante.
-
-####ts.0=insults
-Nenhum resultado relevante.
-
-####ts.0=taunts
-Nenhum resultado relevante.
-
-####Conclusões
-Não parecem existir relações significantes
-
-```{r echo=FALSE}
-#ap.all <- apriori(ts.topics.col[ts.0=='taunts',.(ts.0, ts.1)] ,
-#											parameter=list(confidence=0.33, support=0.33, target='rules'))
-#inspect(sort(ap.all, by='lift'))
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( ts.topics.col[ts.0!=ts.1, .(ts.0,ts.1)] )
 ```
 
+```{r echo=FALSE}
+	with(results, rules.table[order(rules.table$lhs),])
+	results$rules.graph
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( ts.topics.col[ts.1!=ts.2, .(ts.1,ts.2)] )
+```
+
+```{r echo=FALSE}
+	with(results, rules.table[order(rules.table$lhs),])
+	results$rules.graph
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( ts.topics.col[ts.2!=ts.3, .(ts.2,ts.3)] )
+```
+
+```{r echo=FALSE}
+	with(results, rules.table[order(rules.table$lhs),])
+	results$rules.graph
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( ts.topics.col[ts.3!=ts.4, .(ts.3,ts.4)] )
+```
+
+```{r echo=FALSE}
+	with(results, rules.table[order(rules.table$lhs),])
+	results$rules.graph
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( ts.topics.col[ts.4!=ts.5, .(ts.4,ts.5)] )
+```
+
+```{r echo=FALSE}
+	with(results, rules.table[order(rules.table$lhs),])
+	results$rules.graph
+```
+
+####Resultados:
+Tactics aparenta funcionar como uma espécie de 'meio campo' para os outros tópicos positivos, e complaints.
+
+* Tactics normalmente precede small talk, tactics/pos e complaints
+* Esses tópicos normalmente implicam em tactics, o que indica essa relação de 'ida e volta' entre tactics e esses tópicos.
+
+Entretanto, complaints e tactics têm uma relação mais profunda, com tactics constantemente levando a complaints:
+
+* Para as transições ts.0 -> ts.1 e ts.1 -> ts.2
+
+Uma hipótese é que tactics funcione mais como um 'topico neutro' do que um tópico positivo, sendo usado quando não há nenhum tipo de sentimento envolvido na partida(seja ele positivo ou negativo). Contudo, ele ainda pende mais para o lado positivo, não relacionando-se com a maioria dos tópicos negativos, como arguments, insults e taunts.
+
+Arguments aparecem uma vez (timeslices 2 e 3), sendo precedidos por complaints(ts.3=arguments -> ts.2=complaints). isso pode mostrar uma toxicidade levemente maior nestes tslices, como confirmado pelos gráficos de concentração de tópicos positivos x negativos, mas ainda é uma evidência muito fraca para concluirmos algo a mais disso.
+
+##Ponto de mudança de comportamento dos ofensores:
+
 ###Experimento 1:
-Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 1 e 2, intervalo no qual os gráficos apresentam alguma variação
+Apriori com 30% de confiança(correlação fraca), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos, somente aonde lhs!=rhs, para tópicos utilizados pelos ofensores.
 
-####ts.1=Tactics
-ts2.tactics -> ts.1.tactics com 38% de suporte e 100% de confiança.
+Consideraremos como esse ponto de mudança, quando o ofensor mudar seu tópico usado de positivo para negativo.
 
-####ts.1=Tactics.Pos,
-Nenhum resultado relevante.
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.0!=ts.1 & relation.offender=='offender', .(ts.0,ts.1)] )
+```
 
-####ts.1=small.talk
-Nenhum resultado relevante.
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
 
-####ts.1=complaints
-Nenhum resultado relevante.
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.1!=ts.2 & relation.offender=='offender', .(ts.1,ts.2)])
+```
 
-####ts.1=arguments
-Nenhum resultado relevante.
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
 
-####ts.1=insults
-Nenhum resultado relevante.
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.2!=ts.3 & relation.offender=='offender', .(ts.2,ts.3)])
+```
 
-####ts.1=taunts
-Nenhum resultado relevante.
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
 
-####Conclusões
-Não parecem existir relações significantes
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.3!=ts.4 & relation.offender=='offender', .(ts.3,ts.4)])
+```
 
-###Experimento 2:
-Apriori com 50% de confiança e 33% de suporte, limitado as timeslices 2 e 3, intervalo no qual os gráficos apresentam alguma variação
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
 
-####ts.2=Tactics
-Nenhum resultado relevante.
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.4!=ts.5 & relation.offender=='offender', .(ts.4,ts.5)])
+```
 
-####ts.2=Tactics.Pos,
-{ts.3=empty} => {ts.2=tactics.pos}, com 44% de suporte
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
 
-####ts.2=small.talk
-{ts.3=empty} => {ts.2=small.talk} com 40% de suporte
+####Resultados:
+Tactics mantêm seu papel como meio campo, contudo agora ele somente varia com complaints. Entretanto, Tactics/Pos -> Tactics, aparece em timeslices mais tardios (2 e 3, 3 e 4, 4 e 5). Podemos considerar isso como uma queda na positividade destes ofensores nestes timeslices, já que não há nenhuma 'entrada' em tactics/pos, somente 'saidas'.
 
-####ts.2=complaints
-{ts.3=empty} => {ts.2=complaints} com 42% de suporte
+Quanto aos tópicos negativos, Complaints são uma presença constante, sempre trocando-se com tactics, como dito anteriormente. Arguments aparecem mais depois do inicio da partida (timeslices >= (1 e 2)), sempre com uma relação de precedência com complaints, o que, **se considerarmos complaints como um tópico menos tóxico do que arguments** pode ser considerado como uma evolução gradual na toxicidade. 
 
-####ts.2=arguments
-{ts.3=empty} => {ts.2=arguments} com 38% de suporte
+Entretanto, nem insults nem taunts aparecem nas regras obtidas. Um motivo possível para isso pode ser a sua baixa frequência geral (ou minha falta de entendimento pleno do apriori -.-), ou simplesmente o fato destes tópicos terem uma aparição mais errática e não necessariamente relacionada com o desenvolvimento da partida e do stress causado por ela, mas sim alguma condição externa.
 
-####ts.2=insults
-{ts.3=empty} => {ts.2=insults} com 43% de suporte
+Sobre um 'turning point' para o comportamento do ofensor, não fica realmente evidente que exista um. Fica claro que o ofensor se comporta toxicamente desde do começo da partida, apesar desse comportamente intensificar um pouco no decorrer desta. Isso fica mostrado tanto nas transições feitas acima, aonde o ofensor já começa com complaints/tacitcs, podendo este tópico alternar-se com tactics/complaints ou arguments no decorrer da partida, mas nada que indique a transição de um comportamento não-tóxico para um comportamento tóxico. Isso também é demonstrado no plot de timeslices x topic usage dos ofensores, com o uso de tópicos negativos mantendo-se relativamente constantes, mas com um pequeno pico na timeslice 1 (10-20 min de partida).
 
-####ts.2=taunts
-{ts.3=empty} => {ts.2=taunts} com 43% de suporte
+##Ponto de mudança de comportamento dos nao-ofensores:
 
-####Conclusões
-Esses resultados não parecem significar muita coisa além de uma quantidade maior de 'empty'(sem conversas) em ts.3 do que em ts.2, o que de fato acontece(43% vs 14%).
+###Experimento 1:
+Apriori com 30% de confiança(correlação fraca), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos, somente aonde lhs!=rhs, para tópicos utilizados pelos ofensores.
+
+Consideraremos como esse ponto de mudança, quando o jogador mudar seu tópico usado de positivo para negativo. Objetivo deste experimento é comparar estes resultados com o comportamento de ofensores, e verificar as diferenças.
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.0!=ts.1 & relation.offender!='offender', .(ts.0,ts.1)] )
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.1!=ts.2 & relation.offender!='offender', .(ts.1,ts.2)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.2!=ts.3 & relation.offender!='offender', .(ts.2,ts.3)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.3!=ts.4 & relation.offender!='offender', .(ts.3,ts.4)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.4!=ts.5 & relation.offender!='offender', .(ts.4,ts.5)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Results:
+Resultados bastante similares aos adquiridos na análise de regras de todos os tópicos, com breve exceção que 'arguments' não aparece novamente aqui. Nenhuma nova conclusão significativa a se tirar disso.
+
+##Ponto de mudança de comportamento dos aliados:
+
+###Experimento 1:
+Apriori com 30% de confiança(correlação fraca), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos, somente aonde lhs!=rhs, para tópicos utilizados pelos ofensores.
+
+Consideraremos como esse ponto de mudança, quando o jogador mudar seu tópico usado de positivo para negativo. Objetivo deste experimento é comparar estes resultados com o comportamento de outros grupos, e verificar as diferenças.
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.0!=ts.1 & relation.offender=='ally', .(ts.0,ts.1)] )
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.1!=ts.2 & relation.offender=='ally', .(ts.1,ts.2)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.2!=ts.3 & relation.offender=='ally', .(ts.2,ts.3)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.3!=ts.4 & relation.offender=='ally', .(ts.3,ts.4)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.4!=ts.5 & relation.offender=='ally', .(ts.4,ts.5)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Results:
+Resultados também similares aos do com o dataset completo. Aqui os arguments aparecem de maneira um pouco menos timida (arguments precedem complaints em 1->2 e 2->3), e tactics não é continuado por small talk no inicio da partida (0->1), mas small talk ainda pode 'virar' tactics no mesmo intervalo. 
+
+##Ponto de mudança de comportamento dos inimigos:
+
+###Experimento 1:
+Apriori com 30% de confiança(correlação fraca), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos, somente aonde lhs!=rhs, para tópicos utilizados pelos ofensores.
+
+Consideraremos como esse ponto de mudança, quando o jogador mudar seu tópico usado de positivo para negativo. Objetivo deste experimento é comparar estes resultados com o comportamento de outros grupos, e verificar as diferenças.
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.0!=ts.1 & relation.offender=='enemy', .(ts.0,ts.1)] )
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.1!=ts.2 & relation.offender=='enemy', .(ts.1,ts.2)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.2!=ts.3 & relation.offender=='enemy', .(ts.2,ts.3)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.3!=ts.4 & relation.offender=='enemy', .(ts.3,ts.4)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(ts.topics.col[ts.4!=ts.5 & relation.offender=='enemy', .(ts.4,ts.5)])
+```
+
+```{r echo=FALSE}
+	if(!is.null(results))
+		with(results, rules.table[order(rules.table$lhs),])
+	if(!is.null(results))
+		results$rules.graph
+```
+o
+####Resultados
+Tópicos envolvidos continuam os mesmos, com Tactics exercendo o mesmo papel de sempre, mas aqui nós vemos uma relação muito mais próxima entre Tactics e small talk, com small talk -> tactics e tactics precendendo small talk sendo bem mais constantes. A relação entre complaints e tactics também é mais fraca nestes grupos, com complaints -> tactics e sendo precedido por este, mas sem tactics -> complaints.
+
+##Evolução dos topicos com o tempo
+
+###Experimento:
+Apriori com 0% de confiança(todas as regras), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos. Resultados filtrados para mostrar somentes as regras lhs->rhs.
+
+Objetivo aqui é usar as regras para demonstrar os caminhos possíveis entre os tópicos e as probabilidades destes caminhos ocorrerem. Transições que eventualmente não aparecerem são consideradas insignificantes demais(muito pouco suporte), ou são ao acaso (lift muito próximo de 1)
+
+###Full:
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+min.conf = 0
+min.lift = 0.2
+dt.base = ts.topics.col
+	results = slices.arules( dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.4!="other" & ts.5!="other", .(ts.4, ts.5)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Tudo junto
+```{r, fig.show='hide', include=FALSE}
+	min.conf = 0
+min.lift = 0.2
+results = slices.arules(list(y1=dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)],
+														 y2=dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)],
+														 y3=dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)],
+														 y4=dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)],
+														 y5=dt.base[ts.4!="other" & ts.5!="other", .(ts.4,ts.5)]
+														),
+												 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% 
+	visPhysics(barnesHut=list(springLength=500)) %>%
+	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Resultados
+Praticamente todas as transições apresentam lift positivo somente em transações aonde o topico não muda (ie. topico -> topico). Contudo, muitos desses topicos participam de transações aonde o lift é negativo com outros topicos. No geral, topicos positivos tem lift negativo com alguns topicos negativos, e topicos negativos tem lift negativo com alguns topicos positivos. Other langs. tem lift negativo com topicos positivos. Essas relações variam um pouco em algumas transições de timeslice mas têm essa regra geral.
+
+###Aliados:
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+min.conf = 0
+min.lift = 0.2
+dt.base = ts.topics.col[relation.offender=='ally']
+	results = slices.arules( dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.4!="other" & ts.5!="other", .(ts.4, ts.5)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Tudo junto
 
 
-###Experimento 3:
-Apriori com 33% de confiança e 5% de suporte, usando todas as timeslices, e todos os tópicos. Suporte é baixo devido aos desbalanceamentos entre os grupos.
+```{r, fig.show='hide', include=FALSE}
+	min.conf = 0
+min.lift = 0.2
+results = slices.arules(list(y1=dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)],
+														 y2=dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)],
+														 y3=dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)],
+														 y4=dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)],
+														 y5=dt.base[ts.4!="other" & ts.5!="other", .(ts.4,ts.5)]
+														),
+												 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
 
-####Conclusões
-Sem resultados conclusivos, de 300+ regras, a maioria esmagadora dizia de algum modo que empty -> empty e topic -> topic
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% 
+	visPhysics(barnesHut=list(springLength=500)) %>%
+	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Resultados
+
+###Enemies:
+
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+min.conf = 0
+min.lift = 0.2
+dt.base = ts.topics.col[relation.offender=='enemy']
+	results = slices.arules( dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.4!="other" & ts.5!="other", .(ts.4, ts.5)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Tudo junto
+```{r, fig.show='hide', include=FALSE}
+	min.conf = 0
+min.lift = 0.2
+results = slices.arules(list(y1=dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)],
+														 y2=dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)],
+														 y3=dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)],
+														 y4=dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)],
+														 y5=dt.base[ts.4!="other" & ts.5!="other", .(ts.4,ts.5)]
+														),
+												 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% 
+	visPhysics(barnesHut=list(springLength=500)) %>%
+	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Resultados
 
 
+###Ofensores:
 
+####Timeslices 0 e 1:
+```{r, fig.show='hide', include=FALSE}
+min.conf = 0
+min.lift = 0.2
+dt.base = ts.topics.col[relation.offender=='offender']
+	results = slices.arules( dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 1 e 2:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 2 e 3:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 3 e 4:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Timeslices 4 e 5:
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules( dt.base[ts.4!="other" & ts.5!="other", .(ts.4, ts.5)] , 
+													 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+```
+
+####Tudo junto
+```{r, fig.show='hide', include=FALSE}
+	min.conf = 0
+min.lift = 0.2
+results = slices.arules(list(y1=dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)],
+														 y2=dt.base[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)],
+														 y3=dt.base[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)],
+														 y4=dt.base[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)],
+														 y5=dt.base[ts.4!="other" & ts.5!="other", .(ts.4,ts.5)]
+														),
+												 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph %>% 
+	visPhysics(barnesHut=list(springLength=500)) %>%
+	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Resultados
+
+
+#As Arvres somos nozes
+
+Foram criadas árvores de decisão, usando como treinamento os tópicos e as métricas de performance e contamianação de cada partida.
+
+### Total:
+
+####Timeslices 0 e 1:
+```{r echo=FALSE}
+	#fancyRpartPlot(fit01.full)
+```
+
+####Timeslices 1 e 2:
+```{r echo=FALSE}
+	#fancyRpartPlot(fit12.full)
+```
+
+####Timeslices 2 e 3:
+```{r echo=FALSE}
+	#fancyRpartPlot(fit23.full)
+```
+
+####Timeslices 3 e 4:
+```{r echo=FALSE}
+	#fancyRpartPlot(fit34.full)
+```
+
+####Timeslices 4 e 5:
+```{r echo=FALSE}
+	#fancyRpartPlot(fit45.full)
+```
+
+####Results
+Resultados dos testes com árvores são mais confusos, mas ainda, em maioria (contudo não tão esmagadora quando as das arules) indicam que topico->topico. Contudo, o resultado mais relevante daqui é que *contaminação e performance não aparecem em nenhuma das transições* ou seja, aparentemente estas métricas não tem influência sobre a transição dos tópicos. Estas tendências continuam mesmo quando as árvores são construidas baseadas em grupos específicos. Foram construídas arvores com aliados, inimigos, ofensores, inimigos contaminados e não contaminados.
+
+Também é importamente relatar que nenhuma dessas regras estão filtradas por lift, o que pode gerar regras que aparecem por simplesmente causa da distribuição dos dados.
+
+
+# Limitações dessaporra
+
+* Tamanho do vocabulário variado entre timeslices.
+    * Um grupo pode falar muito em uma timeslice e pouco em outras.
+    * Isso pode ser amenizado criando algum tipo de peso para a importância de cada timeslice baseado no tamanho do texto dela.
+        * ISSO É UM SACO DE PROGRAMAR AAAAAA.
+        
+* Timeslices simplesmente muito grandes
+    * 10 min pode ser um muito grande para capturar as nuances, diminuir o tamanho da janela
+        * RIP memória.
+    * Pode se normalizar a partida e fazer uma divisão similar ao trabalho do Kwak et al.
+        * Não me cheira bem tbh, os momentos de uma partida de lol só não funcionam desse jeito.
+ 
+        
+# TODO:
+
+* Fazer regras com árvores, usando como parâmetros: relation.offender,performance,contamination,topic.
+    * Melhores chances de encontrar regras mais complexas que seriam mais complicadas de se encontrar usando arules.
+    * Ou eu posso fazer essa birosca com arules mesmo, mas teria que discretizar performance.
+
+TODO: comparar timeslices iguais de grupos diferentes, para verificar se há relação entre o diálogo usado por um time e o usado por outro, também comparar com performance e contaminação para verificar se há relações significativas(ie. aumento na contaminação == mais transições negativas, etc).
