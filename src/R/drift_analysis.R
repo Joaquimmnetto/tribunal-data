@@ -5,7 +5,7 @@ source("src/R/utils.R")
 
 
 
-r2d_fl="data/model_drift/lda_sym_15/labels.csv"
+r2d_fl = "data/model_drift/lda_sym_15/labels.csv"
 topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
 	col.names = c("case", "match", "relation.offender", "timeslice", "topic"),
 	colClasses = c("factor", "factor", "factor", "integer", "factor")
@@ -134,15 +134,79 @@ ts.topics.col[(ts.0 == ts.1 | is.na(ts.0) | is.na(ts.1))
 							,no.change := TRUE]
 
 
+#-----------------------arules---------------------------
+item.name <- function(str){
+	return (
+		gsub(".+=","",
+				 gsub("[{}]","",str)
+		))
+}
 
-filter.rules <- function(dt, rules, lift.dist, min.sup, lhs.only=NULL){
+lrhs.name <- function(str){
+	return (
+		gsub("=.+","",
+				 gsub("[{}]","",str)
+		))
+}
+
+get.perc <- function(lrhs, percs){
+	if(class(lrhs)=="character"){
+		items <- item.name(lrhs)
+		col.names <- lrhs.name(lrhs)
+	}
+	else{
+		items <- item.name(labels(lrhs))
+		col.names <- lrhs.name(labels(lrhs))	
+	}
 	
-	# percs = list()
-	# for(name in names(dt)){
-	# 	percs[[name]] = prop.table(summary(dt[,get(name)]))	
-	# }
+	comb.names <- copy(col.names)
+	
+	for(i in 1:length(items)){
+		comb.names[i] <- paste(col.names[i],items[i],sep = ".")
+	}
+	
+	return(unlist(percs[col.names])[comb.names])
+}
+
+supp <- function(dt){
+	lhs.name = names(dt)[1]
+	rhs.name = names(dt)[2]
+	items.names = union(levels(dt[[1]]),levels(dt[[2]]))
+	
+	results = list()
+	for(item in items.names){
+		lhs.count = nrow(dt[get(lhs.name)!=get(rhs.name),1][get(lhs.name)==item])
+		rhs.count = nrow(dt[get(lhs.name)!=get(rhs.name),2][get(rhs.name)==item])
+		eq.count = nrow(dt[get(lhs.name)==get(rhs.name),1][get(lhs.name)==item])
+		results[[item]] = (lhs.count+rhs.count+eq.count)/nrow(dt)
+	}
+		
+	return(results)
+}
+
+filter.rules <- function(dt, rules, lift.dist, min.lc, lhs.only=NULL){
+	
+	percs = list()
+	for(name in names(dt)){
+		percs[[name]] = prop.table(summary(dt[,get(name)]))	
+	}
+	
 	library(arules)
+	
 	rules = subset(rules, subset=(abs(lift - 1) > lift.dist))
+	
+	
+	#supt = supp(dt)
+	#lhs.sup = unlist(supt[item.name(labels(rules@lhs))])
+	lhs.perc = get.perc(rules@lhs, percs)
+	rhs.perc = get.perc(rules@rhs, percs)
+	min.perc = pmin(lhs.perc, rhs.perc)
+	
+	rules@quality$conf.lhs = rules@quality$support/lhs.perc
+	rules@quality$conf.rhs = rules@quality$support/rhs.perc
+	rules@quality$confidence = rules@quality$support/min.perc
+	
+	rules = subset(rules, subset=confidence > min.lc)
 	
 	if(!is.null(lhs.only)){
   	rules = arules::subset(rules, subset=(lhs %pin% sprintf("%s=%s",names(dt)[1],lhs.only)))
@@ -158,6 +222,10 @@ graph_arules <- function(rules){
 	ig_df$vertices = transform(ig_df$vertices, support = c(NA, support[-nrow(ig_df$vertices)]))
 	ig_df$vertices = transform(ig_df$vertices, confidence = c(NA, confidence[-nrow(ig_df$vertices)]))
 	ig_df$vertices = transform(ig_df$vertices, lift = c(NA, lift[-nrow(ig_df$vertices)]))
+	ig_df$vertices = transform(ig_df$vertices, conf.lhs = c(NA, conf.lhs[-nrow(ig_df$vertices)]))
+	ig_df$vertices = transform(ig_df$vertices, conf.rhs = c(NA, conf.rhs[-nrow(ig_df$vertices)]))
+	
+	
 	
 	return (visNetwork(
 		nodes = data.frame(
@@ -165,10 +233,12 @@ graph_arules <- function(rules){
 			,value = abs(ig_df$vertices$confidence) # could change to lift or confidence
 			,color = ifelse(ig_df$vertices$lift < 1, 'red', 'green')
 			,title = ifelse(!is.na(ig_df$vertices$support),
-													sprintf("s:%.3f, c:%.2f, l:%.2f",
-											 				ig_df$vertices$support, 
-											 				ig_df$vertices$confidence, 
-											 				ig_df$vertices$lift),
+													sprintf("l:%.2f, cl:%.2f, cr:%.2f, lc:%.2f",
+											 				ig_df$vertices$lift, 
+											 				ig_df$vertices$conf.lhs, 
+											 				ig_df$vertices$conf.rhs,
+											 				ig_df$vertices$confidence
+											 				),
 													ig_df$vertices$name
 											)
 			
@@ -180,24 +250,23 @@ graph_arules <- function(rules){
 }
 
 
-slices.arules <- function(dts, global.sup = 0.003, 
+slices.arules <- function(dts, global.sup = 0,
 													min.confidence = 0.30, 
 													min.lift.dist=0.30,
 													lhs.only=NULL){
 	require(arules)
 	total.rules = NULL
 	if(class(dts)!='list'){
-		print("Converting to list...")
 		dts = list(y1=dts)
 	}
 	
 	for(dt in dts){
 		rules = apriori(dt,
-										parameter=list(confidence=min.confidence, support=global.sup)
+										parameter=list(confidence=0, support=global.sup)
 		)
 		rules = filter.rules(dt, rules, 
 												 lift.dist = min.lift.dist, 
-												 min.sup = local.sup,
+												 min.lc = min.confidence,
 												 lhs.only = lhs.only
 		)
 		
@@ -219,33 +288,66 @@ slices.arules <- function(dts, global.sup = 0.003,
 	}
 	
 	return(NULL)
-	
-	
+}
+verticalize <- function(dt){
+	lhs = list(dt[,.(ts.0)],
+						 dt[,.(ts.1)],
+						 dt[,.(ts.2)],
+						 dt[,.(ts.3)],
+						 dt[,.(ts.4)]
+						 )
+	rhs = list(dt[,.(ts.1)],
+						 dt[,.(ts.2)],
+						 dt[,.(ts.3)],
+						 dt[,.(ts.4)],
+						 dt[,.(ts.5)]
+	)
+	trans.topics = rbindlist(lhs)
+	trans.topics = cbind(trans.topics,rbindlist(rhs))
+	setnames(trans.topics,c("ts.0","ts.1"),c("lhs","rhs"))
+	return(trans.topics)
 }
 
-min.conf = 0
-min.lift = 0.2
-results = slices.arules(list(y1=ts.topics.col[ts.0!="other" & ts.1!="other", .(ts.0,ts.1)],
-														 y2=ts.topics.col[ts.1!="other" & ts.2!="other", .(ts.1,ts.2)],
-														 y3=ts.topics.col[ts.2!="other" & ts.3!="other", .(ts.2,ts.3)],
-														 y4=ts.topics.col[ts.3!="other" & ts.4!="other", .(ts.3,ts.4)],
-														 y5=ts.topics.col[ts.4!="other" & ts.5!="other", .(ts.4,ts.5)]
-														),
-												 min.confidence = min.conf, lhs.only="", min.lift.dist = min.lift)
+compare.groups <- function(dt, group.a, group.b){
+	lhs = list(dt[relation.offender==group.a, .(ts.0)],
+						 dt[relation.offender==group.a, .(ts.1)],
+						 dt[relation.offender==group.a, .(ts.2)],
+						 dt[relation.offender==group.a, .(ts.3)],
+						 dt[relation.offender==group.a, .(ts.4)],
+						 dt[relation.offender==group.a, .(ts.5)]
+						)
+	rhs = list(dt[relation.offender==group.b, .(ts.0)],
+						 dt[relation.offender==group.b, .(ts.1)],
+						 dt[relation.offender==group.b, .(ts.2)],
+						 dt[relation.offender==group.b, .(ts.3)],
+						 dt[relation.offender==group.b, .(ts.4)],
+						 dt[relation.offender==group.b, .(ts.5)]
+						)
+	trans.topics = rbindlist(lhs)
+	trans.topics = cbind(trans.topics,rbindlist(rhs))
+	names(trans.topics) <- c(group.a,group.b)
+	return(trans.topics)
+}
+dt = ts.topics.col[ts.0!=ts.1][,.(ts.0,ts.1)]
+rules = slices.arules(dt, 
+											min.confidence = 0.1, min.lift.dist = 0.3, lhs.only="")
+inspectDT(rules$rules)
+rules$rules.graph 
+#%>% visPhysics(barnesHut=list(springLength=500)) %>%
+#	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
 
-results$rules.graph %>% 
-	visPhysics(barnesHut=list(springLength=500)) %>%
-	visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+
 
 #Arvore
-require(rpart)
+require(rpart) 
 require(rattle)
 
-fit01.full <- rpart(ts.1 ~ ts.0 + performance + contamination, data=ts.topics.col)
-fit12.full <- rpart(ts.2 ~ ts.1 + performance + contamination, data=ts.topics.col)
-fit23.full <- rpart(ts.3 ~ ts.2 + performance + contamination, data=ts.topics.col)
-fit34.full <- rpart(ts.4 ~ ts.3 + performance + contamination, data=ts.topics.col)
-fit45.full <- rpart(ts.5 ~ ts.4 + performance + contamination, data=ts.topics.col)
+
+fit01.full <- rpart(ts.1 ~ ts.0 + performance + contamination, data = ts.topics.col)
+fit12.full <- rpart(ts.2 ~ ts.1 + performance + contamination, data = ts.topics.col)
+fit23.full <- rpart(ts.3 ~ ts.2 + performance + contamination, data = ts.topics.col)
+fit34.full <- rpart(ts.4 ~ ts.3 + performance + contamination, data = ts.topics.col)
+fit45.full <- rpart(ts.5 ~ ts.4 + performance + contamination, data = ts.topics.col)
 
 
 # fit.ae <- rpart(ts.1 ~ ts.0 + performance + contamination, data=ts.topics.col[relation.offender!='offender'])
@@ -256,9 +358,6 @@ fit45.full <- rpart(ts.5 ~ ts.4 + performance + contamination, data=ts.topics.co
 # fit.nc <- rpart(ts.1 ~ ts.0 + performance + contamination, data=ts.topics.col[relation.offender=='enemy' & contamination == 0] )
 # fit.ce <- rpart(ts.1 ~ ts.0 + performance + contamination, data=ts.topics.col[relation.offender=='enemy' & contamination > 0] )
 
-
-fancyRpartPlot(fit.a)
-fancyRpartPlot(fit.of)
 
 # results = slices.arules(ts.topics.col[ts.0!=ts.1 | ts.1!=ts.2 | ts.0!=ts.2, .(ts.0,ts.1,ts.2)], 
 # 													min.confidence = 0.30, min.lift.dist = 0.30)

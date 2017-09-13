@@ -496,7 +496,7 @@ dt.base = ts.topics.col
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 1 e 2:
@@ -507,7 +507,7 @@ dt.base = ts.topics.col
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 2 e 3:
@@ -518,7 +518,7 @@ dt.base = ts.topics.col
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 3 e 4:
@@ -529,7 +529,7 @@ dt.base = ts.topics.col
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 4 e 5:
@@ -540,7 +540,7 @@ dt.base = ts.topics.col
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Tudo junto
@@ -580,7 +580,7 @@ dt.base = ts.topics.col[relation.offender=='ally']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 1 e 2:
@@ -591,7 +591,7 @@ dt.base = ts.topics.col[relation.offender=='ally']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 2 e 3:
@@ -602,7 +602,7 @@ dt.base = ts.topics.col[relation.offender=='ally']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 3 e 4:
@@ -613,7 +613,7 @@ dt.base = ts.topics.col[relation.offender=='ally']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 4 e 5:
@@ -624,7 +624,7 @@ dt.base = ts.topics.col[relation.offender=='ally']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Tudo junto
@@ -665,7 +665,7 @@ dt.base = ts.topics.col[relation.offender=='enemy']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 1 e 2:
@@ -676,7 +676,7 @@ dt.base = ts.topics.col[relation.offender=='enemy']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 2 e 3:
@@ -687,7 +687,7 @@ dt.base = ts.topics.col[relation.offender=='enemy']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 3 e 4:
@@ -698,7 +698,7 @@ dt.base = ts.topics.col[relation.offender=='enemy']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 4 e 5:
@@ -709,7 +709,7 @@ dt.base = ts.topics.col[relation.offender=='enemy']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Tudo junto
@@ -748,8 +748,8 @@ dt.base = ts.topics.col[relation.offender=='offender']
 ```
 
 ```{r echo=FALSE}
-	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	 inspectDT(results$rules)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 1 e 2:
@@ -759,8 +759,8 @@ dt.base = ts.topics.col[relation.offender=='offender']
 ```
 
 ```{r echo=FALSE}
-	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	 inspectDT(results$rules)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 2 e 3:
@@ -771,7 +771,7 @@ dt.base = ts.topics.col[relation.offender=='offender']
 
 ```{r echo=FALSE}
 	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 3 e 4:
@@ -781,8 +781,8 @@ dt.base = ts.topics.col[relation.offender=='offender']
 ```
 
 ```{r echo=FALSE}
-	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	  inspectDT(results$rules)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Timeslices 4 e 5:
@@ -792,8 +792,8 @@ dt.base = ts.topics.col[relation.offender=='offender']
 ```
 
 ```{r echo=FALSE}
-	inspectDT(results$rules)
-	results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
+	  inspectDT(results$rules)
+	# results$rules.graph %>% visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 400)
 ```
 
 ####Tudo junto
@@ -818,6 +818,233 @@ results = slices.arules(list(y1=dt.base[ts.0!="other" & ts.1!="other", .(ts.0,ts
 ```
 
 ####Resultados
+
+#Transições sem consideração de tempo
+Dataset construido com todas as transições ocorridas, sem consideração das timeslices das transações. Apriori com 0% de confiança(todas as regras), 0.3% de suporte (~10% do menor tópico considerado(other.langs)) e lift minimo de 1.3/0.7, limitado a um par de timeslices consecutivos. Resultados filtrados para mostrar somentes as regras lhs->rhs.
+
+##Transações com repetição
+
+###Full
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col), 
+											min.confidence = 0.003,
+											lhs.only = "")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+####Results:
+Complaints e arguments agora funcionam como meio campo entre os tópicos. Esses dois tópicos são conectados entre si, e conectam topicos positivos com negativos. Contudo, há uma ponte direta entre esses tópicos, na figura de tactics/positive -> insults. Usar o dataset junto não parece ser a solução mais ideal para a análise. Nos próximos passos os grupos serão analizados individualmente, e depois na forma de ofensores e não ofensores.
+###Aliados
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='ally']), 
+											min.confidence = 0.000
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph #%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Inimigos
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='enemy']), 
+											min.confidence = 0.000
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph #%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='offender']), 
+											min.confidence = 0.000
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph#	%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Não-Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender']), 
+											min.confidence = 0.000
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph#	%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Conclusão
+Em todos os três casos, arguments e complaints executam o papel do meio-campo entre topicos mais positivos e topicos mais negativos. Contudo, a relação entre tactics/positive e insults persiste, fornecendo uma quebra significativa nesse padrão, e dentro de cada região, há pouca interconexão entre os tópicos presentes. Nos casos de full/enemy e ally, tactics/positive não é alcançado por ninguém, e é alcançado por tactics, no caso do offender. A conexão entre taunts e insults é não existente, e a conexão entre small talk e tactics é feita via complaints/arguments. 
+
+Essa análise foi feita sem considerar valoes de confiança, considerando somente lifts de 1.3 ou superior.
+
+##Transações sem repetição
+
+Somente considerada nas regras as transações sem repetições (x->x)
+
+###Full
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col)[lhs!=rhs], 
+											min.confidence = 0.003
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph #%>% 
+	#visPhysics(barnesHut=list(springLength=200)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed")
+```
+
+####Results:
+
+Neste caso, Tactics serve como um interlocutor entre os tópicos positivos e complaints. Complaints serve como uma porta de entrada para arguments, interlocutando com o mesmo. Aqui podemos considerar que tactics faz o papel de meio campo sozinho, enquanto complaints serve de entrada para negativos, e tactics também serve como topico de entrada para os positivos, além do seu papel de 'meio campo'.
+Insults relacionam-se somente com other.langs, topico esse que também se relaciona com tactics/pos. Como other.langs é um tópico bem particular as circunstâncias de uma partida(pessoas que não falam inglês no time), o significado semântico disso não é muito claro.
+
+###Aliados
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='ally'])[lhs!=rhs], 
+											min.confidence = 0.00
+											,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph #%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+####Results
+Tactics mantêm a mesma função anterior, mediando tópicos positivos e complaints. Contudo a relação de complaints com arguments muda, transformando-se em uma relação de mão única complaints -> arguments. Tactics/positive possui uma relação direta com insults, novamente(tp -> insults).
+
+###Inimigos
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='enemy'])[lhs!=rhs], 
+											min.confidence = 0.000, 
+											lhs.only="")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph #%>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Results:
+Complaints e arguments tem um caso parecido com allies, com uma ligação de caminho único. Contudo arguments tem uma ligação dupla com taunts. Insults só liga-se com other.langs, e tactics.pos agora possui uma ligação com small.talk, e nenhuma com other langs ou insults.
+
+###Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender=='offender'])[lhs!=rhs], 
+											min.confidence = 0.000, 
+											lhs.only="")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Conclusion
+Aqui as relações ficam mais confusas, com tactics complaints, arguments e tactics/positive realizando ligações entre topicos positivos e negativos. As relações entre tp e tactics mantêm-se, contudo, small talk tem uma relação unidirecional com tactics (sm -> tactics) e com arguments(arguments -> sm). taunts agora leva a complaints, além de tactics, mas continua 'isolado' sem receber de ninguém. A ligação entre tactics/positive e insults reaparece aqui, de maneira unidirecional (tp->insults).
+
+###Não-Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender'])[lhs!=rhs], 
+											min.confidence = 0.000, 
+											lhs.only="")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Conclusões
+Existe uma 'área central' de transições, entretanto seus limites não são completamente claros. Em não ofensores, essa área é ocupada por tactics e complaints, com tactics realizando a interloucução entre tópicos mais positivos(small talk e tactics/positive) e complaints. Já complaints liga-se a arguments, que também 'recebe' de taunts, tornando complaints uma 'porta de entrada' para tópicos negativos. O comportamento de taunts e especialmente de insults não fica claro nestas análises, provavelmente devido a sua baixa frequência. Uma análise mais detalhada destes vai ser tentada a seguir.
+
+##Insults, com autoreferência
+Partidas aonde insults aparecem ao menos uma vez. conf.=0 e min.lift=1.3
+
+###Full
+```{r, fig.show='hide', include=FALSE}
+	dt = ts.topics.col[ ts.0 == 'insults' | ts.1 == 'insults' | ts.2 == 'insults' | 
+											ts.3 == 'insults' | ts.4 == 'insults' | ts.5 == 'insults']
+	results = slices.arules(verticalize(dt), 
+											min.confidence = 0.000
+											#,lhs.only=""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Ofensores
+###Não-Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender'])[lhs!=rhs], 
+											min.confidence = 0.000, 
+											lhs.only="")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Não-Ofensores
+###Não-Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender'])[lhs!=rhs], 
+											min.confidence = 0.000, 
+											lhs.only="")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
 
 
 #As Arvres somos nozes
