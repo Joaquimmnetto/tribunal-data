@@ -12,6 +12,7 @@ topics <- fread(r2d_fl, header = FALSE, sep=',', showProgress=TRUE,
 )
 
 setkey(topics, case, match, relation.offender, timeslice)
+
 #full/lda_sym_15
 {
 topics[,topic := factor(
@@ -43,8 +44,8 @@ topics[,topic.2 := factor(ifelse
 
 build.topics.aggr <- function(dt = topics, value.col, topics.col, col.name = 'value', agr.size = 10000){
 	num.agrs = as.integer((nrow(dt)/agr.size))
-	agr.group <- rep(1:num.agrs, each=agr.size)
-	agr.group <- append(agr.group, rep(num.agrs+1, nrow(dt)-length(agr.group)))
+	agr.group <- rep(1:num.agrs, each = agr.size)
+	agr.group <- append(agr.group, rep(num.agrs + 1, nrow(dt) - length(agr.group)))
 	
 	topics.aggr <- dt[,.(value = get(value.col), topics = get(topics.col))]
 	topics.aggr <- topics.aggr[order(value)]
@@ -59,7 +60,7 @@ build.topics.aggr <- function(dt = topics, value.col, topics.col, col.name = 'va
 																"tactics.pos" = prop.table(summary(topics))['tactics.pos'],
 																"other.langs" = prop.table(summary(topics))['other.langs'],
 																"nas" = prop.table(summary(topics))["NA's"]
-	),by=i]
+	),by = i]
 																
 	
 	colnames(topics.aggr)[2] = col.name
@@ -75,20 +76,24 @@ build.topics.aggr <- function(dt = topics, value.col, topics.col, col.name = 'va
 	return(topics.aggr)
 }
 
-ts.aggr = build.topics.aggr(dt=topics, value.col='timeslice', topics.col='topic',agr.size = 10000)
-ts.aggr.offender = build.topics.aggr(dt=topics[relation.offender=='offender'], value.col='timeslice', topics.col='topic',agr.size = 10000)
-ts.aggr.ally = build.topics.aggr(dt=topics[relation.offender=='ally'], value.col='timeslice', topics.col='topic',agr.size = 10000)
-ts.aggr.enemy = build.topics.aggr(dt=topics[relation.offender=='enemy'], value.col='timeslice', topics.col='topic',agr.size = 10000)
+ts.aggr = build.topics.aggr(dt = topics, 
+														value.col = 'timeslice', topics.col = 'topic',agr.size = 10000)
+ts.aggr.offender = build.topics.aggr(dt = topics[relation.offender == 'offender'], 
+																		 value.col = 'timeslice', topics.col = 'topic', agr.size = 10000)
+ts.aggr.ally = build.topics.aggr(dt = topics[relation.offender == 'ally'], 
+																 value.col = 'timeslice', topics.col = 'topic',agr.size = 10000)
+ts.aggr.enemy = build.topics.aggr(dt = topics[relation.offender == 'enemy'], 
+																	value.col = 'timeslice', topics.col = 'topic',agr.size = 10000)
 
 
 plot.aggr <- function(dt,title='all'){
-	ggplot(dt) + geom_smooth(aes(x=value, y=tactics, color="Tactics"), span=0.8) + 
-		geom_smooth(aes(x=value, y=tactics.pos, color="Tactics/Pos"), span=0.8) + 
-		geom_smooth(aes(x=value, y=complaints, color="Complaints"), span=0.8) + 
-		geom_smooth(aes(x=value, y=arguments, color="Arguments"), span=0.8) + 
-		geom_smooth(aes(x=value, y=insults, color="Insults"), span=0.8) + 
-		geom_smooth(aes(x=value, y=taunts, color="Taunts"), span=0.8) +
-		ggtitle(title) + coord_cartesian(xlim=c(0, 5))
+	ggplot(dt) + geom_smooth(aes(x = value, y = tactics, color = "Tactics"), span = 0.8) + 
+		geom_smooth(aes(x = value, y = tactics.pos, color = "Tactics/Pos"), span = 0.8) + 
+		geom_smooth(aes(x = value, y = complaints, color = "Complaints"), span = 0.8) + 
+		geom_smooth(aes(x = value, y = arguments, color = "Arguments"), span = 0.8) + 
+		geom_smooth(aes(x = value, y = insults, color = "Insults"), span = 0.8) + 
+		geom_smooth(aes(x = value, y = taunts, color = "Taunts"), span = 0.8) +
+		ggtitle(title) + coord_cartesian(xlim = c(0, 5))
 }
 
 
@@ -100,22 +105,28 @@ plot.aggr <- function(dt,title='all'){
 #setkey(groups,case,match,relation.offender)
 #topics <- merge(topics, groups[,.(case,match,relation.offender,performance,contamination)], all.x=TRUE, all.y=FALSE)
 
-ts.topics.col <- topics[timeslice==0,.(case,match,relation.offender,topic)]
+ts.topics.col <- topics[timeslice == 0,.(case,match,relation.offender,topic)]
 setnames(ts.topics.col,'topic','ts.0')
-setkey(ts.topics.col,case,match,relation.offender)
+setkey(ts.topics.col, case, match, relation.offender)
 
-for(i in 1:5){
-	ts.topics.col <- merge(ts.topics.col,topics[timeslice==i,.(case,match,relation.offender,topic)],all=TRUE)
+for(i in 1:5) {
+	ts.topics.col <- merge(ts.topics.col,
+												 topics[timeslice == i, .(case,match,relation.offender,topic)], all = TRUE)
 	setnames(ts.topics.col,'topic',sprintf('ts.%d',i))
 	setkey(ts.topics.col,case,match,relation.offender)
 }
 
-setkey(groups,case,match,relation.offender)
-ts.topics.col = merge(ts.topics.col,groups[,.(case,match,relation.offender,performance,contamination)],all.x=TRUE, all.y=FALSE)
+setkey(groups, case, match, relation.offender)
+ts.topics.col = merge(ts.topics.col,
+											groups[,.(case,match,relation.offender,performance,contamination)], 
+											all.x = TRUE, all.y = FALSE)
 
 
-ts.topics.col = merge(ts.topics.col,matches[,.(case,match,time.played)],all.x=TRUE, all.y=FALSE)
+ts.topics.col = merge(ts.topics.col, 
+											matches[,.(case,match,time.played)], 
+											all.x = TRUE, all.y = FALSE)
 setkey(ts.topics.col,case,match,relation.offender)
+
 ts.topics.col = ts.topics.col[, time.played := time.played/60]
 ts.topics.col[time.played > 10 & is.na(ts.0), ts.0 := 'empty']
 ts.topics.col[time.played > 20 & is.na(ts.1), ts.1 := 'empty']
@@ -125,7 +136,7 @@ ts.topics.col[time.played > 50 & is.na(ts.4), ts.4 := 'empty']
 ts.topics.col[time.played > 60 & is.na(ts.5), ts.5 := 'empty']
 setkey(ts.topics.col,case,match,relation.offender)
 
-ts.topics.col[,no.change:=FALSE]
+ts.topics.col[,no.change := FALSE]
 ts.topics.col[(ts.0 == ts.1 | is.na(ts.0) | is.na(ts.1))  
 							& (ts.1 == ts.2 | is.na(ts.1) | is.na(ts.2))  
 							& (ts.2 == ts.3 | is.na(ts.2) | is.na(ts.3))  
@@ -135,22 +146,22 @@ ts.topics.col[(ts.0 == ts.1 | is.na(ts.0) | is.na(ts.1))
 
 
 #-----------------------arules---------------------------
-item.name <- function(str){
-	return (
+item.name <- function(str) {
+	return(
 		gsub(".+=","",
 				 gsub("[{}]","",str)
 		))
 }
 
-lrhs.name <- function(str){
-	return (
+lrhs.name <- function(str) {
+	return(
 		gsub("=.+","",
 				 gsub("[{}]","",str)
 		))
 }
 
-get.perc <- function(lrhs, percs){
-	if(class(lrhs)=="character"){
+get.perc <- function(lrhs, percs) {
+	if(class(lrhs) == "character") {
 		items <- item.name(lrhs)
 		col.names <- lrhs.name(lrhs)
 	}
@@ -161,7 +172,7 @@ get.perc <- function(lrhs, percs){
 	
 	comb.names <- copy(col.names)
 	
-	for(i in 1:length(items)){
+	for(i in 1:length(items)) {
 		comb.names[i] <- paste(col.names[i],items[i],sep = ".")
 	}
 	
@@ -175,10 +186,10 @@ supp <- function(dt){
 	
 	results = list()
 	for(item in items.names){
-		lhs.count = nrow(dt[get(lhs.name)!=get(rhs.name),1][get(lhs.name)==item])
-		rhs.count = nrow(dt[get(lhs.name)!=get(rhs.name),2][get(rhs.name)==item])
-		eq.count = nrow(dt[get(lhs.name)==get(rhs.name),1][get(lhs.name)==item])
-		results[[item]] = (lhs.count+rhs.count+eq.count)/nrow(dt)
+		lhs.count = nrow(dt[get(lhs.name) != get(rhs.name),1][get(lhs.name) == item])
+		rhs.count = nrow(dt[get(lhs.name) != get(rhs.name),2][get(rhs.name) == item])
+		eq.count = nrow(dt[get(lhs.name) == get(rhs.name),1][get(lhs.name) == item])
+		results[[item]] = (lhs.count + rhs.count + eq.count)/nrow(dt)
 	}
 		
 	return(results)
@@ -187,13 +198,13 @@ supp <- function(dt){
 filter.rules <- function(dt, rules, lift.dist, min.lc, lhs.only=NULL){
 	
 	percs = list()
-	for(name in names(dt)){
+	for(name in names(dt)) {
 		percs[[name]] = prop.table(summary(dt[,get(name)]))	
 	}
 	
 	library(arules)
 	
-	rules = subset(rules, subset=(abs(lift - 1) > lift.dist))
+	rules = subset(rules, subset = (abs(lift - 1) > lift.dist))
 	
 	
 	#supt = supp(dt)
@@ -206,18 +217,18 @@ filter.rules <- function(dt, rules, lift.dist, min.lc, lhs.only=NULL){
 	rules@quality$conf.rhs = rules@quality$support/rhs.perc
 	rules@quality$confidence = rules@quality$support/min.perc
 	
-	rules = subset(rules, subset=confidence > min.lc)
+	rules = subset(rules, subset = confidence > min.lc)
 	
-	if(!is.null(lhs.only)){
-  	rules = arules::subset(rules, subset=(lhs %pin% sprintf("%s=%s",names(dt)[1],lhs.only)))
+	if(!is.null(lhs.only)) {
+  	rules = arules::subset(rules, subset = (lhs %pin% sprintf("%s=%s",names(dt)[1],lhs.only)))
 	}
 	return(rules)
 }
 
-graph_arules <- function(rules){
+graph_arules <- function(rules) {
 	require(visNetwork)
 	require(arulesViz)
-	ig <- plot( rules, method="graph" )
+	ig <- plot( rules, method = "graph" )
 	ig_df <- get.data.frame( ig, what = "both" )
 	ig_df$vertices = transform(ig_df$vertices, support = c(NA, support[-nrow(ig_df$vertices)]))
 	ig_df$vertices = transform(ig_df$vertices, confidence = c(NA, confidence[-nrow(ig_df$vertices)]))
@@ -227,7 +238,7 @@ graph_arules <- function(rules){
 	
 	
 	
-	return (visNetwork(
+	return(visNetwork(
 		nodes = data.frame(
 			id = ig_df$vertices$name
 			,value = abs(ig_df$vertices$confidence) # could change to lift or confidence
@@ -250,19 +261,19 @@ graph_arules <- function(rules){
 }
 
 
-slices.arules <- function(dts, global.sup = 0,
+slices.arules <- function(dts, global.sup = 0.003,
 													min.confidence = 0.30, 
-													min.lift.dist=0.30,
+													min.lift.dist = 0.30,
 													lhs.only=NULL){
 	require(arules)
 	total.rules = NULL
-	if(class(dts)!='list'){
-		dts = list(y1=dts)
+	if(class(dts) != 'list') {
+		dts = list(y1 = dts)
 	}
 	
-	for(dt in dts){
+	for(dt in dts) {
 		rules = apriori(dt,
-										parameter=list(confidence=0, support=global.sup)
+										parameter = list(confidence = 0, support = global.sup)
 		)
 		rules = filter.rules(dt, rules, 
 												 lift.dist = min.lift.dist, 
@@ -270,7 +281,7 @@ slices.arules <- function(dts, global.sup = 0,
 												 lhs.only = lhs.only
 		)
 		
-		if(is.null(total.rules)){
+		if(is.null(total.rules)) {
 			total.rules = rules
 		}else{
 			total.rules = append(total.rules, rules)
@@ -278,13 +289,13 @@ slices.arules <- function(dts, global.sup = 0,
 	}
 	
 	
-	if(length(rules) > 0){
+	if(length(rules) > 0) {
 		ruledf = data.table(
 			lhs = labels(total.rules@lhs),
 			rhs = labels(total.rules@rhs), 
 			total.rules@quality)
 		graph = graph_arules(total.rules)
-		return(list(rules=total.rules, rules.table=ruledf, rules.graph=graph))
+		return(list(rules = total.rules, rules.table = ruledf, rules.graph = graph))
 	}
 	
 	return(NULL)
@@ -309,28 +320,30 @@ verticalize <- function(dt){
 }
 
 compare.groups <- function(dt, group.a, group.b){
-	lhs = list(dt[relation.offender==group.a, .(ts.0)],
-						 dt[relation.offender==group.a, .(ts.1)],
-						 dt[relation.offender==group.a, .(ts.2)],
-						 dt[relation.offender==group.a, .(ts.3)],
-						 dt[relation.offender==group.a, .(ts.4)],
-						 dt[relation.offender==group.a, .(ts.5)]
+	lhs = list(dt[relation.offender == group.a, .(ts.0)],
+						 dt[relation.offender == group.a, .(ts.1)],
+						 dt[relation.offender == group.a, .(ts.2)],
+						 dt[relation.offender == group.a, .(ts.3)],
+						 dt[relation.offender == group.a, .(ts.4)],
+						 dt[relation.offender == group.a, .(ts.5)]
 						)
-	rhs = list(dt[relation.offender==group.b, .(ts.0)],
-						 dt[relation.offender==group.b, .(ts.1)],
-						 dt[relation.offender==group.b, .(ts.2)],
-						 dt[relation.offender==group.b, .(ts.3)],
-						 dt[relation.offender==group.b, .(ts.4)],
-						 dt[relation.offender==group.b, .(ts.5)]
+	rhs = list(dt[relation.offender == group.b, .(ts.0)],
+						 dt[relation.offender == group.b, .(ts.1)],
+						 dt[relation.offender == group.b, .(ts.2)],
+						 dt[relation.offender == group.b, .(ts.3)],
+						 dt[relation.offender == group.b, .(ts.4)],
+						 dt[relation.offender == group.b, .(ts.5)]
 						)
 	trans.topics = rbindlist(lhs)
 	trans.topics = cbind(trans.topics,rbindlist(rhs))
 	names(trans.topics) <- c(group.a,group.b)
 	return(trans.topics)
 }
-dt = ts.topics.col[ts.0!=ts.1][,.(ts.0,ts.1)]
-rules = slices.arules(dt, 
-											min.confidence = 0.1, min.lift.dist = 0.3, lhs.only="")
+dt = merge(groups[relation.offender == 'offender', .(case, match, topic)], 
+					 groups[relation.offender == 'ally', .(case, match, topic)], 
+					 by = c('case','match'))
+rules = slices.arules(dt[,.(topic.x,topic.y)], 
+											min.confidence = 0.1, min.lift.dist = 0.3, lhs.only = "")
 inspectDT(rules$rules)
 rules$rules.graph 
 #%>% visPhysics(barnesHut=list(springLength=500)) %>%

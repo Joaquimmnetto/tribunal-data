@@ -20,10 +20,10 @@ tars_dir = "../../../dataset/dataset_sample/sample" if len(sys.argv) < 2 else sy
 dest_dir = "../../.." if len(sys.argv) < 3 else sys.argv[2]
 num_producers = 4 if len(sys.argv) < 4 else int(sys.argv[3])
 
-chat_csv_name = 'chat2.csv' if len(sys.argv) < 5 else str(sys.argv[4])
-players_name = 'players2.csv' if len(sys.argv) < 7 else str(sys.argv[6])
+chat_csv_name = 'chat.csv' if len(sys.argv) < 5 else str(sys.argv[4])
+players_name = 'players.csv' if len(sys.argv) < 7 else str(sys.argv[6])
 chat_corpus_name = 'None' if len(sys.argv) < 6 else str(sys.argv[5])
-matches_name = 'matches2.csv' if len(sys.argv) < 8 else str(sys.argv[7])
+matches_name = 'matches.csv' if len(sys.argv) < 8 else str(sys.argv[7])
 
 chat_atrs = ["association_to_offender", "sent_to"]
 player_atrs = ['association_to_offender', 'champion_name', 'kills', 'deaths', 'assists', 'gold_earned', 'outcome']

@@ -24,7 +24,7 @@ Dataset construido com todas as transições ocorridas, sem consideração das t
 
 ###Full
 ```{r, fig.show='hide', include=FALSE}
-	min.conf = 0.1
+	min.conf = 0.0
 	results = slices.arules(verticalize(ts.topics.col), 
 											min.confidence = min.conf,
 											lhs.only = "")
@@ -72,9 +72,9 @@ Complaints e arguments agora funcionam como meio campo entre os tópicos. Esses 
 
 ###Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(ts.topics.col[relation.offender=='offender']), 
+	results = slices.arules(verticalize(ts.topics.col[relation.offender == 'offender']), 
 											min.confidence = min.conf
-											,lhs.only=""
+											,lhs.only = ""
 											)
 ```
 
@@ -87,9 +87,9 @@ Complaints e arguments agora funcionam como meio campo entre os tópicos. Esses 
 
 ###Não-Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender']), 
-											min.confidence = min.conf
-											,lhs.only=""
+	results = slices.arules(verticalize(ts.topics.col[relation.offender != 'offender'])
+											,min.confidence = min.conf
+											,lhs.only = ""
 											)
 ```
 
@@ -166,9 +166,9 @@ Complaints e arguments tem um caso parecido com allies, com uma ligação de cam
 
 ###Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(ts.topics.col[relation.offender=='offender'])[lhs!=rhs], 
+	results = slices.arules(verticalize(ts.topics.col[relation.offender == 'offender'])[lhs != rhs], 
 											min.confidence = min.conf, 
-											lhs.only="")
+											lhs.only = "")
 ```
 
 ```{r echo=FALSE}
@@ -183,9 +183,9 @@ Aqui as relações ficam mais confusas, com tactics complaints, arguments e tact
 
 ###Não-Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(ts.topics.col[relation.offender!='offender'])[lhs!=rhs], 
+	results = slices.arules(verticalize(ts.topics.col[relation.offender != 'offender'])[lhs != rhs], 
 											min.confidence = min.conf, 
-											lhs.only="")
+											lhs.only = "")
 ```
 
 ```{r echo=FALSE}
@@ -198,17 +198,19 @@ Aqui as relações ficam mais confusas, com tactics complaints, arguments e tact
 ###Conclusões
 Existe uma 'área central' de transições, entretanto seus limites não são completamente claros. Em não ofensores, essa área é ocupada por tactics e complaints, com tactics realizando a interloucução entre tópicos mais positivos(small talk e tactics/positive) e complaints. Já complaints liga-se a arguments, que também 'recebe' de taunts, tornando complaints uma 'porta de entrada' para tópicos negativos. O comportamento de taunts e especialmente de insults não fica claro nestas análises, provavelmente devido a sua baixa frequência. Uma análise mais detalhada destes vai ser tentada a seguir.
 
+Após o aumento do nivel de confiança para 0.2, foi descoberta uma 'área central' mais estável, composta pelos tópicos tactics e complaints. Nesse mesmo experimento, tactics relaciona-se com tactics/pos e small talk em duas vias em grupos não ofensores, e em uma única via (tp/sm -> tactics) nos ofensores. Comportamento similar é mostrado na relação de arguments e complaints, com uma via em não ofensores e duas vias em ofensores. Complaints também recebe de taunts quando se trata de ofensores. Insults continuam um tópico misterioso.
+
 ##Insults, com autoreferência
 Partidas aonde insults aparecem ao menos uma vez. conf.=0 e min.lift=1.3
 
 ###Full
 ```{r, fig.show='hide', include=FALSE}
-	min.conf = 0.10
+	min.conf = 0.0
 	dt = ts.topics.col[ ts.0 == 'insults' | ts.1 == 'insults' | ts.2 == 'insults' | 
 											ts.3 == 'insults' | ts.4 == 'insults' | ts.5 == 'insults' ]
 	results = slices.arules(verticalize(dt), 
 											min.confidence = min.conf
-											#,lhs.only=""
+											,lhs.only = ""
 											)
 ```
 
@@ -222,9 +224,9 @@ Partidas aonde insults aparecem ao menos uma vez. conf.=0 e min.lift=1.3
 
 ###Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(dt[relation.offender=='offender'])[lhs!=rhs], 
+	results = slices.arules(verticalize(dt[relation.offender == 'offender']), 
 											min.confidence = min.conf, 
-											lhs.only="")
+											lhs.only = "")
 ```
 
 ```{r echo=FALSE}
@@ -236,9 +238,9 @@ Partidas aonde insults aparecem ao menos uma vez. conf.=0 e min.lift=1.3
 
 ###Não-Ofensores
 ```{r, fig.show='hide', include=FALSE}
-	results = slices.arules(verticalize(dt[relation.offender!='offender'])[lhs!=rhs], 
+	results = slices.arules(verticalize(dt[relation.offender != 'offender']), 
 											min.confidence = min.conf, 
-											lhs.only="")
+											lhs.only = "")
 ```
 
 ```{r echo=FALSE}
@@ -249,3 +251,55 @@ Partidas aonde insults aparecem ao menos uma vez. conf.=0 e min.lift=1.3
 ```
 
 
+##Taunts, sem autoreferência
+Partidas aonde taunts aparecem ao menos uma vez. conf.=0 e min.lift=1.3
+
+###Full
+```{r, fig.show='hide', include=FALSE}
+	min.conf = 0.10
+	dt = ts.topics.col[ ts.0 == 'insults' | ts.1 == 'insults' | ts.2 == 'insults' | 
+											ts.3 == 'insults' | ts.4 == 'insults' | ts.5 == 'insults' ]
+	results = slices.arules(verticalize(dt)[lhs != rhs], 
+											min.confidence = min.conf
+											,lhs.only = ""
+											)
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+
+###Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(dt[relation.offender == 'offender'])[lhs != rhs], 
+											min.confidence = min.conf, 
+											lhs.only = "")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+###Não-Ofensores
+```{r, fig.show='hide', include=FALSE}
+	results = slices.arules(verticalize(dt[relation.offender != 'offender'])[lhs != rhs], 
+											min.confidence = min.conf, 
+											lhs.only = "")
+```
+
+```{r echo=FALSE}
+	inspectDT(results$rules)
+	results$rules.graph# %>% 
+	#visPhysics(barnesHut=list(springLength=500)) %>%
+	#visHierarchicalLayout(direction = "LR", sortMethod="directed", levelSeparation = 600)
+```
+
+####Resultados:
+Procurar regras isolando insults/taunts pode parecer uma boa idéia a primeira vista, mas acaba retornando resultados altamente enviesados, já que, apesar dos valores de confiança permanecer os mesmo, os valores de lift são fortemente distorcidos pelo desbalanceamento do dataset. Os parâmetros definidos pelo apriori já são bons o suficiente para filtrar regras extremamente raras, não sendo necessário fazer qualquer tipo de subsetting. 

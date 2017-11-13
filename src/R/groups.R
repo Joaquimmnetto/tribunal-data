@@ -157,7 +157,7 @@ nc.offender.topics.perf <- build.topics.aggr(matches[enemy.contamination==0],'en
 ec.topics.perf <- build.topics.aggr(matches[enemy.contamination > 0],'enemy.performance','enemy.topics')
 
 outcomes <- unique(players[,.(case,match,relation.offender,outcome)])
-outcomes <- outcomes[relation.offender !='offender' && outcome=='Win']
+outcomes <- outcomes[relation.offender !='offender' & outcome=='Win']
 outcomes <- rbind(outcomes,
 									rbind(outcomes[relation.offender=='enemy'][,relation.offender:='ally'][,outcome:='Loss'],
 												outcomes[relation.offender=='ally'][,relation.offender:='enemy'][,outcome:='Loss'])
